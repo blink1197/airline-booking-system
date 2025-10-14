@@ -80,7 +80,7 @@ The document must include a Visual Mock-up and an ERD.
     * The link must be Public to allow future employers to view the project.
 
 #### 7.2 TSD Inclusion
-* Public Figma Link
+* [Public Figma Link](https://www.figma.com/design/CMczN2gNCB3fZ5wZHwscPi/ABS-Mock-Up?node-id=2-311&t=Bitt7Q5CpQQC3nrK-1)
 * ERD Link/Image
 
 ## 8. Data Requirements
