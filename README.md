@@ -81,7 +81,7 @@ The document must include a Visual Mock-up and an ERD.
 
 #### 7.2 TSD Inclusion
 * [Public Figma Link](https://www.figma.com/design/CMczN2gNCB3fZ5wZHwscPi/ABS-Mock-Up?node-id=2-311&t=Bitt7Q5CpQQC3nrK-1)
-* ERD Link/Image
+* [ERD Link/Image] https://github.com/blink1197/airline-booking-system/blob/main/ERD.svg
 
 ## 8. Data Requirements
 The document must include data models, database schemas, and an ERD (link provided above).
