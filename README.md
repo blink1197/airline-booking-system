@@ -92,12 +92,12 @@ The document must include data models, database schemas, and an ERD (link provid
 
 | Attribute Name | Key Type | Data Type | Description |
 |----------------|-----------|------------|--------------|
-| airlineId | PK | INT | Unique identifier for the airline. |
-| name |  | VARCHAR | Name of the airline (e.g., "SkyLink"). |
-| logo |  | VARCHAR | URL or path to the airline's logo. |
-| email |  | VARCHAR | Contact email for the airline. |
-| mobileNumber |  | VARCHAR | Contact phone number. |
-| address |  | VARCHAR | Physical address of the airline HQ. |
+| airlineId | PK | STRING | Unique identifier for the airline. |
+| name |  | STRING | Name of the airline (e.g., "SkyLink"). |
+| logo |  | STRING | URL or path to the airline's logo. |
+| email |  | STRING | Contact email for the airline. |
+| mobileNumber |  | STRING | Contact phone number. |
+| address |  | STRING | Physical address of the airline HQ. |
 
 ---
 
@@ -105,15 +105,15 @@ The document must include data models, database schemas, and an ERD (link provid
 
 | Attribute Name | Key Type | Data Type | Description |
 |----------------|-----------|------------|--------------|
-| userId | PK | INT | Unique identifier for each registered user. |
-| firstName |  | VARCHAR | User's first name. |
-| lastName |  | VARCHAR | User's last name. |
-| email |  | VARCHAR | User's email address (should be UNIQUE). |
-| password |  | VARCHAR | Hashed password. |
-| mobileNumber |  | VARCHAR | User's contact number. |
-| dateOfBirth |  | DATE | User's date of birth. |
-| bookingHistory |  | TEXT | Text field for storing historical booking summaries/notes (optional). |
-| role |  | VARCHAR | User role (e.g., 'Customer', 'Admin'). |
+| userId | PK | STRING | Unique identifier for each registered user. |
+| firstName |  | STRING | User's first name. |
+| lastName |  | STRING | User's last name. |
+| email |  | STRING | User's email address (should be UNIQUE). |
+| password |  | STRING | Hashed password. |
+| mobileNumber |  | STRING | User's contact number. |
+| dateOfBirth |  | STRING | User's date of birth. |
+| bookingHistory |  | STRING | Text field for storing historical booking summaries/notes (optional). |
+| role |  | STRING | User role (e.g., 'Customer', 'Admin'). |
 | createdOn |  | DATETIME | Timestamp for account creation. |
 | updatedOn |  | DATETIME | Timestamp for last update. |
 
@@ -123,14 +123,14 @@ The document must include data models, database schemas, and an ERD (link provid
 
 | Attribute Name | Key Type | Data Type | Description |
 |----------------|-----------|------------|--------------|
-| flightId | PK | INT | Unique identifier for the specific flight. |
-| airlineId | FK | INT | Links to the operating airline (Airline_info). |
-| fromLocation |  | VARCHAR | Departure city/airport. |
-| toLocation |  | VARCHAR | Arrival city/airport. |
+| flightId | PK | STRING | Unique identifier for the specific flight. |
+| airlineId | FK | STRING | Links to the operating airline (Airline_info). |
+| fromLocation |  | STRING | Departure city/airport. |
+| toLocation |  | STRING | Arrival city/airport. |
 | departureDate |  | DATETIME | Scheduled departure date and time. |
 | arrivalDate |  | DATETIME | Scheduled arrival date and time. |
-| seatsAvailable |  | INT | Number of available seats. |
-| price |  | DECIMAL | Base price of the flight. |
+| seatsAvailable |  | NUMBER | Number of available seats. |
+| price |  | NUMBER | Base price of the flight. |
 | createdOn |  | DATETIME | Timestamp for flight record creation. |
 | updatedOn |  | DATETIME | Timestamp for last update. |
 
@@ -140,13 +140,13 @@ The document must include data models, database schemas, and an ERD (link provid
 
 | Attribute Name | Key Type | Data Type | Description |
 |----------------|-----------|------------|--------------|
-| bookingId | PK | INT | Unique identifier for the booking/reservation. |
-| userId | FK | INT | Links to the user who made the booking (User_info). |
-| flightId | FK | INT | Links to the specific flight booked (Flight_details). |
+| bookingId | PK | STRING | Unique identifier for the booking/reservation. |
+| userId | FK | STRING | Links to the user who made the booking (User_info). |
+| flightId | FK | STRING | Links to the specific flight booked (Flight_details). |
 | bookingDate |  | DATETIME | Date/time the booking was made. |
-| flightType |  | VARCHAR | Type of flight (e.g., 'One-Way', 'Round-Trip'). |
-| seatNumber |  | VARCHAR | The specific seat number(s) assigned. |
-| totalAmount |  | DECIMAL | Total monetary value of the booking. |
+| flightType |  | STRING | Type of flight (e.g., 'One-Way', 'Round-Trip'). |
+| seatNumber |  | STRING | The specific seat number(s) assigned. |
+| totalAmount |  | NUMBER | Total monetary value of the booking. |
 | createdOn |  | DATETIME | Timestamp for booking creation. |
 | updatedOn |  | DATETIME | Timestamp for last update. |
 
@@ -156,15 +156,15 @@ The document must include data models, database schemas, and an ERD (link provid
 
 | Attribute Name | Key Type | Data Type | Description |
 |----------------|-----------|------------|--------------|
-| passengerId | PK | INT | Unique identifier for each passenger record. |
-| userId | FK | INT | Links to the user who created this passenger record (User_info). |
-| bookingId | FK | INT | **CRITICAL:** Links the passenger to the specific booking (Booking_details). |
-| firstName |  | VARCHAR | Passenger's first name. |
-| lastName |  | VARCHAR | Passenger's last name. |
-| email |  | VARCHAR | Passenger's email (if different from user). |
-| mobileNumber |  | VARCHAR | Passenger's contact number. |
-| baggageDetails |  | TEXT | Notes on baggage (e.g., weight, number of bags). |
-| otherDetails |  | TEXT | Miscellaneous details (e.g., special needs). |
+| passengerId | PK | STRING | Unique identifier for each passenger record. |
+| userId | FK | STRING | Links to the user who created this passenger record (User_info). |
+| bookingId | FK | STRING | **CRITICAL:** Links the passenger to the specific booking (Booking_details). |
+| firstName |  | STRING | Passenger's first name. |
+| lastName |  | STRING | Passenger's last name. |
+| email |  | STRING | Passenger's email (if different from user). |
+| mobileNumber |  | STRING| Passenger's contact number. |
+| baggageDetails |  | STRING | Notes on baggage (e.g., weight, number of bags). |
+| otherDetails |  | STRING | Miscellaneous details (e.g., special needs). |
 
 ---
 
@@ -172,12 +172,12 @@ The document must include data models, database schemas, and an ERD (link provid
 
 | Attribute Name | Key Type | Data Type | Description |
 |----------------|-----------|------------|--------------|
-| paymentId | PK | INT | Unique identifier for each payment transaction. |
-| bookingId | FK | INT | Links the payment transaction to the relevant booking (Booking_details). |
-| amount |  | DECIMAL | Monetary amount of the payment. |
+| paymentId | PK | STRING | Unique identifier for each payment transaction. |
+| bookingId | FK | STRING | Links the payment transaction to the relevant booking (Booking_details). |
+| amount |  | NUMBER| Monetary amount of the payment. |
 | paymentDate |  | DATETIME | Date and time the payment was made. |
-| paymentMethod |  | VARCHAR | Method used (e.g., 'Card', 'PayPal'). |
-| status |  | VARCHAR | Payment status (e.g., 'Completed', 'Failed'). |
+| paymentMethod |  | STRING | Method used (e.g., 'Card', 'PayPal'). |
+| status |  | STRING | Payment status (e.g., 'Completed', 'Failed'). |
 | createdOn |  | DATETIME | Timestamp for payment record creation. |
 | updatedOn |  | DATETIME | Timestamp for last update. |
 
@@ -187,12 +187,12 @@ The document must include data models, database schemas, and an ERD (link provid
 
 | Attribute Name | Key Type | Data Type | Description |
 |----------------|-----------|------------|--------------|
-| ticketId | PK | INT | Unique identifier for the generated ticket. |
-| passengerId | FK | INT | Links the ticket to the specific passenger (Passenger_details). |
-| firstName |  | VARCHAR | Passenger's first name (redundant but often stored for ticket printing). |
-| lastName |  | VARCHAR | Passenger's last name (redundant but often stored for ticket printing). |
-| class |  | VARCHAR | Travel class (e.g., 'Economy', 'Business'). |
-| fare |  | DECIMAL | Final fare price (after discounts, taxes). |
+| ticketId | PK | STRING| Unique identifier for the generated ticket. |
+| passengerId | FK | STRING | Links the ticket to the specific passenger (Passenger_details). |
+| firstName |  | STRING | Passenger's first name (redundant but often stored for ticket printing). |
+| lastName |  | STRING | Passenger's last name (redundant but often stored for ticket printing). |
+| class |  | STRING | Travel class (e.g., 'Economy', 'Business'). |
+| fare |  | NUMBER | Final fare price (after discounts, taxes). |
 
 ---
 
