@@ -3,7 +3,7 @@
 ## 1. Title Page
 | Project Name: | &#9992;&#65039; Airline Booking System                                                                                 |
 |---------------|--------------------------------------------------------------------------------------------------------|
-| Version       | 1.0.1                                                                                                  |
+| Version       | 1.0.2                                                                                                  |
 | Date          | October 14, 2025                                                                                       |
 | Authors       | [Cris Bagotsay](https://github.com/blink1197/)<br>[Richard Delos Trinos](https://github.com/richard-DT)|
 
@@ -81,7 +81,7 @@ The document must include a Visual Mock-up and an ERD.
 
 #### 7.2 TSD Inclusion
 * [Public Figma Link](https://www.figma.com/design/CMczN2gNCB3fZ5wZHwscPi/ABS-Mock-Up?node-id=2-311&t=Bitt7Q5CpQQC3nrK-1)
-* [ERD Link/Image](https://github.com/blink1197/airline-booking-system/blob/main/ERD.svg)
+* [ERD Link](https://drive.google.com/file/d/1WNCXU3CTT8dckXDJT_ljm8VHvR5LGH84/view?usp=drive_link)
 
 ## 8. Data Requirements
 The document must include data models, database schemas, and an ERD (link provided above).
@@ -200,12 +200,32 @@ The document must include data models, database schemas, and an ERD (link provid
 ## 9. Glossary
 Definitions of terms and acronyms used in the document.
 
-| Term / Acronym | Definition                        |
-|:--------------:|-----------------------------------|
-| **TSD**        | Technical Specifications Document |
-| **MVP**        | Minimum Viable Product            |
-| **ERD**        | Entity-Relationship Diagram       |
-| **SPA**        | Single Page Application           |
+| **Term / Acronym** | **Definition** |
+|---------------------|----------------|
+| **TSD** | **Technical Specifications Document** — a formal document describing the system’s technical and functional details. |
+| **MVP** | **Minimum Viable Product** — the simplest version of the product that can be released to validate core functionality. |
+| **ERD** | **Entity-Relationship Diagram** — a visual representation of data entities, their attributes, and relationships in a database. |
+| **SPA** | **Single Page Application** — a web application that loads a single HTML page and dynamically updates content without reloading. |
+| **API** | **Application Programming Interface** — a set of rules that allows one system or component to interact with another programmatically. |
+| **Frontend** | The client-side part of the web application that users directly interact with (**UI/UX**). |
+| **Backend** | The server-side part of the web application responsible for processing requests, managing logic, and interacting with the database. |
+| **REST** | **Representational State Transfer** — an architectural style for designing networked applications, typically using HTTP requests. |
+| **UI** | **User Interface** — the visual elements and layout through which a user interacts with a system. |
+| **UX** | **User Experience** — the overall feeling and satisfaction users get when interacting with a product. |
+| **NFR** | **Non-Functional Requirements** — system qualities such as performance, scalability, security, and usability. |
+| **FR** | **Functional Requirements** — specific behaviors, actions, and features the system must implement. |
+| **CRUD** | **Create, Read, Update, Delete** — the four basic operations of persistent data storage. |
+| **PK** | **Primary Key** — a unique identifier for a record in a database table. |
+| **FK** | **Foreign Key** — a field that links one database table to another. |
+| **JSON** | **JavaScript Object Notation** — a lightweight data interchange format commonly used for APIs. |
+| **Endpoint** | A specific URL or route in an API that allows clients to access or manipulate server resources. |
+| **Wireframe** | A low-fidelity visual guide representing the skeletal framework of a web page or app. |
+| **Figma** | A collaborative design tool used for creating **UI/UX** mockups and prototypes. |
+| **Responsive Design** | A design approach ensuring that web interfaces adapt to different screen sizes and devices. |
+| **Repository (Repo)** | A central location where project code, files, and version history are stored (e.g., on **GitHub**). |
+| **Version Control** | A system that records changes to files and enables collaboration among multiple developers. |
+| **Deployment** | The process of making a web application available for users to access online. |
+| **Trello** | A project management tool used for task organization through boards and cards. |
 
 ## 10. Appendices
 
@@ -214,6 +234,7 @@ Definitions of terms and acronyms used in the document.
 |----------|----------------|------------------------------------------------|-----------------------------------------------------|
 | 1.0.0    | October 15, 2025 | [Cris Bagotsay](https://github.com/blink1197/),<br> [Richard Delos Trinos](https://github.com/richard-DT) | Initial draft of the Technical Specifications Document. |
 | 1.0.1    | October 18, 2025 | [Richard Delos Trinos](https://github.com/richard-DT) | Add ERD data types and public link to the ERD. |
+| 1.0.2    | October 20, 2025 | [Cris Bagotsay](https://github.com/blink1197/) | Add new terms and definitions in Glossary section and update ERD link to point directly to draw.io link. |
 
 #### 10.2 GitHub Repository & Collaboration Guidelines
 * Repository: Create a new public GitHub repo called airline-booking-system.
