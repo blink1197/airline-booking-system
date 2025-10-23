@@ -43,14 +43,16 @@ The technical specifications should cover both Frontend and Backend requirements
 |---------|---------------------------------|----------------------------------------------------------------------------------------------------------------|
 | PG-01   | Landing Page (Flight Search)    | The initial screen where users can search for available flights.                                               | 
 | PG-02   | Flight Results Page             | Displays available flight options based on the user’s search criteria.                                         | 
-| PG-03   | Booking Page                    | Displays selected flight details and allows users to enter passenger and payment information (future feature). | 
-| PG-04   | Confirmation Page               | Shows booking confirmation and reference number after successful transaction.                                  | 
-| PG-05   | Login Page                      | Allows registered users to log into their account.                                                             | 
-| PG-06   | Register Page                   | Enables new users to create an account.                                                                        | 
-| PG-07   | About Us Page                   | Provides information about the airline booking system, mission, and team.                                      | 
-| PG-08   | Contact Us Page                 | Displays contact details and a functional inquiry form.                                                        | 
-| PG-09   | User Profile / My Bookings Page | Allows logged-in users to view their booking history and check current booking status.                         | 
-| PG-10   | Error / Empty State Page        | Displays a user-friendly message when no flights are found or when an error occurs.                            | 
+| PG-03   | Booking Page                    | Displays selected flight details and allows users to enter passenger information.                              | 
+| PG-04   | Add-Ons Page                    | Allows users to select add-ons (future feature).                                                               |
+| PG-05   | Payment Page                    | Allows users to review and select payment method (future feature)                                              |
+| PG-06   | Confirmation Page               | Shows booking confirmation and reference number after successful transaction.                                  | 
+| PG-07   | Login Page                      | Allows registered users to log into their account.                                                             | 
+| PG-08   | Register Page                   | Enables new users to create an account.                                                                        | 
+| PG-09   | About Us Page                   | Provides information about the airline booking system, mission, and benefits.                                  | 
+| PG-10   | Contact Us Page                 | Displays contact details and a functional inquiry form.                                                        | 
+| PG-11   | User Profile                    | Allows logged-in users to view their booking history and check current booking status.                         | 
+| PG-12   | Error / Empty State Page        | Displays a user-friendly message when no flights are found or when an error occurs.                            | 
 
 
 
