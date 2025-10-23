@@ -3,7 +3,7 @@
 ## 1. Title Page
 | Project Name: | &#9992;&#65039; Airline Booking System                                                                                 |
 |---------------|--------------------------------------------------------------------------------------------------------|
-| Version       | 1.0.2                                                                                                  |
+| Version       | 1.0.3                                                                                                  |
 | Date          | October 14, 2025                                                                                       |
 | Authors       | [Cris Bagotsay](https://github.com/blink1197/)<br>[Richard Delos Trinos](https://github.com/richard-DT)|
 
@@ -252,6 +252,7 @@ Definitions of terms and acronyms used in the document.
 | 1.0.0    | October 15, 2025 | [Cris Bagotsay](https://github.com/blink1197/),<br> [Richard Delos Trinos](https://github.com/richard-DT) | Initial draft of the Technical Specifications Document. |
 | 1.0.1    | October 18, 2025 | [Richard Delos Trinos](https://github.com/richard-DT) | Add ERD data types and public link to the ERD. |
 | 1.0.2    | October 20, 2025 | [Cris Bagotsay](https://github.com/blink1197/) | Add new terms and definitions in Glossary section and update ERD link to point directly to draw.io link. |
+| 1.0.3    | October 23, 2025 | [Cris Bagotsay](https://github.com/blink1197/) | Add pages overview to list the pages' name and purposes. |
 
 #### 10.2 GitHub Repository & Collaboration Guidelines
 * Repository: Create a new public GitHub repo called airline-booking-system.
