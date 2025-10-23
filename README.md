@@ -38,6 +38,21 @@ The technical specifications should cover both Frontend and Backend requirements
 | FR-FE-03    | Search Options Display | Display buttons for **“Round-trip”** and **“One-way”**, but ensure only **“One-way”** search is functional.                                          |
 | FR-FE-04    | Utility Footer         | Include a functional **Footer** element displaying basic contact information.                                                                        |
 | FR-FE-05    | Navigation Menu        | Include a **hamburger menu button** on the navigation bar for mobile responsiveness.                                                                 |
+#### 4.1.1 Pages Overview
+| Page ID | Page Name                       | Description                                                                                                    | 
+|---------|---------------------------------|----------------------------------------------------------------------------------------------------------------|
+| PG-01   | Landing Page (Flight Search)    | The initial screen where users can search for available flights.                                               | 
+| PG-02   | Flight Results Page             | Displays available flight options based on the user’s search criteria.                                         | 
+| PG-03   | Booking Page                    | Displays selected flight details and allows users to enter passenger and payment information (future feature). | 
+| PG-04   | Confirmation Page               | Shows booking confirmation and reference number after successful transaction.                                  | 
+| PG-05   | Login Page                      | Allows registered users to log into their account.                                                             | 
+| PG-06   | Register Page                   | Enables new users to create an account.                                                                        | 
+| PG-07   | About Us Page                   | Provides information about the airline booking system, mission, and team.                                      | 
+| PG-08   | Contact Us Page                 | Displays contact details and a functional inquiry form.                                                        | 
+| PG-09   | User Profile / My Bookings Page | Allows logged-in users to view their booking history and check current booking status.                         | 
+| PG-10   | Error / Empty State Page        | Displays a user-friendly message when no flights are found or when an error occurs.                            | 
+
+
 
 ### 4.2 FR - Backend (Core Logic & Data)
 | ID          | Requirement          | Description                                                                                |
