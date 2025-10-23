@@ -1,0 +1,21 @@
+nav {
+    color: var(--color-primary) !important;
+}
+
+nav .logo-text {
+    color: var(--color-primary) !important;
+}
+
+nav .nav-link {
+    color: var(--color-primary) !important;
+}
+
+footer {
+    background-color: var(--color-primary) !important;
+    color: var(--color-white);
+}
+
+footer a {
+    color: var(--color-gray-4) !important;
+    text-decoration: none !important; 
+}
