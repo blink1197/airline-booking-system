@@ -8,14 +8,52 @@ main {
   padding: 0 !important;
   margin: 0 !important;
 }
+
 /* BootStrap Overrides */
 .btn-primary {
   background-color: var(--color-primary) !important;
   border-color: var(--color-primary) !important;
-  color: #fff;
+  color: var(--color-white);
+}
+
+.bg-primary {
+  background-color: var(--color-primary) !important;
 }
 
 .btn-primary:hover {
-  background-color: rgba(var(--color-primary-rgb), 0.85) !important; /* 85% opacity */
+  background-color: rgba(var(--color-primary-rgb), 0.85) !important; 
   border-color: rgba(var(--color-primary-rgb), 0.85) !important;
+}
+
+.btn-secondary {
+  background-color: var(--color-white) !important; 
+  color: var(--color-primary) !important; 
+  border-color: var(--color-primary) !important;
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-gray-5) !important; 
+  color: var(--color-primary) !important; 
+  border-color: var(--color-primary) !important;
+}
+
+.text-primary {
+  color: var(--color-primary) !important;
+}
+
+.list-group-item:hover {
+  border: 1px solid var(--color-primary) !important;
+}
+
+/* Utility Class */
+.small-text {
+  font-size: 0.875rem; /* 14px */
+}
+
+.smaller-text {
+  font-size: 0.75rem; /* 12px */
+}
+
+.smallest-text {
+  font-size: 0.625rem; /* 10px */
 }

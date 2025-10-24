@@ -42,3 +42,30 @@
     height: 250px; 
     object-fit: cover; 
 }
+
+/* Flights page */
+
+.list-odd {
+    background-color: var(--color-gray-6);
+}
+
+.list-even {
+    background-color: var(--color-white);
+}
+
+.sticky-bottom-btn {
+  position: sticky;
+  bottom: 0;
+  background: white; /* Match your page background */
+  padding: 1rem;
+  z-index: 100; /* Keep it above content but below navbar if needed */
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05); /* subtle shadow */
+}
+
+.custom-progress-bar {
+    max-width: 800px !important;
+}
+
+.flights-results-container {
+    max-width: 800px !important;
+}
