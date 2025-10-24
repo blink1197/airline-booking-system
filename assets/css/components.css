@@ -1,3 +1,4 @@
+/*  Navbar styles */
 nav {
     color: var(--color-primary) !important;
 }
@@ -14,6 +15,7 @@ nav .nav-link:hover {
     color: var(--color-primary) !important;
 }
 
+/* Footer styles */
 footer {
     background-color: var(--color-primary) !important;
     color: var(--color-white);
@@ -31,4 +33,9 @@ footer a:hover {
 footer .footer-socials a {
     color: inherit !important;
     text-decoration: none !important;
+}
+
+/* Progress bar styles */
+header .progress-bar {
+    background-color: var(--color-primary) !important;
 }
