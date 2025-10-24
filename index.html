@@ -21,7 +21,7 @@
 </head>
 
 <body class="container-fluid d-flex flex-column min-vh-100 p-0">
-    <nav class="container">
+    <nav class="container shadow-sm px-0">
         <div class="navbar navbar-expand-lg navbar-light bg-white">
             <div class="container-fluid">
                 <a class="navbar-brand" href="/">
@@ -46,8 +46,133 @@
     </nav>
 
 
-    <main class="border px-2">
+    <main class="container-fluid">
+        <section class="hero container py-5">
+            <h1
+                class="hero-title d-flex flex-column justify-content-center align-items-center gap-2 fw-bold fs-1 mb-5 mt-5 pt-md-5">
+                <span>Smarter Flights</span>
+                <span>Seamless Booking</span>
+            </h1>
 
+            <div class="container px-4 mb-md-5 pb-md-5">
+                <form class="hero-form bg-white p-3 p-lg-5">
+                    <div class="row g-3">
+                        <!-- Row 1: From, To, Depart, Return -->
+                        <div class="col-12 col-md-3">
+                            <label for="from" class="form-label fw-bold">From</label>
+                            <input type="text" class="form-control py-3" id="from">
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <label for="to" class="form-label fw-bold">To</label>
+                            <input type="text" class="form-control py-3" id="to">
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <label for="departure-date" class="form-label fw-bold">Depart</label>
+                            <input type="text" class="form-control py-3" id="departure-date">
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <label for="return-date" class="form-label fw-bold">Return</label>
+                            <input type="text" class="form-control py-3" id="return-date">
+                        </div>
+
+                        <!-- Row 2: Dropdowns + Button -->
+                        <div class="col-12 col-md-4 d-flex gap-2">
+                            <div class="dropdown flex-fill">
+                                <a class="btn btn-primary dropdown-toggle w-100 py-md-2" href="#" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    One Way
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">One Way</a></li>
+                                    <li><a class="dropdown-item" href="#">Round Trip</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="dropdown flex-fill">
+                                <a class="btn btn-primary dropdown-toggle w-100 py-md-2" href="#" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    Economy
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Economy</a></li>
+                                    <li><a class="dropdown-item" href="#">Business</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-4 col-lg-3 ms-md-auto">
+                            <button
+                                class="btn btn-primary py-3 py-md-2 w-100 fw-bold d-flex justify-content-center gap-2 align-items-center"
+                                type="button">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-search" viewBox="0 0 16 16">
+                                    <path
+                                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                </svg>
+                                <span>Search Flight</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </section>
+        <section class="getaways">
+            <div class="container py-5">
+                <h2 class="section-title mb-1">Discover the world's favorite getaways!</h2>
+                <p class="mb-5"> From beaches to cities — your dream destination awaits.</p>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="card shadow-sm getaway-card">
+                            <img src="./assets/images/getaway1.jpg" class="card-img-top img-fluid" alt="Getaway 1">
+                            <div class="card-body">
+                                <p><strong>Iloilo</strong></p>
+                                <p class="card-text">This is a wider card with supporting text below as a natural
+                                    lead-in to additional content. This content is a little bit longer.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-primary">Book a flight</button>
+                                    </div>
+                                    <small class="text-body-secondary">1,299 PHP</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card shadow-sm getaway-card">
+                            <img src="./assets/images/getaway2.jpg" class="card-img-top img-fluid" alt="Getaway 2">
+                            <div class="card-body">
+                                <p><strong>Macau</strong></p>
+                                <p class="card-text">This is a wider card with supporting text below as a natural
+                                    lead-in to additional content. This content is a little bit longer.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-primary">Book a flight</button>
+                                    </div>
+                                    <small class="text-body-secondary">1,299 PHP</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card shadow-sm getaway-card">
+                            <img src="./assets/images/getaway3.jpg" class="card-img-top img-fluid" alt="Getaway 3">
+                            <div class="card-body">
+                                <p><strong>Laoag</strong></p>
+                                <p class="card-text">This is a wider card with supporting text below as a natural
+                                    lead-in to additional content. This content is a little bit longer.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-primary">Book a flight</button>
+                                    </div>
+                                    <small class="text-body-secondary">1,299 PHP</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+        </section>
     </main>
 
     <footer class="container-fluid">

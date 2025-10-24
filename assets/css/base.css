@@ -4,6 +4,10 @@ body {
   font-family: var(--font-main);
 }
 
+main {
+  padding: 0 !important;
+  margin: 0 !important;
+}
 /* BootStrap Overrides */
 .btn-primary {
   background-color: var(--color-primary) !important;

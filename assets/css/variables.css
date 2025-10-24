@@ -13,6 +13,7 @@
     --color-gray-3: #828282;
     --color-gray-4: #BDBDBD;
     --color-gray-5: #E0E0E0;
+    --color-gray-6: rgba(224, 224, 224, 0.5);
 
     /* Typography */
     --font-main: "Inter", sans-serif;
