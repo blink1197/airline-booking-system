@@ -74,6 +74,5 @@ header .progress-bar {
     position: sticky;
     bottom: 0;
     background: var(--color-white);
-    padding: 1rem;
     z-index: 100; 
 }

@@ -82,3 +82,13 @@
     margin: 10px 0;
     height: 2px
 }
+
+/* Add-ons page */
+
+.add-on-card {
+    border-radius: 10px;
+    box-shadow: var(--shadow-card);
+}
+.add-on-card img {
+    border-radius: 10px 10px 0 0;
+}
