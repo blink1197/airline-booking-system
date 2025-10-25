@@ -45,7 +45,92 @@ main {
   border: 1px solid var(--color-primary) !important;
 }
 
+.form-check-input:checked {
+  background-color: var(--color-primary);
+}
+
 /* Utility Class */
+
+.extra-small-text-regular {
+  font-family: var(--font-main) !important;
+  font-weight: 400 !important;
+  font-size: 0.75rem !important; /* 12px */
+  line-height: 16.6px !important;
+  letter-spacing: 0% !important;
+}
+
+.extra-small-text-bold {
+  font-family: var(--font-main) !important;
+  font-weight: 700 !important;
+  font-size: 0.75rem !important; /* 12px */
+  line-height: 16.6px !important;
+  letter-spacing: 0% !important;
+}
+
+.small-text-regular {
+  font-family: var(--font-main) !important;
+  font-weight: 400 !important;
+  font-size: 0.875rem !important; /* 14px */
+  line-height: 19.6px !important;
+  letter-spacing: 0% !important;
+}
+
+.small-text-bold {
+  font-family: var(--font-main) !important;
+  font-weight: 700 !important;
+  font-size: 0.875rem !important; /* 14px */
+  line-height: 19.6px !important;
+  letter-spacing: 0% !important;
+}
+
+.normal-text-regular {
+  font-family: var(--font-main) !important;
+  font-weight: 400 !important;
+  font-size: 1rem !important; /* 16px */
+  line-height: 22.4px !important;
+  letter-spacing: 0% !important;
+}
+
+.normal-text-bold {
+  font-family: var(--font-main) !important;
+  font-weight: 700 !important;
+  font-size: 1rem !important; /* 16px */
+  line-height: 22.4px !important;
+  letter-spacing: 0% !important;
+}
+
+.medium-text-regular {
+  font-family: var(--font-main) !important;
+  font-weight: 400 !important;
+  font-size: 1.125rem !important; /* 18px */
+  line-height: 25.2px !important;
+  letter-spacing: 0% !important;
+}
+
+.medium-text-bold {
+  font-family: var(--font-main) !important;
+  font-weight: 700 !important;
+  font-size: 1.125rem !important; /* 18px */
+  line-height: 25.2px !important;
+  letter-spacing: 0% !important;
+}
+
+.large-text-regular {
+  font-family: var(--font-main) !important;
+  font-weight: 400 !important;
+  font-size: 1.25rem !important; /* 20px */
+  line-height: 28px !important;
+  letter-spacing: 0% !important;
+}
+
+.large-text-bold {
+  font-family: var(--font-main) !important;
+  font-weight: 700 !important;
+  font-size: 1.25rem !important; /* 20px */
+  line-height: 28px !important;
+  letter-spacing: 0% !important;
+}
+
 .small-text {
   font-size: 0.875rem; /* 14px */
 }
