@@ -39,3 +39,37 @@ footer .footer-socials a {
 header .progress-bar {
     background-color: var(--color-primary) !important;
 }
+
+.custom-progress-bar .circle {
+    width: 1.35rem;
+    height: 1.35rem;
+    border-radius: 50%;
+    background-color: var(--color-gray-4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-white);
+}
+
+.custom-progress-bar .circle.active {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-primary);
+}
+
+.custom-progress-bar .circle.not-yet-started {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-gray-5);
+}
+
+.custom-progress-bar .circle.completed {
+    background-color: var(--color-primary);
+}
+
+/* Sticky Button Group */
+.sticky-bottom-btn {
+    position: sticky;
+    bottom: 0;
+    background: var(--color-white);
+    padding: 1rem;
+    z-index: 100; 
+}
