@@ -41,7 +41,7 @@ header .progress-bar {
 }
 
 .custom-progress-bar {
-    max-width: 800px !important;
+    max-width: 600px !important;
 }
 
 .custom-progress-bar .circle {
