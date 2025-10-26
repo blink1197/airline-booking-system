@@ -103,6 +103,21 @@
 }
 
 
+/* ============================ contact us page ===============================*/
+.contact-image {
+  background-image: url("../images/contact_image.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 480px;
+}
+
+/* Ensure consistency with other pages */
+.col-md-6 > .contact-image {
+  display: block;
+  min-height: 100%;
+}
+/* ============================ end of contact us page ===============================*/
+
 
 
 /* =============================== Log-in Page ==================================== */
