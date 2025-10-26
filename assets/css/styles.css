@@ -175,7 +175,7 @@
   position: relative;
   background: 
     linear-gradient(rgba(9, 44, 76, 0.65), rgba(9, 44, 76, 0.65)),
-    url("../images/about3.png") center/cover no-repeat;
+    url("../images/about_image.jpg") center/cover no-repeat;
   color: #ffffff;
   padding: 6rem 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
