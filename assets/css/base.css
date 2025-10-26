@@ -49,6 +49,12 @@ main {
   background-color: var(--color-primary);
 }
 
+.accordion-button::after {
+  width: 1rem !important;
+  height: 1rem !important;
+  background-size: 1rem;
+}
+
 /* Utility Class */
 
 .extra-small-text-regular {
@@ -141,4 +147,8 @@ main {
 
 .smallest-text {
   font-size: 0.625rem; /* 10px */
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }
