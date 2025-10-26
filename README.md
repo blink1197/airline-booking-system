@@ -253,6 +253,7 @@ Definitions of terms and acronyms used in the document.
 | 1.0.1    | October 18, 2025 | [Richard Delos Trinos](https://github.com/richard-DT) | Add ERD data types and public link to the ERD. |
 | 1.0.2    | October 20, 2025 | [Cris Bagotsay](https://github.com/blink1197/) | Add new terms and definitions in Glossary section and update ERD link to point directly to draw.io link. |
 | 1.0.3    | October 23, 2025 | [Cris Bagotsay](https://github.com/blink1197/) | Add pages overview to list the pages' name and purposes. |
+| 2.0.0    | October 26, 2025 | [Richard Delos Trinos](https://github.com/richard-DT) | Add Phase 2 required static pages: Log-in, Register, About Us, Contact Us, User Profile, Error/ Empty State Page . |
 
 #### 10.2 GitHub Repository & Collaboration Guidelines
 * Repository: Create a new public GitHub repo called airline-booking-system.
