@@ -23,8 +23,8 @@
             const errorType = params.get('type');
 
             // Default message for unknown error
-            let title = "Status Update";
-            let message = "An unknown error occurred. Please navigate back to the homepage.";
+            let title = "404";
+            let message = "The page you're looking for doesn't exist or has been moved.";
             let showButton = true; // Default to showing button
 
             const messages = {
@@ -90,12 +90,13 @@
     </nav>
 
     <main class="container-fluid flex-grow-1">
-        <section class="hero d-flex align-items-center justify-content-center py-5 text-white text-center flex-grow-1">
+        <section class="hero d-flex align-items-center justify-content-center text-white text-center flex-grow-1">
             <div class="container">
-                <div class="p-5" style="max-width: 500px; margin: auto; min-height: 75vh;">
-                    <h1 class="fw-bold display-5 mb-3" id="statusTitle">Status Update</h1>
+                <div class="p-5 d-flex flex-column justify-content-center"
+                    style="max-width: 500px; margin: auto; min-height: 75vh;">
+                    <h1 class="fw-bold display-5 mb-3" id="statusTitle">404</h1>
                     <p class="fs-5 mb-4" id="statusMessage">Loading message...</p>
-                    <a id="homeButton" href="./index.html#Homepage" class="btn btn-primary btn-lg">Go to Homepage</a>
+                    <a id="homeButton" href="./index.html" class="btn btn-primary btn-lg">Go to Homepage</a>
                 </div>
             </div>
         </section>
