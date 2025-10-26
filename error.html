@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:wght@100..900&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="./assets/css/variables.css">
+    <link rel="stylesheet" href="./assets/css/base.css">
+    <link rel="stylesheet" href="./assets/css/components.css">
+    <link rel="stylesheet" href="./assets/css/styles.css">
+    <title>Flyx - Status Page (PG-12)</title>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const errorType = params.get('type');
+            
+            // Default message for unknown error
+            let title = "Status Update";
+            let message = "An unknown error occurred. Please navigate back to the homepage.";
+            let showButton = true; // Default to showing button
+
+            const messages = {
+                'server': {
+                    title: "Server Error",
+                    message: "It's nice to see you on our booking site, but we are **encountering a server error**. Please try again later.",
+                    showButton: true 
+                },
+                'no-flights': {
+                    title: "No Flights Found",
+                    message: "It's nice to see you on our booking site, but **no flights are available on your selected date and time**. Please try again.",
+                    showButton: true
+                },
+                // Logged-out state hides the button
+                'logged-out': {
+                    title: "Successfully Logged Out",
+                    message: "Thank you for visiting us.",
+                    showButton: false // Hide button for a clean log-out screen
+                }
+            };
+
+            const data = messages[errorType] || {
+                title: title, 
+                message: message, 
+                showButton: showButton
+            };
+
+            // Update the HTML elements
+            document.getElementById('statusTitle').textContent = data.title;
+            document.getElementById('statusMessage').innerHTML = data.message; 
+            
+            // Handle Go to Homepage button visibility
+            if (!data.showButton) {
+                document.getElementById('homeButton').style.display = 'none';
+            }
+        });
+    </script>
+</head>
+
+<body class="container-fluid d-flex flex-column min-vh-100 p-0 pt-5">
+    
+    <nav class="shadow-sm fixed-top"> 
+        <div class="navbar navbar-expand-lg navbar-light bg-white container"> 
+            <div class="container-fluid">
+                <a class="navbar-brand" href="./index.html#Homepage">
+                    <img class="img-fluid" src="./assets/images/logo_dark.png" alt="Flyx Logo" height="44">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav ms-auto gap-3">
+                        <a class="nav-link" href="./flights.html">Flights</a>
+                        <a class="nav-link" href="./about.html">About</a>
+                        <a class="nav-link" href="./contactUs.html">Contact Us</a>
+                        <a class="nav-link" href="./login.html">Sign In</a> 
+                        <a class="btn btn-primary" href="./register.html" role="button">Sign Up</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <main class="container-fluid flex-grow-1">
+        <section class="hero d-flex align-items-center justify-content-center py-5 text-white text-center flex-grow-1">
+            <div class="container"> <div class="p-5" style="max-width: 500px; margin: auto; min-height: 75vh;"> 
+                    <h1 class="fw-bold display-5 mb-3" id="statusTitle">Status Update</h1>
+                    <p class="fs-5 mb-4" id="statusMessage">Loading message...</p>
+                    <a id="homeButton" href="./index.html#Homepage" class="btn btn-primary btn-lg">Go to Homepage</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+
+    <footer class="container-fluid mt-auto">
+      <div class="container text-center p-4">
+        <p class="text-muted mb-0">© 2025 Flyx, Inc. All rights reserved.</p>
+      </div>
+    </footer>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
