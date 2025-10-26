@@ -101,3 +101,153 @@
     border-radius: 10px;
     overflow: hidden;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ============================ contact us page ===============================*/
+.contact-image {
+  background-image: url("../images/mission3.jpg");
+  background-size: cover;
+  background-position: center;
+  border-radius: 16px;
+  height: 480px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+/* Ensure consistency with other pages */
+.col-md-6 > .contact-image {
+  display: block;
+  min-height: 100%;
+}
+/* ============================ end of contact us page ===============================*/
