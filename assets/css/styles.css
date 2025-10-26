@@ -148,12 +148,10 @@
 /* ==================== register page ============== */
 
 .register-image {
-  background-image: url("../images/mission1.jpg");
+  background-image: url("../images/register_image.jpg");
   background-size: cover;
   background-position: center;
-  border-radius: 16px;
   height: 480px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
 }
 /* ============= end of register page ============== */
 
