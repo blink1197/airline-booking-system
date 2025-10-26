@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:wght@100..900&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="./assets/css/variables.css">
+    <link rel="stylesheet" href="./assets/css/base.css">
+    <link rel="stylesheet" href="./assets/css/components.css">
+    <link rel="stylesheet" href="./assets/css/styles.css">
+    <title>Flyx - User Profile (PG-11)</title>
+</head>
+
+<body class="container-fluid d-flex flex-column min-vh-100 p-0">
+
+    <nav class="container shadow-sm px-0">
+        <div class="navbar navbar-expand-lg navbar-light bg-white">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="./index.html#Homepage">
+                    <img class="img-fluid" src="./assets/images/logo_dark.png" alt="Flyx Logo" height="44">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav ms-auto gap-3">
+                        <a class="nav-link" href="./flights.html">Flights</a>
+                        <a class="nav-link" href="./about.html">About</a>
+                        <a class="nav-link" href="./contactUs.html">Contact</a>
+                        <a class="btn btn-outline-primary" href="./error.html?type=logged-out" role="button">Log Out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container my-5 flex-grow-1 mx-auto">
+        <div class="profile-header mb-5">
+            <h1 class="fw-bold">Hello, [User Name]!</h1>
+            <p class="text-muted">Manage your flights, view status, and review past bookings.</p>
+        </div>
+
+        <ul class="nav nav-tabs profile-tabs mb-4" id="profileTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="current-tab" data-bs-toggle="tab" data-bs-target="#current-status"
+                    type="button" role="tab" aria-controls="current-status" aria-selected="true">
+                    Current Booking Status
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="history-tab" data-bs-toggle="tab" data-bs-target="#booking-history"
+                    type="button" role="tab" aria-controls="booking-history" aria-selected="false">
+                    Booking History 📅
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="profileTabContent">
+
+            <div class="tab-pane fade show active" id="current-status" role="tabpanel" aria-labelledby="current-tab">
+                <div class="alert alert-info" role="alert">
+                    <h4 class="alert-heading">Upcoming Flight: MNL to CEB</h4>
+                    <p class="mb-0">Flight **FX-456**. Departure: **October 30, 2025** at 10:00 AM. Status: **Confirmed**.</p>
+                    <hr>
+                    <p class="mb-0">Your E-Ticket and check-in details are available below.</p>
+                </div>
+
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold ms-5">E-Ticket & Details</h5>
+                        <ul class="list-group list-group-flush mx-5">
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Booking Reference:</span>
+                                <span class="fw-bold text-primary">FLYXT3342</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Seat:</span>
+                                <span>15A (Window)</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Baggage:</span>
+                                <span>1x Carry-on, 1x Checked (20kg)</span>
+                            </li>
+                            <li class="list-group-item text-center">
+                                <button class="btn btn-sm btn-outline-secondary me-2">Modify Flight</button>
+                                <button class="btn btn-sm btn-danger">Cancel Booking</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="booking-history" role="tabpanel" aria-labelledby="history-tab">
+                
+                <div class="card shadow-sm mb-3">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="mb-1 fw-bold">Departure: MNL to DVO</h5>
+                            <span class="badge bg-success">Completed</span>
+                        </div>
+                        <p class="mb-1 text-muted">Flight FX-101 • December 15, 2024</p>
+                        <small>Total paid: **2,500 PHP**</small>
+                        <a href="#" class="float-end btn btn-sm btn-outline-primary">View Details</a>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm mb-3">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="mb-1 fw-bold">Departure: CEB to KLO</h5>
+                            <span class="badge bg-warning text-dark">Cancelled</span>
+                        </div>
+                        <p class="mb-1 text-muted">Flight FX-205 • September 01, 2024</p>
+                        <small>Total paid: **1,800 PHP** (Refund Processed)</small>
+                        <a href="#" class="float-end btn btn-sm btn-outline-secondary">View Receipt</a>
+                    </div>
+                </div>
+
+                <div class="text-center p-5 border rounded bg-light mt-5">
+                    <p class="fw-bold mb-1">That's all for your booking history!</p>
+                    <p class="text-muted">You've successfully managed all your past trips.</p>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+    <footer class="container-fluid mt-auto">
+      <div class="container text-center p-4">
+        <p class="text-muted mb-0">© 2025 Flyx, Inc. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script src="./assets/scripts/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
