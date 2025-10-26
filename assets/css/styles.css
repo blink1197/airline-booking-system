@@ -101,3 +101,191 @@
     border-radius: 10px;
     overflow: hidden;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =============================== Log-in Page ==================================== */
+
+.login-image {
+  background-image: url("../images/mission2.jpg"); 
+  background-size: cover;
+  background-position: center;
+  border-radius: 16px;
+  height: 480px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.col-md-6 > .login-image {
+  display: block;
+  min-height: 100%;
+}
+
+.login-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.bypass-container {
+  max-width: 520px;
+  background: #f8f9fa;
+  border-left: 4px solid var(--color-primary);
+  border-radius: 10px;
+}
+
+@media (max-width: 767px) {
+  .login-image {
+    display: none;
+  }
+  main.container-fluid {
+    padding-top: 2rem;
+  }
+}
+/* =============================== End of Log-in Page ==================================== */
