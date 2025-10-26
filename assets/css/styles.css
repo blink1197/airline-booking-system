@@ -102,6 +102,15 @@
     overflow: hidden;
 }
 
+.payment-disclaimer {
+  background-color: var(--color-gray-5) !important;
+}
+
+.payment-method-container {
+  max-width: 1000px !important;
+}
+
+
 /*=========================Profile Page (for Logged-in User ========================*/
 
 .profile-tabs .nav-link {
