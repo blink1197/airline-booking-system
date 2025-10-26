@@ -21,7 +21,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             const params = new URLSearchParams(window.location.search);
             const errorType = params.get('type');
-            
+
             // Default message for unknown error
             let title = "Status Update";
             let message = "An unknown error occurred. Please navigate back to the homepage.";
@@ -31,7 +31,7 @@
                 'server': {
                     title: "Server Error",
                     message: "It's nice to see you on our booking site, but we are **encountering a server error**. Please try again later.",
-                    showButton: true 
+                    showButton: true
                 },
                 'no-flights': {
                     title: "No Flights Found",
@@ -47,15 +47,15 @@
             };
 
             const data = messages[errorType] || {
-                title: title, 
-                message: message, 
+                title: title,
+                message: message,
                 showButton: showButton
             };
 
             // Update the HTML elements
             document.getElementById('statusTitle').textContent = data.title;
-            document.getElementById('statusMessage').innerHTML = data.message; 
-            
+            document.getElementById('statusMessage').innerHTML = data.message;
+
             // Handle Go to Homepage button visibility
             if (!data.showButton) {
                 document.getElementById('homeButton').style.display = 'none';
@@ -64,12 +64,11 @@
     </script>
 </head>
 
-<body class="container-fluid d-flex flex-column min-vh-100 p-0 pt-5">
-    
-    <nav class="shadow-sm fixed-top"> 
-        <div class="navbar navbar-expand-lg navbar-light bg-white container"> 
+<body class="container-fluid d-flex flex-column min-vh-100 p-0">
+    <nav class="container px-0">
+        <div class="navbar navbar-expand-lg navbar-light bg-white">
             <div class="container-fluid">
-                <a class="navbar-brand" href="./index.html#Homepage">
+                <a class="navbar-brand" href="/">
                     <img class="img-fluid" src="./assets/images/logo_dark.png" alt="Flyx Logo" height="44">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -79,20 +78,21 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav ms-auto gap-3">
-                        <a class="nav-link" href="./flights.html">Flights</a>
-                        <a class="nav-link" href="./about.html">About</a>
-                        <a class="nav-link" href="./contactUs.html">Contact Us</a>
-                        <a class="nav-link" href="./login.html">Sign In</a> 
-                        <a class="btn btn-primary" href="./register.html" role="button">Sign Up</a>
+                        <a class="nav-link" href="#">Flights</a>
+                        <a class="nav-link" href="#">About</a>
+                        <a class="nav-link" href="#">Contact</a>
+                        <a class="nav-link" href="#">Sign In</a>
+                        <a class="btn btn-primary" href="#" role="button">Sign Up</a>
                     </div>
                 </div>
             </div>
         </div>
     </nav>
-    
+
     <main class="container-fluid flex-grow-1">
         <section class="hero d-flex align-items-center justify-content-center py-5 text-white text-center flex-grow-1">
-            <div class="container"> <div class="p-5" style="max-width: 500px; margin: auto; min-height: 75vh;"> 
+            <div class="container">
+                <div class="p-5" style="max-width: 500px; margin: auto; min-height: 75vh;">
                     <h1 class="fw-bold display-5 mb-3" id="statusTitle">Status Update</h1>
                     <p class="fs-5 mb-4" id="statusMessage">Loading message...</p>
                     <a id="homeButton" href="./index.html#Homepage" class="btn btn-primary btn-lg">Go to Homepage</a>
@@ -103,9 +103,9 @@
 
 
     <footer class="container-fluid mt-auto">
-      <div class="container text-center p-4">
-        <p class="text-muted mb-0">© 2025 Flyx, Inc. All rights reserved.</p>
-      </div>
+        <div class="container text-center p-4">
+            <p class="text-muted mb-0">© 2025 Flyx, Inc. All rights reserved.</p>
+        </div>
     </footer>
 
 
