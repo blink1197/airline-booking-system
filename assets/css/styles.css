@@ -111,6 +111,12 @@
 }
 
 
+/* Confirmation Page */
+
+.confirmation-container {
+  max-width: 600px !important;
+}
+
 /*=========================Profile Page (for Logged-in User ========================*/
 
 .profile-tabs .nav-link {
