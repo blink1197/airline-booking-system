@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="./assets/css/variables.css" />
+  <link rel="stylesheet" href="./assets/css/base.css" />
+  <link rel="stylesheet" href="./assets/css/components.css" />
+  <link rel="stylesheet" href="./assets/css/styles.css" />
+  <title>Flyx - Create Account</title>
+</head>
+
+<body class="container-fluid d-flex flex-column">
+  <nav class="container shadow-sm px-0">
+    <div class="navbar navbar-expand-lg navbar-light bg-white">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="./index.html#Homepage">
+          <img class="img-fluid" src="./assets/images/logo_dark.png" alt="Flyx Logo" height="44" />
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav ms-auto gap-3">
+            <a class="nav-link" href="./flights.html">Flights</a>
+            <a class="nav-link" href="./about.html">About</a>
+            <a class="nav-link" href="./contactUs.html">Contact</a>
+            <a class="btn btn-primary fw-bold" href="./login.html" role="button">Sign In</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container mx-auto">
+    <div class="row align-items-center justify-content-center">
+      <!-- Left Side: Image -->
+      <div class="col-md-6 d-none d-md-block p-5">
+        <div class="register-image"></div>
+      </div>
+
+      <!-- Right Side: Registration Form -->
+      <div class="col-md-6 col-sm-12 d-flex align-items-center justify-content-center p-5">
+        <div class="w-100" style="max-width:720px;">
+          <div class="">
+            <div class="card-body">
+              <h2 class="card-title text-center mb-4 fw-bold">Create Your Account</h2>
+              <p class="card-text text-center text-muted mb-4">
+                Join Flyx to explore seamless travel booking.
+              </p>
+
+              <form>
+                <div class="mb-3">
+                  <label for="fullNameInput" class="form-label fw-bold">Full Name</label>
+                  <input type="text" class="form-control py-2" id="fullNameInput" placeholder="John Doe" required />
+                </div>
+                <div class="mb-3">
+                  <label for="emailInput" class="form-label fw-bold">Email Address</label>
+                  <input type="email" class="form-control py-2" id="emailInput" placeholder="name@example.com" required />
+                </div>
+                <div class="mb-3">
+                  <label for="passwordInput" class="form-label fw-bold">Password</label>
+                  <input type="password" class="form-control py-2" id="passwordInput" placeholder="Enter your password" required />
+                </div>
+                <div class="mb-4">
+                  <label for="confirmPasswordInput" class="form-label fw-bold">Confirm Password</label>
+                  <input type="password" class="form-control py-2" id="confirmPasswordInput" placeholder="Confirm your password" required />
+                </div>
+                <div class="d-grid mb-3">
+                  <button type="submit" class="btn btn-primary btn-lg fw-bold py-2">Sign Up</button>
+                </div>
+              </form>
+            </div>
+
+            <div class="text-center mt-4">
+              <p class="mb-0">
+                Already have an account?
+                <a href="./login.html" class="text-decoration-none fw-bold">Sign In</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="container-fluid mt-auto">
+    <div class="container text-center p-4">
+      <p class="text-muted mb-0">© 2025 Flyx, Inc. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="./assets/scripts/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
