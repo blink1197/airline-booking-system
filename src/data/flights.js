@@ -54,3 +54,6 @@ export const flights = [
     price: '14,300.00',
   },
 ]
+
+
+export const cabinTypes = ['Economy', 'Business', 'First'];
