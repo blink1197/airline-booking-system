@@ -1,0 +1,102 @@
+<template>
+  <div class="position-relative mb-3">
+    <label :for="id" class="form-label fw-semibold">{{ label }}</label>
+
+    <!-- Input Field -->
+    <input type="text" class="form-control" :id="id" v-model="searchTerm" :placeholder="placeholder"
+      @focus="isOpen = true" @blur="closeDropdown" @input="filterOptions" />
+
+    <!-- Dropdown List -->
+    <ul v-if="isOpen && filteredOptions.length > 0" class="list-group position-absolute w-100 mt-1 z-3"
+      style="max-height: 220px; overflow-y: auto;">
+      <li v-for="option in filteredOptions" :key="option._id" class="list-group-item list-group-item-action"
+        :class="{ active: option._id === selectedValue }" @mousedown.prevent="selectOption(option)">
+        <div class="fw-semibold">
+          {{ option.city }} - {{ option._id }}
+        </div>
+        <div class="small fw-light">
+          {{ option.name }}, {{ option.country }}
+        </div>
+      </li>
+    </ul>
+  </div>
+</template>
+
+<script setup>
+import { ref, watch } from 'vue'
+
+const props = defineProps({
+  id: {
+    type: String,
+    default: () => `combo-${Math.random().toString(36).slice(2, 8)}`
+  },
+  label: {
+    type: String,
+    required: true
+  },
+  options: {
+    type: Array,
+    required: true
+  },
+  modelValue: {
+    type: String,
+    default: ''
+  },
+  placeholder: {
+    type: String,
+    default: 'Type or select destination'
+  }
+})
+
+const emit = defineEmits(['update:modelValue'])
+
+const searchTerm = ref('')
+const isOpen = ref(false)
+const filteredOptions = ref([...props.options])
+const selectedValue = ref(props.modelValue)
+
+watch(
+  () => props.modelValue,
+  val => {
+    selectedValue.value = val
+    const selected = props.options.find(opt => opt._id === val)
+    if (selected) searchTerm.value = `${selected.city} — ${selected._id}`
+  },
+  { immediate: true }
+)
+
+function filterOptions() {
+  const term = searchTerm.value.toLowerCase()
+  filteredOptions.value = props.options.filter(opt =>
+    `${opt.city} ${opt.country} ${opt.name} ${opt._id}`
+      .toLowerCase()
+      .includes(term)
+  )
+}
+
+function selectOption(option) {
+  searchTerm.value = `${option.city} — ${option._id}`
+  selectedValue.value = option._id
+  emit('update:modelValue', option._id)
+  isOpen.value = false
+}
+
+function closeDropdown() {
+  setTimeout(() => (isOpen.value = false), 150)
+}
+</script>
+
+<style scoped>
+.list-group-item {
+  cursor: pointer;
+}
+
+.list-group-item.active {
+  background-color: var(--bs-primary);
+  color: white;
+}
+
+.list-group-item .small {
+  font-size: 0.85rem;
+}
+</style>
