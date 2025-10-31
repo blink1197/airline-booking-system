@@ -42,5 +42,8 @@ export const useFlightSearchStore = defineStore('flightSearch', () => {
     cabin,
     setFlightSearchData,
     resetFlightSearch,
+  },
+  {
+    persist: true, // Enable localStorage persistence
   }
 })

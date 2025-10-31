@@ -4,14 +4,19 @@ import 'bootstrap/dist/js/bootstrap.min.js';
 import './assets/styles/main.css';
 
 import { createPinia } from 'pinia';
+import { createPersistedState } from 'pinia-plugin-persistedstate';
 import { createApp } from 'vue';
 
 import App from './App.vue';
 import router from './router';
 
 const app = createApp(App)
+const pinia = createPinia()
 
-app.use(createPinia())
+// 🔥 Use the persisted state plugin
+pinia.use(createPersistedState())
+
+app.use(pinia)
 app.use(router)
 
 app.mount('#app')
