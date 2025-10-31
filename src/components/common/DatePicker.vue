@@ -1,11 +1,12 @@
 <template>
-  <div class="position-relative mb-3" ref="wrapperRef">
+  <div class="position-relative" ref="wrapperRef">
     <label :for="id" class="form-label fw-semibold">{{ label }}</label>
 
     <div class="input-group">
       <input type="text" class="form-control" :id="id" :placeholder="placeholder" v-model="displayDate"
         @focus="openCalendar" readonly :disabled="isDisabled" />
-      <span class="input-group-text bg-light" @click="toggleCalendar" style="cursor: pointer;">
+      <span class="input-group-text bg-light" @click="toggleCalendar" :class="{ 'opacity-50': isDisabled }"
+        :style="{ cursor: isDisabled ? 'not-allowed' : 'pointer' }">
         <i class="bi bi-calendar-event"></i>
       </span>
     </div>
@@ -40,7 +41,7 @@
 </template>
 
 <script setup>
-import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, toRef, watch } from 'vue';
 
 const props = defineProps({
   id: {
@@ -58,6 +59,9 @@ const props = defineProps({
     default: false
   },
 })
+
+
+const isDisabled = toRef(props, 'isDisabled')
 
 const emit = defineEmits(['update:modelValue'])
 
@@ -91,8 +95,12 @@ const displayDate = computed(() => formatDate(selectedDate.value))
 
 watch(selectedDate, val => {
   if (val) {
-    const iso = val.toISOString().split('T')[0] // YYYY-MM-DD
-    emit('update:modelValue', iso)
+    const year = val.getFullYear()
+    const month = String(val.getMonth() + 1).padStart(2, '0')
+    const day = String(val.getDate()).padStart(2, '0')
+    const localIso = `${year}-${month}-${day}`
+    emit('update:modelValue', localIso)
+
   } else {
     emit('update:modelValue', '')
   }
@@ -152,11 +160,11 @@ function nextMonth() {
 }
 
 function toggleCalendar() {
-  isOpen.value = !isOpen.value
+  if (!isDisabled.value) isOpen.value = !isOpen.value
 }
 
 function openCalendar() {
-  isOpen.value = true
+  if (!isDisabled.value) isOpen.value = true
 }
 
 function handleMouseDownOutside(event) {
@@ -194,5 +202,9 @@ onBeforeUnmount(() => {
 .disabled-date {
   opacity: 0.5;
   pointer-events: none;
+}
+
+.calendar-day.bg-primary {
+  color: white !important;
 }
 </style>
