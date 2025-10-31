@@ -1,6 +1,8 @@
 <script setup>
+import { cabinTypes } from '@/data/flights'
 import { Modal } from 'bootstrap'
 import { onMounted, ref, watch } from 'vue'
+import DropdownComponent from './DropdownComponent.vue'
 
 const props = defineProps({
   modelValue: {
@@ -94,13 +96,7 @@ function saveChanges() {
             </div>
 
             <div class="mt-4">
-              <label class="form-label fw-semibold">Cabin Class</label>
-              <select class="form-select" v-model="tempCabin">
-                <option value="Economy">Economy</option>
-                <option value="Premium Economy">Premium Economy</option>
-                <option value="Business">Business</option>
-                <option value="First">First</option>
-              </select>
+              <DropdownComponent label="Cabin Class" v-model="tempCabin" :items="cabinTypes" />
             </div>
           </div>
 
