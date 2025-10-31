@@ -72,11 +72,12 @@ watch(tripType, (value) => {
                 <PaxCabinPicker v-model="paxCabin" />
               </div>
               <div class="col-12 col-md-6 col-lg-4 ms-md-auto">
-                <a class="btn btn-primary py-3 py-md-2 w-100 fw-bold d-flex justify-content-center gap-2 align-items-center"
-                  type="button" href="./flights.html">
+                <router-link
+                  class="btn btn-primary py-3 py-md-2 w-100 fw-bold d-flex justify-content-center gap-2 align-items-center"
+                  :to="{ name: 'flights' }">
                   <i class="bi bi-search"></i>
                   <span>Search Flight</span>
-                </a>
+                </router-link>
               </div>
             </div>
           </form>
