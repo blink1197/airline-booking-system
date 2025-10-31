@@ -1,5 +1,5 @@
 <template>
-  <div class="position-relative mb-3">
+  <div class="position-relative">
     <label :for="id" class="form-label fw-semibold">{{ label }}</label>
 
     <!-- Input Field -->
@@ -10,7 +10,7 @@
     <ul v-if="isOpen && filteredOptions.length > 0" class="list-group position-absolute w-100 mt-1 z-3"
       style="max-height: 220px; overflow-y: auto;">
       <li v-for="option in filteredOptions" :key="option._id" class="list-group-item list-group-item-action"
-        :class="{ active: option._id === selectedValue }" @mousedown.prevent="selectOption(option)">
+        :class="{ active: option._id === selectedValue?._id }" @mousedown.prevent="selectOption(option)">
         <div class="fw-semibold">
           {{ option.city }} - {{ option._id }}
         </div>
@@ -39,8 +39,8 @@ const props = defineProps({
     required: true
   },
   modelValue: {
-    type: String,
-    default: ''
+    type: Object,
+    default: null
   },
   placeholder: {
     type: String,
@@ -55,12 +55,16 @@ const isOpen = ref(false)
 const filteredOptions = ref([...props.options])
 const selectedValue = ref(props.modelValue)
 
+// --- Watch for external v-model changes ---
 watch(
   () => props.modelValue,
-  val => {
+  (val) => {
     selectedValue.value = val
-    const selected = props.options.find(opt => opt._id === val)
-    if (selected) searchTerm.value = `${selected.city} — ${selected._id}`
+    if (val) {
+      searchTerm.value = `${val.city} — ${val._id}`
+    } else {
+      searchTerm.value = ''
+    }
   },
   { immediate: true }
 )
@@ -76,8 +80,8 @@ function filterOptions() {
 
 function selectOption(option) {
   searchTerm.value = `${option.city} — ${option._id}`
-  selectedValue.value = option._id
-  emit('update:modelValue', option._id)
+  selectedValue.value = option
+  emit('update:modelValue', option)
   isOpen.value = false
 }
 
