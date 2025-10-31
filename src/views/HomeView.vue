@@ -7,24 +7,20 @@ import DatePicker from '@/components/common/DatePicker.vue';
 import DestinationSelect from '@/components/common/DestinationSelect.vue';
 import PaxCabinPicker from '@/components/common/PaxCabinPicker.vue';
 import { destinations } from '@/data/destinations';
-import { ref, watch } from 'vue';
+import { useFlightSearchStore } from '@/stores/flightSearch';
 
 
-const tripType = ref('oneWayTrip');
-const from = ref('');
-const to = ref('');
-const departureDate = ref('');
-const returnDate = ref('');
-const isReturnDateDisabled = ref(true);
+const flightStore = useFlightSearchStore();
+const {
+  tripType,
+  from,
+  to,
+  departureDate,
+  returnDate,
+  isReturnDateDisabled,
+  paxCabin
+} = flightStore;
 
-const paxCabin = ref({
-  pax: { adults: 1, children: 0, infants: 0 },
-  cabin: 'Economy'
-})
-
-watch(tripType, (value) => {
-  isReturnDateDisabled.value = value === 'oneWayTrip'
-})
 </script>
 
 <template>
@@ -47,7 +43,6 @@ watch(tripType, (value) => {
                     One Way
                   </label>
                 </div>
-
                 <div class="form-check">
                   <input class="form-check-input" type="radio" id="roundTrip" name="tripType" value="roundTrip"
                     v-model="tripType" />
