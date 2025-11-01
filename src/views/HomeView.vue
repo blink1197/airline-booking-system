@@ -2,8 +2,8 @@
 import getawayImage1 from '@/assets/images/getaway1.jpg';
 import getawayImage2 from '@/assets/images/getaway2.jpg';
 import getawayImage3 from '@/assets/images/getaway3.jpg';
-import CardComponent from '@/components/common/CardComponent.vue';
 import FlightSearchForm from '@/components/common/FlightSearchForm.vue';
+import CardComponent from '@/components/ui/CardComponent.vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();

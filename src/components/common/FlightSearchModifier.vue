@@ -7,9 +7,9 @@ import { formatDateReadable } from '@/utils/date'
 import { Modal } from 'bootstrap'
 import { storeToRefs } from 'pinia'
 import { computed, onMounted, reactive, ref, watch } from 'vue'
+import DropdownComponent from '../ui/DropdownComponent.vue'
 import DatePicker from './DatePicker.vue'
 import DestinationSelect from './DestinationSelect.vue'
-import DropdownComponent from './DropdownComponent.vue'
 
 const flightStore = useFlightSearchStore()
 const { tripType, from, to, departureDate, returnDate, pax, cabin } = storeToRefs(flightStore)
