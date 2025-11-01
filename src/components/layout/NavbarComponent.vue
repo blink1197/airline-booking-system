@@ -1,18 +1,20 @@
 <template>
   <nav class="container px-0">
-    <div class="navbar navbar-expand-lg navbar-light bg-white">
+    <div class="navbar navbar-expand-md navbar-light bg-white">
       <div class="container-fluid">
+        <!-- Brand -->
         <router-link class="navbar-brand" to="/">
-          <img class="img-fluid" src="../../assets/images/logo_dark.png" alt="Flyx Logo" height="44">
+          <img class="img-fluid" src="../../assets/images/logo_dark.png" alt="Flyx Logo" height="44" />
         </router-link>
 
+        <!-- Toggle (visible on small screens) -->
         <button class="navbar-toggler" type="button" @click="toggleNavbar" aria-controls="navbarNavAltMarkup"
           :aria-expanded="visible.toString()" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
 
-        <!-- Smooth height transition -->
-        <div ref="menu" class="navbar-collapse" :class="{ show: visible }" :style="{ height: menuHeight }"
+        <!-- Collapsible nav with smooth transition -->
+        <div ref="menu" class="navbar-collapse" :class="{ show: visible }" :style="collapseStyle"
           id="navbarNavAltMarkup">
           <div class="navbar-nav ms-auto gap-3">
             <router-link class="nav-link" to="/">Home</router-link>
@@ -28,22 +30,30 @@
 </template>
 
 <script setup>
-import { nextTick, ref } from 'vue'
+import { computed, nextTick, ref } from 'vue'
 
 const visible = ref(false)
 const menu = ref(null)
 const menuHeight = ref('0px')
 
+// Smoothly toggle height on small screens
 function toggleNavbar() {
   visible.value = !visible.value
   nextTick(() => {
     if (visible.value) {
-      menuHeight.value = menu.value.scrollHeight + 'px' // expand smoothly
+      menuHeight.value = menu.value.scrollHeight + 'px'
     } else {
-      menuHeight.value = '0px' // collapse smoothly
+      menuHeight.value = '0px'
     }
   })
 }
+
+// Let Bootstrap handle open state for md+ screens
+const collapseStyle = computed(() => {
+  return window.innerWidth >= 768
+    ? { height: 'auto' }
+    : { height: menuHeight.value, overflow: 'hidden', transition: 'height 0.3s ease' }
+})
 </script>
 
 <style scoped>
@@ -60,5 +70,14 @@ nav .nav-link:hover {
 .navbar-collapse {
   overflow: hidden;
   transition: height 0.3s ease;
+}
+
+/* Ensure auto height for md+ */
+@media (min-width: 768px) {
+  .navbar-collapse {
+    height: auto !important;
+    overflow: visible !important;
+    transition: none !important;
+  }
 }
 </style>
