@@ -1,54 +1,26 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { computed } from 'vue'
+import { useContactStore } from './contact'
+import { usePassengersStore } from './passengers'
 
-export const useBookingStore = defineStore(
-  'booking', () => {
-    // Passenger list (array of objects)
-    const passengers = ref([])
+export const useBookingStore = defineStore('booking', () => {
+  const passengersStore = usePassengersStore()
+  const contactStore = useContactStore()
 
-    // Contact info (single object)
-    const contact = ref({
-      title: '',
-      firstName: '',
-      lastName: '',
-      countryCode: '',
-      mobileNumber: '',
-      email: '',
-      confirmEmail: '',
-    })
+  // Combine all data
+  const bookingData = computed(() => ({
+    passengers: passengersStore.passengers,
+    contact: contactStore.contact
+  }))
 
-    // Actions
-    function setPassengers(data) {
-      passengers.value = data
-    }
-
-    function setContact(data) {
-      contact.value = data
-    }
-
-    function resetBooking() {
-      passengers.value = []
-      contact.value = {
-        title: '',
-        firstName: '',
-        lastName: '',
-        countryCode: '',
-        mobileNumber: '',
-        email: '',
-        confirmEmail: '',
-        useFirstGuestDetails: false
-      }
-    }
-
-    return {
-      passengers,
-      contact,
-      setPassengers,
-      setContact,
-      resetBooking,
-    }
-  },
-  {
-    persist: true, // Persist state in localStorage
+  // Reset both
+  function resetBooking() {
+    passengersStore.resetPassengers()
+    contactStore.resetContact()
   }
-)
+
+  return {
+    bookingData,
+    resetBooking
+  }
+})

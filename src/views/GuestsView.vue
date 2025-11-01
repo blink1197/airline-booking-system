@@ -4,61 +4,57 @@ import ContactInfoForm from '@/components/forms/ContactInfoForm.vue'
 import PassengerForm from '@/components/forms/PassengerForm.vue'
 import StickyButtonGroup from '@/components/ui/StickyButtonGroup.vue'
 import VerticalTabs from '@/components/ui/VerticalTabs.vue'
-import { useBookingStore } from '@/stores/booking'
+
+import { useContactStore } from '@/stores/contact'
 import { useFlightSearchStore } from '@/stores/flightSearch'
+import { usePassengersStore } from '@/stores/passengers'
 import { computed, ref, watch } from 'vue'
 
+// Stores
 const flightStore = useFlightSearchStore()
-const bookingStore = useBookingStore();
-const { pax, to, from, cabin } = flightStore
+const passengersStore = usePassengersStore()
+const contactStore = useContactStore()
 
+const { pax, to, from, cabin } = flightStore
 const activeTabIndex = ref(0)
 
-// Generate tab items dynamically based on pax values
+
+// ------------------------------
+// Generate Passenger Tabs
+// ------------------------------
 const tabItems = computed(() => {
   const items = []
   let id = 1
 
-  for (let i = 0; i < pax.adults; i++) {
-    items.push({
-      id: id++, label: `Adult ${i + 1}`,
-      icon: 'bi bi-person',
-      itenerary: `${from._id} ⟶ ${to._id}`,
-      cabin: `${cabin} Class`
-    })
+  const createTabs = (count, type) => {
+    for (let i = 0; i < count; i++) {
+      items.push({
+        id: id++,
+        label: `${type} ${i + 1}`,
+        icon: 'bi bi-person',
+        itenerary: `${from._id} ⟶ ${to._id}`,
+        cabin: `${cabin} Class`,
+      })
+    }
   }
-  for (let i = 0; i < pax.children; i++) {
-    items.push({
-      id: id++, label: `Child ${i + 1}`,
-      icon: 'bi bi-person',
-      itenerary: `${from._id} ⟶ ${to._id}`,
-      cabin: `${cabin} Class`
-    })
-  }
-  for (let i = 0; i < pax.infants; i++) {
-    items.push({
-      id: id++, label: `Infant ${i + 1}`,
-      icon: 'bi bi-person',
-      itenerary: `${from._id} ⟶ ${to._id}`,
-      cabin: `${cabin} Class`
-    })
-  }
+
+  createTabs(pax.adults, 'Adult')
+  createTabs(pax.children, 'Child')
+  createTabs(pax.infants, 'Infant')
 
   return items
 })
 
-const passengerForms = ref(bookingStore.passengers || [])
-const contactForm = ref({
-  title: bookingStore.contact?.title || '',
-  firstName: bookingStore.contact?.firstName || '',
-  lastName: bookingStore.contact?.lastName || '',
-  countryCode: bookingStore.contact?.countryCode || '',
-  mobileNumber: bookingStore.contact?.mobileNumber || '',
-  email: bookingStore.contact?.email || '',
-  confirmEmail: bookingStore.contact?.confirmEmail || '',
-  useFirstGuestDetails: bookingStore.contact.useFirstGuestDetails || false
-})
 
+// ------------------------------
+// Local Refs (sync with Pinia)
+// ------------------------------
+const passengerForms = ref(passengersStore.passengers || [])
+const contactForm = ref({ ...contactStore.contact })
+
+// ------------------------------
+// Copy First Guest to Contact
+// ------------------------------
 function copyFirstGuestDetails(isChecked) {
   if (isChecked && passengerForms.value.length > 0) {
     const firstPassenger = passengerForms.value[0]
@@ -69,8 +65,7 @@ function copyFirstGuestDetails(isChecked) {
       lastName: firstPassenger.lastName || '',
       useFirstGuestDetails: true,
     }
-  } else if (!isChecked) {
-    // Clear copied values
+  } else {
     contactForm.value = {
       ...contactForm.value,
       title: '',
@@ -81,10 +76,14 @@ function copyFirstGuestDetails(isChecked) {
   }
 }
 
+// ------------------------------
+// Watchers
+// ------------------------------
+
+// When pax count changes, rebuild passenger forms
 watch(
   tabItems,
   (newTabs) => {
-    // Reset or expand passengerForms to match tab count
     passengerForms.value = newTabs.map((_, index) => {
       return (
         passengerForms.value[index] || {
@@ -102,9 +101,11 @@ watch(
   { immediate: true }
 )
 
-// Sync passenger and contact form
-watch(passengerForms, (v) => bookingStore.setPassengers(v), { deep: true })
-watch(contactForm, (v) => bookingStore.setContact(v), { deep: true })
+// Sync passenger forms to Pinia
+watch(passengerForms, (v) => passengersStore.setPassengers(v), { deep: true })
+
+// Sync contact form to Pinia
+watch(contactForm, (v) => contactStore.setContact(v), { deep: true })
 </script>
 
 <template>
@@ -112,6 +113,7 @@ watch(contactForm, (v) => bookingStore.setContact(v), { deep: true })
     <main class="container-fluid px-2 pt-1 pb-2">
       <!-- Progress Bar -->
       <ProgressBar title="Guests" :steps="5" :currentStep="2" />
+
       <!-- Passenger Information -->
       <div class="px-2 mb-4">
         <h6 class="mb-3 normal-text-bold">Passenger Information</h6>
@@ -122,17 +124,20 @@ watch(contactForm, (v) => bookingStore.setContact(v), { deep: true })
           </template>
         </VerticalTabs>
       </div>
+
       <!-- Contact Information -->
       <div class="px-2">
         <h6 class="mb-3 normal-text-bold">Contact Information</h6>
         <ContactInfoForm v-model="contactForm" @useGuestDetails="copyFirstGuestDetails" />
       </div>
+
       <!-- Sticky Button -->
       <StickyButtonGroup primaryText="Continue" primaryLink="/add-ons" secondaryText="Back" secondaryLink="/flights"
         :showSecondary="true" />
     </main>
   </div>
 </template>
+
 <style scoped>
 .guests-page {
   max-width: 800px;
