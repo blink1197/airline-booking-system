@@ -1,5 +1,5 @@
 <template>
-  <nav class="container px-0">
+  <nav class="container px-0" v-click-outside="handleClickOutside">
     <div class="navbar navbar-expand-md navbar-light bg-white">
       <div class="container-fluid">
         <!-- Brand -->
@@ -46,6 +46,14 @@ function toggleNavbar() {
       menuHeight.value = '0px'
     }
   })
+}
+
+// Collapse when clicking outside
+function handleClickOutside() {
+  if (visible.value && window.innerWidth < 768) {
+    visible.value = false
+    menuHeight.value = '0px'
+  }
 }
 
 // Let Bootstrap handle open state for md+ screens
