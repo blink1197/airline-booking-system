@@ -86,7 +86,7 @@ function submitForm() {
 </script>
 
 <template>
-  <form class="hero-form bg-white p-3 p-lg-5 mx-auto" @submit.prevent="submitForm">
+  <form class="hero-form bg-white p-3 p-lg-5 pb-lg-4 mx-auto" @submit.prevent="submitForm">
     <div class="row g-3">
       <!-- Trip Type -->
       <div class="col-12 d-flex gap-4">
@@ -130,7 +130,7 @@ function submitForm() {
       </div>
 
       <!-- Submit -->
-      <div class="col-12 col-md-6 col-lg-4 ms-md-auto">
+      <div class="col-12 col-md-6 col-lg-4 ms-md-auto align-items-end d-flex mb-md-3">
         <button type="submit"
           class="btn btn-primary py-3 py-md-2 w-100 fw-bold d-flex justify-content-center gap-2 align-items-center">
           <i class="bi bi-search"></i>
