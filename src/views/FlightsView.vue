@@ -1,12 +1,13 @@
 <script setup>
 import FlightListItem from '@/components/common/FlightListItem.vue';
 import FlightSearchModifier from '@/components/common/FlightSearchModifier.vue';
+import StickyButtonGroup from '@/components/ui/StickyButtonGroup.vue';
 import { flights } from '@/data/flights';
 </script>
 
 <template>
-  <div class="container-fluid d-flex flex-column p-0">
-    <main class="container-fluid px-2 pt-1 pb-2 ">
+  <div class="container-fluid d-flex flex-column p-0 flight flights-page">
+    <main class="container-fluid px-2 pt-1 pb-2">
       <div class="container flights-results-container">
 
         <!-- Flight Search Modifier -->
@@ -30,8 +31,12 @@ import { flights } from '@/data/flights';
     </main>
 
     <!-- Sticky Button -->
-    <div class="py-4 px-4 sticky-bottom-btn border-0 d-flex justify-content-center">
-      <a class="btn btn-primary w-100 p-3 sticky-btn" href="./booking.html">Continue</a>
-    </div>
+    <StickyButtonGroup primaryText="Continue" primaryLink="/guests" secondaryText="Back" :showSecondary="false" />
   </div>
 </template>
+
+<style scoped>
+.flights-page {
+  max-width: 800px;
+}
+</style>

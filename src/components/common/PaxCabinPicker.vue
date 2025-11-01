@@ -2,7 +2,7 @@
 import { cabinTypes } from '@/data/flights'
 import { Modal } from 'bootstrap'
 import { onMounted, ref, watch } from 'vue'
-import DropdownComponent from './DropdownComponent.vue'
+import DropdownComponent from '../ui/DropdownComponent.vue'
 
 const props = defineProps({
   modelValue: {
