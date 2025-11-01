@@ -5,7 +5,7 @@
     <div class="position-relative mb-4 mx-1">
       <!-- Progress Line -->
       <div class="progress" style="height: 10px;">
-        <div class="progress-bar" role="progressbar" :style="{ width: progressWidth }" aria-valuemin="0"
+        <div class="progress-bar" role="progressbar" :style="{ width: animatedWidth }" aria-valuemin="0"
           aria-valuemax="100"></div>
       </div>
 
@@ -13,7 +13,6 @@
       <div class="position-absolute top-50 start-0 translate-middle-y w-100 d-flex justify-content-between">
         <div v-for="(step, index) in steps" :key="index" class="circle" :class="circleClass(index)">
           <i v-if="index < currentStep" class="bi bi-check"></i>
-          <!-- <span v-else>{{ index + 1 }}</span> -->
         </div>
       </div>
     </div>
@@ -21,30 +20,27 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 
-// Props
 const props = defineProps({
-  title: {
-    type: String,
-    default: 'Progress',
-  },
-  steps: {
-    type: Number,
-    default: 5,
-  },
-  currentStep: {
-    type: Number,
-    default: 1,
-  },
+  title: { type: String, default: 'Progress' },
+  steps: { type: Number, default: 5 },
+  currentStep: { type: Number, default: 1 },
 })
 
-// Computed percentage for progress bar
+const animatedWidth = ref('0%')
+
 const progressWidth = computed(() => {
   return ((props.currentStep - 1) / (props.steps - 1)) * 100 + '%'
 })
 
-// Return class for each circle
+onMounted(() => {
+  // delay triggers transition on mount
+  requestAnimationFrame(() => {
+    animatedWidth.value = progressWidth.value
+  })
+})
+
 function circleClass(index) {
   if (index < props.currentStep - 1) return 'completed'
   if (index === props.currentStep - 1) return 'active'
@@ -57,7 +53,6 @@ function circleClass(index) {
   max-width: 500px;
 }
 
-/* Progress bar color */
 .progress {
   background-color: #e9ecef;
   border-radius: 5px;
@@ -65,10 +60,10 @@ function circleClass(index) {
 
 .progress-bar {
   background-color: var(--color-primary, #0d6efd);
-  transition: width 0.4s ease;
+  transition: width 0.6s ease;
 }
 
-/* Step circles */
+/* Circles */
 .circle {
   width: 25px;
   height: 25px;
@@ -78,7 +73,6 @@ function circleClass(index) {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 600;
   transition: all 0.3s ease;
 }
 
