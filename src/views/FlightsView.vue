@@ -1,6 +1,7 @@
 <script setup>
 import FlightListItem from '@/components/common/FlightListItem.vue';
 import FlightSearchModifier from '@/components/common/FlightSearchModifier.vue';
+import ProgressBar from '@/components/common/ProgressBar.vue';
 import StickyButtonGroup from '@/components/ui/StickyButtonGroup.vue';
 import { flights } from '@/data/flights';
 </script>
@@ -8,6 +9,9 @@ import { flights } from '@/data/flights';
 <template>
   <div class="container-fluid d-flex flex-column p-0 flight flights-page">
     <main class="container-fluid px-2 pt-1 pb-2">
+
+      <!-- Custom Progress Bar -->
+      <ProgressBar title="Flights" :steps="5" :currentStep="1" />
       <div class="container flights-results-container">
 
         <!-- Flight Search Modifier -->
