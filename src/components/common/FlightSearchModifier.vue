@@ -144,7 +144,7 @@ function handleSubmit() {
             </div>
 
             <!-- Passengers -->
-            <div class="col-12 col-md-6 mt-2">
+            <div class="col-6 col-md-6 mt-2">
               <label class="form-label fw-semibold">Passengers</label>
               <div v-for="(count, key) in form.pax" :key="key"
                 class="d-flex justify-content-between align-items-center mb-2">
@@ -156,9 +156,8 @@ function handleSubmit() {
                 </div>
               </div>
             </div>
-
             <!-- Cabin -->
-            <div class="col-12 col-md-6 mt-2">
+            <div class="col-4 col-md-3 mt-2">
               <DropdownComponent label="Cabin Class" v-model="form.cabin" :items="cabinTypes" />
             </div>
           </form>
