@@ -95,7 +95,7 @@ function saveChanges() {
               </div>
             </div>
 
-            <div class="mt-4">
+            <div class="mt-4 w-25">
               <DropdownComponent label="Cabin Class" v-model="tempCabin" :items="cabinTypes" />
             </div>
           </div>

@@ -1,12 +1,12 @@
 <template>
-  <div class="py-3 px-3 d-flex flex-column gap-2 sticky-bottom-btn flex-md-row justify-content-md-between">
+  <div class="py-3 px-3 d-flex gap-2 sticky-bottom-btn flex-md-row justify-content-md-end">
     <!-- Primary Button -->
-    <router-link :to="primaryLink" class="btn btn-primary w-100 p-3 order-md-2 mx-auto">
+    <router-link :to="primaryLink" class="btn btn-primary w-100 p-2 order-md-2 order-2">
       {{ primaryText }}
     </router-link>
 
     <!-- Secondary Button (conditionally rendered) -->
-    <router-link v-if="showSecondary" :to="secondaryLink" class="btn btn-secondary w-100 p-3 mx-auto">
+    <router-link v-if="showSecondary" :to="secondaryLink" class="btn btn-secondary w-100 p-2 ">
       {{ secondaryText }}
     </router-link>
   </div>
@@ -46,5 +46,11 @@ defineProps({
   background: white;
   padding: 1rem;
   z-index: 100;
+}
+
+@media (min-width: 768px) {
+  .btn {
+    max-width: 25%;
+  }
 }
 </style>
