@@ -1,12 +1,12 @@
 <template>
   <div class="py-3 px-3 d-flex flex-column gap-2 sticky-bottom-btn flex-md-row justify-content-md-between">
     <!-- Primary Button -->
-    <router-link :to="primaryLink" class="btn btn-primary w-100 p-3 order-md-2 mx-auto">
+    <router-link :to="primaryLink" class="btn btn-primary w-100 p-2 order-md-2 mx-auto">
       {{ primaryText }}
     </router-link>
 
     <!-- Secondary Button (conditionally rendered) -->
-    <router-link v-if="showSecondary" :to="secondaryLink" class="btn btn-secondary w-100 p-3 mx-auto">
+    <router-link v-if="showSecondary" :to="secondaryLink" class="btn btn-secondary w-100 p-2 mx-auto">
       {{ secondaryText }}
     </router-link>
   </div>
