@@ -9,7 +9,6 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 
 function handleSearch(formData) {
-  console.log('Search emitted from form:', formData);
   router.push({ name: 'flights' });
 }
 </script>
@@ -36,20 +35,20 @@ function handleSearch(formData) {
           <h2 class="section-title mb-1">Discover the world's favorite getaways!</h2>
           <p class="mb-5"> From beaches to cities — your dream destination awaits.</p>
           <div class="row g-4">
-            <div class="col-md-4">
+            <div class="col-md-6 col-lg-4">
               <CardComponent :image="getawayImage1" title="Iloilo"
-                description="This is a wider card with supporting text below." primaryText="Book a flight"
-                secondaryText="PHP 1,299" />
+                description="Discover Iloilo: heritage streets, Spanish-era churches, delicious batchoy, and nearby beaches for the perfect quick escape"
+                primaryText="Book Now" miscText="PHP 1,299" />
             </div>
-            <div class="col-md-4">
+            <div class="col-md-6 col-lg-4">
               <CardComponent :image="getawayImage2" title="Macau"
-                description="This is a wider card with supporting text below." primaryText="Book a flight"
-                secondaryText="PHP 1,299" />
+                description="Macau dazzles with a mix of glitzy casinos, Portuguese heritage, cobblestone streets, and world-famous egg tarts."
+                primaryText="Book Now" miscText="PHP 4,900" />
             </div>
-            <div class="col-md-4">
+            <div class="col-md-6 col-lg-4">
               <CardComponent :image="getawayImage3" title="Laoag"
-                description="This is a wider card with supporting text below." primaryText="Book a flight"
-                secondaryText="PHP 1,299" />
+                description="Laoag charms with historic churches, wind-swept sand dunes, and vibrant local markets—a gateway to Ilocos Norte's rich culture."
+                primaryText="Book Now" miscText="PHP 1,472" />
             </div>
           </div>
         </div>

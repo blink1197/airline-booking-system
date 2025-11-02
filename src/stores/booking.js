@@ -7,13 +7,13 @@ export const useBookingStore = defineStore('booking', () => {
   const passengersStore = usePassengersStore()
   const contactStore = useContactStore()
 
-  // Combine all data
+
   const bookingData = computed(() => ({
     passengers: passengersStore.passengers,
     contact: contactStore.contact
   }))
 
-  // Reset both
+
   function resetBooking() {
     passengersStore.resetPassengers()
     contactStore.resetContact()
