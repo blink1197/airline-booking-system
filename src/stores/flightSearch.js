@@ -2,9 +2,9 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 export const useFlightSearchStore = defineStore(
-  'flightSearch', // store id
+  'flightSearch',
   () => {
-    // --- State ---
+
     const tripType = ref('oneWayTrip')
     const from = ref(null)
     const to = ref(null)
@@ -13,7 +13,7 @@ export const useFlightSearchStore = defineStore(
     const pax = ref({ adults: 1, children: 0, infants: 0 })
     const cabin = ref('Economy')
 
-    // --- Actions ---
+
     function setFlightSearchData(data) {
       tripType.value = data.tripType || tripType.value
       from.value = data.from || from.value
@@ -47,6 +47,6 @@ export const useFlightSearchStore = defineStore(
     }
   },
   {
-    persist: true, // Persist state in localStorage
+    persist: true,
   }
 )
