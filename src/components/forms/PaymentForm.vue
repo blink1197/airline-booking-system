@@ -93,7 +93,7 @@
 
     <!-- Disclaimer -->
     <div class="bg-secondary p-2 m-3 payment-disclaimer rounded">
-      <p class="extra-small-text-regular">
+      <p class="extra-small-text-regular mb-0">
         <strong>Disclaimer</strong>: Flyx authenticates all debit and credit card transactions, and reserves
         the right to refuse you, or your baggage, if in the exercise of reasonable discretion, we determine
         that the payment of your fare has been done fraudulently or unlawfully. Some banks may charge
