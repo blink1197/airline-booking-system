@@ -1,7 +1,63 @@
+<script setup>
+import ProgressBar from '@/components/common/ProgressBar.vue';
+import PaymentForm from '@/components/forms/PaymentForm.vue';
+import StickyButtonGroup from '@/components/ui/StickyButtonGroup.vue';
+import { ref } from 'vue';
+
+
+const termsAccepted = ref(false);
+</script>
+
 <template>
-  <div>
-    <h1>This is Payment Method page</h1>
+  <div class="container-fluid d-flex flex-column p-0 flight payment-page">
+    <main class="container-fluid px-2 pt-1 pb-2">
+      <!-- Progress Bar -->
+      <ProgressBar title="Payment" :steps="5" :currentStep="4" />
+
+      <div class="px-2 mb-4">
+        <h6 class="normal-text-bold m-0">Payment</h6>
+        <p class="extra-small-text-regular m-0">Securely complete your payment below.</p>
+      </div>
+
+      <div class="px-2">
+        <PaymentForm />
+      </div>
+
+      <div class="payment-card mx-2 small-text-regular p-3 mb-4 bg-white rounded">
+        <div class="form-check d-flex align-items-start">
+          <input class="form-check-input mt-1 me-2" type="checkbox" value="" id="flexCheckDefault"
+            v-model="termsAccepted" />
+          <label class="form-check-label" for="flexCheckDefault">
+            <span>
+              I fully understand that all information is handled in accordance with Flyx Privacy
+              Policy in effect at the time of booking. Flyx also
+              reserves the right to share information with the government authorities and aviation
+              partners of the purpose completing the booking
+              transaction needed for the flight.
+            </span>
+          </label>
+        </div>
+      </div>
+      <!-- Sticky Button -->
+      <StickyButtonGroup primaryText="Continue" primaryLink="/confirmation" secondaryText="Back"
+        secondaryLink="/payment" :showSecondary="true" />
+    </main>
   </div>
 </template>
 
-<style></style>
+<style scoped>
+.payment-page {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.payment-card {
+  box-shadow: var(--shadow-card);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.payment-disclaimer {
+  background-color: var(--color-gray-5) !important;
+}
+</style>
