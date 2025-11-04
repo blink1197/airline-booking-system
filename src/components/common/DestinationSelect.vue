@@ -9,10 +9,10 @@
     <!-- Dropdown List -->
     <ul v-if="isOpen && filteredOptions.length > 0" class="list-group position-absolute w-100 mt-1 z-3"
       style="max-height: 220px; overflow-y: auto;">
-      <li v-for="option in filteredOptions" :key="option._id" class="list-group-item list-group-item-action"
-        :class="{ active: option._id === selectedValue?._id }" @mousedown.prevent="selectOption(option)">
+      <li v-for="option in filteredOptions" :key="option.airportId" class="list-group-item list-group-item-action"
+        :class="{ active: option.airportId === selectedValue?.airportId }" @mousedown.prevent="selectOption(option)">
         <div class="fw-semibold">
-          {{ option.city }} - {{ option._id }}
+          {{ option.city }} - {{ option.airportId }}
         </div>
         <div class="small fw-light">
           {{ option.name }}, {{ option.country }}
@@ -61,7 +61,7 @@ watch(
   (val) => {
     selectedValue.value = val
     if (val) {
-      searchTerm.value = `${val.city} — ${val._id}`
+      searchTerm.value = `${val.city} — ${val.airportId}`
     } else {
       searchTerm.value = ''
     }
@@ -72,14 +72,14 @@ watch(
 function filterOptions() {
   const term = searchTerm.value.toLowerCase()
   filteredOptions.value = props.options.filter(opt =>
-    `${opt.city} ${opt.country} ${opt.name} ${opt._id}`
+    `${opt.city} ${opt.country} ${opt.name} ${opt.airportId}`
       .toLowerCase()
       .includes(term)
   )
 }
 
 function selectOption(option) {
-  searchTerm.value = `${option.city} — ${option._id}`
+  searchTerm.value = `${option.city} — ${option.airportId}`
   selectedValue.value = option
   emit('update:modelValue', option)
   isOpen.value = false
