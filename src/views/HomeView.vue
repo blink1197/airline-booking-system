@@ -4,13 +4,16 @@ import getawayImage2 from '@/assets/images/getaway2.jpg';
 import getawayImage3 from '@/assets/images/getaway3.jpg';
 import FlightSearchForm from '@/components/common/FlightSearchForm.vue';
 import CardComponent from '@/components/ui/CardComponent.vue';
-import { useRouter } from 'vue-router';
+import { useAirportsStore } from '@/stores/airports';
+import { onMounted } from 'vue';
 
-const router = useRouter();
 
-function handleSearch(formData) {
-  router.push({ name: 'flights' });
-}
+const { fetchAirports } = useAirportsStore();
+
+onMounted(() => {
+  // Fetch airports
+  fetchAirports();
+});
 </script>
 
 <template>
@@ -25,7 +28,7 @@ function handleSearch(formData) {
 
         <!-- Flight Search Form -->
         <div class="container px-0 mb-md-5 pb-md-5">
-          <FlightSearchForm @search="handleSearch" />
+          <FlightSearchForm />
         </div>
       </section>
 
