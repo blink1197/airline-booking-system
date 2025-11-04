@@ -2,25 +2,38 @@
 import DatePicker from '@/components/common/DatePicker.vue';
 import DestinationSelect from '@/components/common/DestinationSelect.vue';
 import PaxCabinPicker from '@/components/common/PaxCabinPicker.vue';
-import { destinations } from '@/data/destinations';
+import { useAirportsStore } from '@/stores/airports';
 import { useFlightSearchStore } from '@/stores/flightSearch';
+import { storeToRefs } from 'pinia';
 import { reactive, ref, watch } from 'vue';
+import { useRouter } from 'vue-router';
 
-const emit = defineEmits(['search']);
-
+const router = useRouter();
+const { airports } = useAirportsStore();
 const flightStore = useFlightSearchStore();
-const isReturnDateDisabled = ref(flightStore.tripType === 'oneWayTrip');
+const {
+  tripType,
+  from,
+  to,
+  departureDate,
+  returnDate,
+  pax,
+  cabin,
+  isSearching,
+} = storeToRefs(flightStore);
+const { setFlightSearchData, searchFlights } = flightStore;
+const isReturnDateDisabled = ref(tripType === 'oneWayTrip');
 
 // --- Form state ---
 const form = reactive({
-  tripType: flightStore.tripType,
-  from: flightStore.from,
-  to: flightStore.to,
-  departureDate: flightStore.departureDate,
-  returnDate: flightStore.returnDate,
+  tripType: tripType,
+  from: from,
+  to: to,
+  departureDate: departureDate,
+  returnDate: returnDate,
   paxCabin: {
-    pax: flightStore.pax,
-    cabin: flightStore.cabin,
+    pax: pax,
+    cabin: cabin,
   },
 });
 
@@ -55,6 +68,7 @@ watch(
   { deep: true }
 );
 
+
 // --- Functions ---
 function validateForm() {
   let valid = true;
@@ -75,13 +89,17 @@ function submitForm() {
   if (!validateForm()) return;
 
   // Update store
-  flightStore.setFlightSearchData({
+  setFlightSearchData({
     ...form,
     pax: form.paxCabin.pax,
     cabin: form.paxCabin.cabin,
   });
 
-  emit('search', { ...form });
+  // Search flights
+  searchFlights();
+
+  //Redirect users to flights results page
+  router.push({ name: 'flights' });
 }
 </script>
 
@@ -102,13 +120,13 @@ function submitForm() {
 
       <!-- Departure -->
       <div class="col-12 col-md-6 mt-2">
-        <DestinationSelect label="Departure" v-model="form.from" :options="destinations" placeholder="From" />
+        <DestinationSelect label="Departure" v-model="form.from" :options="airports" placeholder="From" />
         <div class="text-danger small" style="min-height:1.5em">{{ errors.from }}</div>
       </div>
 
       <!-- Destination -->
       <div class="col-12 col-md-6 mt-2">
-        <DestinationSelect label="Destination" v-model="form.to" :options="destinations" placeholder="To" />
+        <DestinationSelect label="Destination" v-model="form.to" :options="airports" placeholder="To" />
         <div class="text-danger small" style="min-height:1.5em">{{ errors.to }}</div>
       </div>
 
@@ -132,8 +150,13 @@ function submitForm() {
       <!-- Submit -->
       <div class="col-12 col-md-6 col-lg-4 ms-md-auto align-items-end d-flex mb-md-3">
         <button type="submit"
-          class="btn btn-primary py-3 py-md-2 w-100 fw-bold d-flex justify-content-center gap-2 align-items-center">
-          <i class="bi bi-search"></i>
+          class="btn btn-primary py-3 py-md-2 w-100 fw-bold d-flex justify-content-center gap-2 align-items-center"
+          :disabled="isSearching">
+
+          <div v-if="isSearching" class="spinner-border spinner-border-sm" role="status">
+            <span class="visually-hidden">Searching</span>
+          </div>
+          <i v-else class="bi bi-search"></i>
           <span>Search Flight</span>
         </button>
       </div>
