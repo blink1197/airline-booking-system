@@ -3,8 +3,8 @@ import axios from "axios";
 // Choose baseURL depending on environment
 const baseURL =
   import.meta.env.MODE === "development"
-    ? import.meta.env.VITE_JOB_TRACKER_API_LOCAL
-    : import.meta.env.VITE_JOB_TRACKER_API_PROD;
+    ? import.meta.env.VITE_AIRLINE_BOOKING_SYSTEM_API_LOCAL
+    : import.meta.env.VITE_AIRLINE_BOOKING_SYSTEM_API_PROD;
 
 // Create Axios instance
 const api = axios.create({
