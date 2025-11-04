@@ -1,10 +1,13 @@
+import api from '@/api/api'
+import { getTotalPassengers } from '@/utils/flightSearch'
+import { buildUrl } from '@/utils/urlBuilder'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 export const useFlightSearchStore = defineStore(
   'flightSearch',
   () => {
-
+    // Search Form Data
     const tripType = ref('oneWayTrip')
     const from = ref(null)
     const to = ref(null)
@@ -12,6 +15,35 @@ export const useFlightSearchStore = defineStore(
     const returnDate = ref('')
     const pax = ref({ adults: 1, children: 0, infants: 0 })
     const cabin = ref('Economy')
+
+    // Search Results
+    const flights = ref([]);
+    const isSearching = ref(false);
+    const error = ref(null);
+
+    async function searchFlights() {
+      const url = buildUrl("/flights/search", {
+        origin: from.value.airportId,
+        destination: to.value.airportId,
+        departureDate: departureDate.value,
+        returnDate: returnDate.value,
+        passengers: getTotalPassengers(pax.value),
+        cabin: cabin.value,
+        tripType: tripType.value,
+      });
+
+      try {
+        isSearching.value = true;
+        error.value = null;
+        const res = await api.get(url);
+        console.log(res);
+      } catch (err) {
+        console.error("Error fetching flights:", err);
+        error.value = err.response?.data?.message || "Failed to fetch flights";
+      } finally {
+        isSearching.value = false;
+      }
+    }
 
 
     function setFlightSearchData(data) {
@@ -35,15 +67,9 @@ export const useFlightSearchStore = defineStore(
     }
 
     return {
-      tripType,
-      from,
-      to,
-      departureDate,
-      returnDate,
-      pax,
-      cabin,
-      setFlightSearchData,
-      resetFlightSearch,
+      tripType, from, to, departureDate, returnDate, pax, cabin,
+      flights, isSearching, error,
+      setFlightSearchData, resetFlightSearch, searchFlights
     }
   },
   {
