@@ -1,7 +1,7 @@
 <script setup>
 import LongArrowIcon from '@/components/icons/LongArrowIcon.vue'
-import { destinations } from '@/data/destinations'
 import { cabinTypes } from '@/data/flights'
+import { useAirportsStore } from '@/stores/airports'
 import { useFlightSearchStore } from '@/stores/flightSearch'
 import { formatDateReadable } from '@/utils/date'
 import { Modal } from 'bootstrap'
@@ -11,6 +11,8 @@ import DropdownComponent from '../ui/DropdownComponent.vue'
 import DatePicker from './DatePicker.vue'
 import DestinationSelect from './DestinationSelect.vue'
 
+
+const { airports } = useAirportsStore();
 const flightStore = useFlightSearchStore()
 const { tripType, from, to, departureDate, returnDate, pax, cabin } = storeToRefs(flightStore)
 const totalPassengers = computed(() => pax.value.adults + pax.value.children + pax.value.infants)
@@ -75,9 +77,9 @@ function handleSubmit() {
   <div class="py-3 row mx-0 text-white bg-primary rounded-3">
     <div class="col-8">
       <span class="d-flex gap-2 align-items-center">
-        <p class="m-0 normal-text-bold">{{ from?._id }}</p>
+        <p class="m-0 normal-text-bold">{{ from?.airportId }}</p>
         <LongArrowIcon width="28" height="12" />
-        <p class="m-0 normal-text-bold">{{ to?._id }}</p>
+        <p class="m-0 normal-text-bold">{{ to?.airportId }}</p>
       </span>
       <span>
         <p class="m-0 fw-light small-text">
@@ -125,12 +127,12 @@ function handleSubmit() {
 
             <!-- Departure -->
             <div class="col-12 col-md-6 mt-2">
-              <DestinationSelect label="Departure" v-model="form.from" :options="destinations" placeholder="From" />
+              <DestinationSelect label="Departure" v-model="form.from" :options="airports" placeholder="From" />
             </div>
 
             <!-- Destination -->
             <div class="col-12 col-md-6 mt-2">
-              <DestinationSelect label="Destination" v-model="form.to" :options="destinations" placeholder="To" />
+              <DestinationSelect label="Destination" v-model="form.to" :options="airports" placeholder="To" />
             </div>
 
             <!-- Departure Date -->
