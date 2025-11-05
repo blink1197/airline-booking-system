@@ -52,10 +52,10 @@
             Upcoming Flight: {{ currentBooking.flight.fromLocation }} to
             {{ currentBooking.flight.toLocation }}
           </h4>
-          <p class="mb-0">
+          <p>
             Flight {{ currentBooking.flight.flightId }}. Departure:
             {{ formatDate(currentBooking.flight.departureDate) }} at
-            {{ formatTime(currentBooking.flight.departureDate }}. Status:
+            {{ formatTime(currentBooking.flight.departureDate) }}. Status:
             <strong>{{ currentBooking.status }}</strong>.
           </p>
           <hr>
