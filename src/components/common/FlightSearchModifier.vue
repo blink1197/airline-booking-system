@@ -63,7 +63,7 @@ function decrement(key) {
 }
 
 
-function handleSubmit() {
+async function handleSubmit() {
   // Update store
   flightStore.setFlightSearchData({
     ...form,
@@ -71,11 +71,11 @@ function handleSubmit() {
   });
 
   //Search for flights
-  flightStore.searchFlights()
+  const success = await flightStore.searchFlights();
 
-  modalInstance?.hide()
-
-  window.location.reload()
+  if (success) {
+    modalInstance?.hide();
+  }
 }
 </script>
 
@@ -184,7 +184,10 @@ function handleSubmit() {
 
         <div class="modal-footer">
           <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-primary" @click="handleSubmit">Apply</button>
+          <button type="button" class="btn btn-primary" @click="handleSubmit" :disabled="flightStore.isSearching">
+            <span v-if="flightStore.isSearching">Updating...</span>
+            <span v-else>Apply</span>
+          </button>
         </div>
       </div>
     </div>

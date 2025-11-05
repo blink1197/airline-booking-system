@@ -3,36 +3,51 @@ import FlightListItem from '@/components/common/FlightListItem.vue';
 import FlightSearchModifier from '@/components/common/FlightSearchModifier.vue';
 import ProgressBar from '@/components/common/ProgressBar.vue';
 import StickyButtonGroup from '@/components/ui/StickyButtonGroup.vue';
-// import { flights } from '@/data/flights';
 import { useFlightSearchStore } from '@/stores/flightSearch';
+import { storeToRefs } from 'pinia';
 
-const { flights } = useFlightSearchStore()
+const flightStore = useFlightSearchStore()
+const { flights, isSearching, error } = storeToRefs(flightStore)
 
 </script>
 
 <template>
   <div class="container-fluid d-flex flex-column p-0 flight flights-page">
     <main class="container-fluid px-2 pt-1 pb-2">
-
-      <!-- Custom Progress Bar -->
+      <!-- Progress -->
       <ProgressBar title="Flights" :steps="5" :currentStep="1" />
-      <div class="container flights-results-container">
 
-        <!-- Flight Search Modifier -->
+      <div class="container flights-results-container">
+        <!-- Modify search -->
         <FlightSearchModifier />
 
-        <!-- Flight Results -->
+        <!-- Filters header -->
         <div class="mx-1 mt-1 mb-3 py-2 d-flex justify-content-between align-items-center smaller-text">
           <span class="d-flex gap-1 justify-content-between align-items-center">
             <i class="bi bi-funnel"></i>
             Filters
           </span>
-          <span>
-            Sort by: Earliest first
-          </span>
+          <span>Sort by: Earliest first</span>
         </div>
+
+        <!-- Results -->
         <div class="list-group">
-          <FlightListItem v-for="(flight, index) in flights" :key="flight.flightNumber" :flightData="flight"
+          <div v-if="isSearching" class="text-center py-5">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-2 small">Searching flights...</p>
+          </div>
+
+          <div v-else-if="error" class="alert alert-danger text-center">
+            {{ error }}
+          </div>
+
+          <div v-else-if="flights.length === 0" class="text-center py-5">
+            <p class="text-muted">No flights found for the selected route.</p>
+          </div>
+
+          <FlightListItem v-else v-for="(flight, index) in flights" :key="flight.flightNumber" :flightData="flight"
             :index="index" />
         </div>
       </div>
@@ -42,6 +57,7 @@ const { flights } = useFlightSearchStore()
     <StickyButtonGroup primaryText="Continue" primaryLink="/guests" secondaryText="Back" :showSecondary="false" />
   </div>
 </template>
+
 
 <style scoped>
 .flights-page {
