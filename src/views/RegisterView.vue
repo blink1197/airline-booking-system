@@ -36,7 +36,7 @@ const handleRegister = async (e) => {
   } catch (err) {
     // Log full error response for debugging
     console.error("Registration error response:", err.response);
-    
+
     // Show backend error if available
     if (err.response && err.response.data) {
       alert(err.response.data.error || "Registration failed!");
@@ -49,7 +49,7 @@ const handleRegister = async (e) => {
 
 
 <template>
-  <main class="container mx-auto pt-md-3 pb-md-5">
+  <div class="container mx-auto pt-md-3 pb-md-5">
     <div class="row align-items-center justify-content-center g-0">
       <!-- Left Side: Image -->
       <div class="col-md-6 d-none d-md-block p-0">
@@ -70,7 +70,8 @@ const handleRegister = async (e) => {
                 <div class="row g-3 mb-3">
                   <div class="col">
                     <label class="form-label fw-bold">First Name</label>
-                    <input class="form-control py-2" v-model="firstName" type="text" placeholder="First Name" required />
+                    <input class="form-control py-2" v-model="firstName" type="text" placeholder="First Name"
+                      required />
                   </div>
                   <div class="col">
                     <label class="form-label fw-bold">Last Name</label>
@@ -85,7 +86,8 @@ const handleRegister = async (e) => {
 
                 <div class="mb-3">
                   <label class="form-label fw-bold">Mobile Number</label>
-                  <input class="form-control py-2" v-model="mobileNumber" type="text" placeholder="Mobile Number" required />
+                  <input class="form-control py-2" v-model="mobileNumber" type="text" placeholder="Mobile Number"
+                    required />
                 </div>
 
                 <div class="mb-3">
@@ -100,7 +102,8 @@ const handleRegister = async (e) => {
 
                 <div class="mb-4">
                   <label class="form-label fw-bold">Confirm Password</label>
-                  <input class="form-control py-2" v-model="confirmPassword" type="password" placeholder="Confirm Password" required />
+                  <input class="form-control py-2" v-model="confirmPassword" type="password"
+                    placeholder="Confirm Password" required />
                 </div>
 
                 <div class="d-grid mb-3">
@@ -119,7 +122,7 @@ const handleRegister = async (e) => {
         </div>
       </div>
     </div>
-  </main>
+  </div>
 </template>
 
 <style scoped>

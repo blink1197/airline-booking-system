@@ -81,6 +81,18 @@ function validateForm() {
 
   if (!form.from) { errors.from = 'Departure cannot be empty'; valid = false; }
   if (!form.to) { errors.to = 'Destination cannot be empty'; valid = false; }
+  if (form.from && form.to) {
+    const sameAirport =
+      form.from.airportId && form.to.airportId
+        ? form.from.airportId === form.to.airportId
+        : form.from === form.to;
+
+    if (sameAirport) {
+      errors.from = 'Departure and destination cannot be the same';
+      errors.to = 'Departure and destination cannot be the same';
+      valid = false;
+    }
+  }
   if (!form.departureDate) { errors.departureDate = 'Departure date cannot be empty'; valid = false; }
   if (form.tripType === 'roundTrip' && !form.returnDate) { errors.returnDate = 'Return date cannot be empty'; valid = false; }
 
@@ -116,7 +128,8 @@ async function submitForm() {
           <label class="form-check-label" for="oneWayTrip">One Way</label>
         </div>
         <div class="form-check">
-          <input class="form-check-input" type="radio" id="roundTrip" value="roundTrip" v-model="form.tripType" />
+          <input class="form-check-input" type="radio" id="roundTrip" value="roundTrip" v-model="form.tripType"
+            disabled />
           <label class="form-check-label" for="roundTrip">Round Trip</label>
         </div>
       </div>

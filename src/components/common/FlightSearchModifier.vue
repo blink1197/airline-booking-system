@@ -6,15 +6,13 @@ import { formatDateReadable } from '@/utils/date'
 import { Modal } from 'bootstrap'
 import { storeToRefs } from 'pinia'
 import { computed, onMounted, reactive, ref, watch } from 'vue'
-import { useRouter } from 'vue-router'
 import DropdownComponent from '../ui/DropdownComponent.vue'
 import DatePicker from './DatePicker.vue'
 import DestinationSelect from './DestinationSelect.vue'
 
-const router = useRouter()
 const { airports } = useAirportsStore();
 const flightStore = useFlightSearchStore()
-const { tripType, from, to, departureDate, returnDate, pax, cabin } = storeToRefs(flightStore)
+const { tripType, from, to, departureDate, returnDate, pax, cabin, flights } = storeToRefs(flightStore)
 const totalPassengers = computed(() => pax.value.adults + pax.value.children + pax.value.infants)
 
 // Modal reference
@@ -34,21 +32,66 @@ const form = reactive({
 
 const isReturnDateDisabled = ref(flightStore.tripType === 'oneWayTrip');
 
+// --- Validation errors ---
+const errors = reactive({
+  from: '',
+  to: '',
+  departureDate: '',
+  returnDate: '',
+});
+
+watch(
+  () => ({ ...form }),
+  (newForm) => {
+    if (newForm.from) errors.from = '';
+    if (newForm.to) errors.to = '';
+    if (newForm.departureDate) errors.departureDate = '';
+    if (newForm.tripType === 'roundTrip' && newForm.returnDate) errors.returnDate = '';
+  },
+  { deep: true }
+);
+
 watch(
   () => form.tripType,
   (val) => {
     isReturnDateDisabled.value = val === 'oneWayTrip';
     if (val === 'oneWayTrip') {
       form.returnDate = '';
+      errors.returnDate = ''; // clear return date error if switching to one way
     }
   }
 );
 
 onMounted(() => {
-  if (modalEl.value) {
-    modalInstance = new Modal(modalEl.value)
-  }
+  if (modalEl.value) modalInstance = new Modal(modalEl.value)
 })
+
+function validateForm() {
+  let valid = true;
+  errors.from = '';
+  errors.to = '';
+  errors.departureDate = '';
+  errors.returnDate = '';
+
+  if (!form.from) { errors.from = 'Departure cannot be empty'; valid = false; }
+  if (!form.to) { errors.to = 'Destination cannot be empty'; valid = false; }
+  if (form.from && form.to) {
+    const sameAirport =
+      form.from.airportId && form.to.airportId
+        ? form.from.airportId === form.to.airportId
+        : form.from === form.to;
+
+    if (sameAirport) {
+      errors.from = 'Departure and destination cannot be the same';
+      errors.to = 'Departure and destination cannot be the same';
+      valid = false;
+    }
+  }
+  if (!form.departureDate) { errors.departureDate = 'Departure date cannot be empty'; valid = false; }
+  if (form.tripType === 'roundTrip' && !form.returnDate) { errors.returnDate = 'Return date cannot be empty'; valid = false; }
+
+  return valid;
+}
 
 function openModal() {
   modalInstance?.show()
@@ -59,29 +102,33 @@ function increment(key) {
 }
 
 function decrement(key) {
+  if (key === 'adults' && form.pax.adults <= 1) return
   if (form.pax[key] > 0) form.pax[key]--
 }
 
 
 async function handleSubmit() {
-  // Update store
+  // ✅ Validate before proceeding
+  const isValid = validateForm();
+  if (!isValid) return;
+
+  // Update store only if valid
   flightStore.setFlightSearchData({
     ...form,
     flightType: form.to.country === form.from.country ? 'domestic' : 'international'
   });
 
-  //Search for flights
+  // Search for flights
   const success = await flightStore.searchFlights();
 
-  if (success) {
-    modalInstance?.hide();
-  }
+  modalInstance?.hide();
 }
 </script>
 
+
 <template>
   <div class="py-3 row mx-0 text-white bg-primary rounded-3">
-    <div class="col-8">
+    <div class="col-8" v-if="flights.length !== 0">
       <div class="d-flex gap-3 align-items-center flex-wrap">
         <!-- From airport -->
         <div class="text-center text-md-start">
@@ -111,9 +158,10 @@ async function handleSubmit() {
       </span>
     </div>
 
-    <div class="col-4 d-flex justify-content-end align-items-center">
+    <div class=" d-flex  align-items-center"
+      :class="`${flights.length === 0 ? 'col-12 justify-content-center' : 'col-4 justify-content-end'}`">
       <button class="btn btn-secondary float-end" @click="openModal">
-        Modify
+        {{ flights.length === 0 ? 'Search Flight' : 'Modify' }}
       </button>
     </div>
   </div>
@@ -124,7 +172,9 @@ async function handleSubmit() {
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title text-primary medium-text-bold" id="modifyModalLabel">Modify Search</h5>
+          <h5 class="modal-title text-primary medium-text-bold" id="modifyModalLabel">
+            {{ flights.length === 0 ? 'Search Flight' : 'Modify Search' }}
+          </h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -137,7 +187,8 @@ async function handleSubmit() {
                 <label class="form-check-label" for="oneWayTrip">One Way</label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="radio" id="roundTrip" value="roundTrip" v-model="form.tripType" />
+                <input class="form-check-input" type="radio" id="roundTrip" value="roundTrip" v-model="form.tripType"
+                  disabled />
                 <label class="form-check-label" for="roundTrip">Round Trip</label>
               </div>
             </div>
@@ -145,21 +196,33 @@ async function handleSubmit() {
             <!-- Departure -->
             <div class="col-12 col-md-6 mt-2">
               <DestinationSelect label="Departure" v-model="form.from" :options="airports" placeholder="From" />
+              <small class="text-danger error-text">
+                {{ errors.from || '\u00A0' }} <!-- non-breaking space when empty -->
+              </small>
             </div>
 
             <!-- Destination -->
             <div class="col-12 col-md-6 mt-2">
               <DestinationSelect label="Destination" v-model="form.to" :options="airports" placeholder="To" />
+              <small class="text-danger error-text">
+                {{ errors.to || '\u00A0' }}
+              </small>
             </div>
 
             <!-- Departure Date -->
             <div class="col-12 col-md-6 mt-2">
               <DatePicker label="Departure Date" v-model="form.departureDate" />
+              <small class="text-danger error-text">
+                {{ errors.departureDate || '\u00A0' }}
+              </small>
             </div>
 
             <!-- Return Date -->
             <div class="col-12 col-md-6 mt-2">
               <DatePicker label="Return Date" v-model="form.returnDate" :is-disabled="isReturnDateDisabled" />
+              <small class="text-danger error-text">
+                {{ errors.returnDate || '\u00A0' }}
+              </small>
             </div>
 
             <!-- Passengers -->
@@ -185,7 +248,14 @@ async function handleSubmit() {
         <div class="modal-footer">
           <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
           <button type="button" class="btn btn-primary" @click="handleSubmit" :disabled="flightStore.isSearching">
-            <span v-if="flightStore.isSearching">Updating...</span>
+            <span v-if="flightStore.isSearching">
+              <div class="spinner-border spinner-border-sm" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+
+              Searching...
+
+            </span>
             <span v-else>Apply</span>
           </button>
         </div>
@@ -197,5 +267,10 @@ async function handleSubmit() {
 .rotate-90 {
   transform: rotate(90deg);
   display: inline-block;
+}
+
+.error-text {
+  display: block;
+  min-height: 1rem;
 }
 </style>

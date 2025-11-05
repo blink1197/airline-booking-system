@@ -92,6 +92,6 @@ export const useFlightSearchStore = defineStore(
     }
   },
   {
-    persist: true,
+    persist: false,
   }
 )

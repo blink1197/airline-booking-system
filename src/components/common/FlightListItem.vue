@@ -1,6 +1,7 @@
 <script setup>
 import { useFlightSearchStore } from '@/stores/flightSearch'
 import { formatMinutes, formatTimeReadable } from '@/utils/date'
+import { getTotalPassengers } from '@/utils/flightSearch'
 import { formatMoney } from '@/utils/string'
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
@@ -10,7 +11,7 @@ import AirPlaneTakeOffIcon from '../icons/AirPlaneTakeOffIcon.vue'
 // Store setup
 const flightStore = useFlightSearchStore()
 const { selectFlight, clearSelectedFlight } = flightStore
-const { selectedFlight } = storeToRefs(flightStore)
+const { selectedFlight, pax } = storeToRefs(flightStore)
 
 const props = defineProps({
   flightData: { type: Object, required: true },
@@ -41,6 +42,9 @@ const {
   airline,
   basePrice
 } = props.flightData
+
+const totalPassengers = getTotalPassengers(pax.value);
+const totalPrice = basePrice * totalPassengers;
 </script>
 
 <template>
@@ -96,7 +100,7 @@ const {
         class="col-4 d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-around gap-1 p-0 w-50 ps-5 ps-sm-0">
         <div class="order-sm-2">
           <p class="small-text m-0">All-in fare</p>
-          <p class="fw-bold m-0">{{ formatMoney(basePrice) }}</p>
+          <p class="fw-bold m-0">{{ formatMoney(totalPrice) }}</p>
         </div>
         <div class="order-sm-1">
           <span class="d-flex align-items-center justify-content-start gap-1">

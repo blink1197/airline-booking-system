@@ -7,8 +7,8 @@
       @focus="isOpen = true" @blur="closeDropdown" @input="filterOptions" />
 
     <!-- Dropdown List -->
-    <ul v-if="isOpen && filteredOptions.length > 0" class="list-group position-absolute w-100 mt-1 z-3"
-      style="max-height: 220px; overflow-y: auto;">
+    <ul v-if="isOpen" class="list-group position-absolute w-100 mt-1 z-3" style="max-height: 220px; overflow-y: auto;">
+      <!-- Show filtered options -->
       <li v-for="option in filteredOptions" :key="option.airportId" class="list-group-item list-group-item-action"
         :class="{ active: option.airportId === selectedValue?.airportId }" @mousedown.prevent="selectOption(option)">
         <div class="fw-semibold">
@@ -17,6 +17,11 @@
         <div class="small fw-light">
           {{ option.name }}, {{ option.country }}
         </div>
+      </li>
+
+      <!-- No results message -->
+      <li v-if="filteredOptions.length === 0" class="list-group-item text-center text-muted" style="cursor: default;">
+        No airports found
       </li>
     </ul>
   </div>

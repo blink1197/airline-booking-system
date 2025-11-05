@@ -26,7 +26,7 @@ const handleSubmit = async (e) => {
 </script>
 
 <template>
-  <main class="container mx-auto pt-md-3 pb-md-5">
+  <div class="container mx-auto pt-md-3 pb-md-5">
     <div class="row align-items-center justify-content-center g-0">
       <!-- Left Side Image -->
       <div class="col-md-6 d-none d-md-block py-5 px-0">
@@ -51,7 +51,8 @@ const handleSubmit = async (e) => {
               </div>
               <div class="mb-4">
                 <label class="form-label fw-bold">Message</label>
-                <textarea class="form-control py-2" rows="4" v-model="message" placeholder="Write your message..." required></textarea>
+                <textarea class="form-control py-2" rows="4" v-model="message" placeholder="Write your message..."
+                  required></textarea>
               </div>
               <div class="d-grid mb-3">
                 <button type="submit" class="btn btn-primary btn-lg fw-bold py-2">Send Message</button>
@@ -61,7 +62,7 @@ const handleSubmit = async (e) => {
         </div>
       </div>
     </div>
-  </main>
+  </div>
 </template>
 
 <style scoped>

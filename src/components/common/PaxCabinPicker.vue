@@ -57,6 +57,8 @@ function increment(key) {
 }
 
 function decrement(key) {
+  // Prevent adults from going below 1
+  if (key === 'adults' && tempPax.value.adults <= 1) return
   if (tempPax.value[key] > 0) tempPax.value[key]--
 }
 

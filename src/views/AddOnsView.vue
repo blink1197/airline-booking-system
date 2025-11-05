@@ -41,7 +41,7 @@ const travelInsuranceProps = computed(() => {
 
 <template>
   <div class="container-fluid d-flex flex-column p-0 flight addons-page">
-    <main class="container-fluid px-2 pt-1 pb-2">
+    <div class="container-fluid px-2 pt-1 pb-2">
       <!-- Progress Bar -->
       <ProgressBar title="Add-ons" :steps="5" :currentStep="3" />
 
@@ -69,7 +69,7 @@ const travelInsuranceProps = computed(() => {
       <!-- Sticky Button -->
       <StickyButtonGroup primaryText="Continue" primaryLink="/payment" secondaryText="Back" secondaryLink="/guests"
         :showSecondary="true" />
-    </main>
+    </div>
   </div>
 </template>
 
