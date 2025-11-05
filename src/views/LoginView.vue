@@ -2,6 +2,7 @@
 
   import { ref } from 'vue'
   import { useRouter } from 'vue-router'
+  import api from '../api/api.js'
 
   const router = useRouter()
 
@@ -10,19 +11,25 @@
   const password = ref('')
 
   
-  const handleLogin = (e) => {
-    e.preventDefault()
-
-    // temporary lang for frontend purposes 
-    if (email.value === 'admin@email.com' && password.value === '123456') {
-      
-      localStorage.setItem('isAuthenticated', 'true')
-
-      router.push('/')
-    } else {
+  const handleLogin = async () => {
+    try {
+      const res = await api.post('/users/login', { email: email.value, password: password.value })
+      localStorage.setItem('token', res.data.token)
+      router.push('/profile')
+    } catch (err) {
       alert('Invalid email or password')
     }
   }
+
+  const getBookings = async () => {
+    try {
+      const res = await api.get('/bookings/history') // token is auto-attached
+      console.log(res.data)
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
 
 </script>
 
