@@ -1,5 +1,4 @@
 <script setup>
-import LongArrowIcon from '@/components/icons/LongArrowIcon.vue'
 import { cabinTypes } from '@/data/flights'
 import { useAirportsStore } from '@/stores/airports'
 import { useFlightSearchStore } from '@/stores/flightSearch'
@@ -7,11 +6,12 @@ import { formatDateReadable } from '@/utils/date'
 import { Modal } from 'bootstrap'
 import { storeToRefs } from 'pinia'
 import { computed, onMounted, reactive, ref, watch } from 'vue'
+import { useRouter } from 'vue-router'
 import DropdownComponent from '../ui/DropdownComponent.vue'
 import DatePicker from './DatePicker.vue'
 import DestinationSelect from './DestinationSelect.vue'
 
-
+const router = useRouter()
 const { airports } = useAirportsStore();
 const flightStore = useFlightSearchStore()
 const { tripType, from, to, departureDate, returnDate, pax, cabin } = storeToRefs(flightStore)
@@ -67,20 +67,37 @@ function handleSubmit() {
   // Update store
   flightStore.setFlightSearchData({
     ...form,
+    flightType: form.to.country === form.from.country ? 'domestic' : 'international'
   });
 
+  //Search for flights
+  flightStore.searchFlights()
+
   modalInstance?.hide()
+
+  window.location.reload()
 }
 </script>
 
 <template>
   <div class="py-3 row mx-0 text-white bg-primary rounded-3">
     <div class="col-8">
-      <span class="d-flex gap-2 align-items-center">
-        <p class="m-0 normal-text-bold">{{ from?.airportId }}</p>
-        <LongArrowIcon width="28" height="12" />
-        <p class="m-0 normal-text-bold">{{ to?.airportId }}</p>
-      </span>
+      <div class="d-flex gap-3 align-items-center flex-wrap">
+        <!-- From airport -->
+        <div class="text-center text-md-start">
+          <p class="m-0 normal-text-bold">{{ from?.airportId }}</p>
+          <p class="m-0 extra-small-text-regular text-break d-none d-md-block">{{ from?.name }}</p>
+        </div>
+
+        <!-- Arrow icon -->
+        <i class="bi bi-airplane fs-4 rotate-90"></i>
+
+        <!-- To airport -->
+        <div class="text-center text-md-start">
+          <p class="m-0 normal-text-bold">{{ to?.airportId }}</p>
+          <p class="m-0 extra-small-text-regular text-break d-none d-md-block">{{ to?.name }}</p>
+        </div>
+      </div>
       <span>
         <p class="m-0 fw-light small-text">
           {{ formatDateReadable(departureDate) }}
@@ -173,3 +190,9 @@ function handleSubmit() {
     </div>
   </div>
 </template>
+<style scoped>
+.rotate-90 {
+  transform: rotate(90deg);
+  display: inline-block;
+}
+</style>
