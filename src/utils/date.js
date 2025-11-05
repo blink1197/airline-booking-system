@@ -57,3 +57,21 @@ export function formatTimeReadable(date) {
 
   return d.toLocaleTimeString(undefined, options)
 }
+
+/**
+ * Converts total minutes to "X hours Y minutes" format.
+ * @param {number} totalMinutes - The total number of minutes.
+ * @returns {string} Formatted time string.
+ */
+export function formatMinutes(totalMinutes) {
+
+  if (isNaN(totalMinutes) || totalMinutes < 0) return "Invalid time";
+
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+
+  if (hours === 0) return `${minutes} m`;
+  if (minutes === 0) return `${hours} h`;
+
+  return `${hours}h ${minutes}m`;
+}
