@@ -1,12 +1,15 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import api from "../api/api"; 
+import api from "../api/api";
 
-const fullName = ref("");
+const firstName = ref("");
+const lastName = ref("");
 const email = ref("");
 const password = ref("");
 const confirmPassword = ref("");
+const mobileNumber = ref("");
+const dateOfBirth = ref("");
 const router = useRouter();
 
 const handleRegister = async (e) => {
@@ -19,21 +22,30 @@ const handleRegister = async (e) => {
 
   try {
     const res = await api.post("/users/register", {
-      name: fullName.value,
+      firstName: firstName.value,
+      lastName: lastName.value,
       email: email.value,
       password: password.value,
+      mobileNumber: mobileNumber.value,
+      dateOfBirth: dateOfBirth.value,
     });
 
+    console.log("Registration response:", res.data);
     alert("Registration successful!");
     router.push("/login");
   } catch (err) {
-    console.error(err);
-    alert(err.response?.data?.message || "Registration failed!");
+    // Log full error response for debugging
+    console.error("Registration error response:", err.response);
+    
+    // Show backend error if available
+    if (err.response && err.response.data) {
+      alert(err.response.data.error || "Registration failed!");
+    } else {
+      alert("Registration failed! Please check your network or backend.");
+    }
   }
 };
 </script>
-
-
 
 
 <template>
@@ -55,22 +67,42 @@ const handleRegister = async (e) => {
               </p>
 
               <form @submit="handleRegister">
-                <div class="mb-3">
-                  <label for="fullNameInput" class="form-label fw-bold">Full Name</label>
-                  <input class="form-control py-2" id="fullNameInput" v-model="fullName" type="text" placeholder="Full Name" required />
+                <div class="row g-3 mb-3">
+                  <div class="col">
+                    <label class="form-label fw-bold">First Name</label>
+                    <input class="form-control py-2" v-model="firstName" type="text" placeholder="First Name" required />
+                  </div>
+                  <div class="col">
+                    <label class="form-label fw-bold">Last Name</label>
+                    <input class="form-control py-2" v-model="lastName" type="text" placeholder="Last Name" required />
+                  </div>
                 </div>
+
                 <div class="mb-3">
-                  <label for="emailInput" class="form-label fw-bold">Email Address</label>
-                  <input class="form-control py-2" id="emailInput" v-model="email" type="email" placeholder="Email" required />
+                  <label class="form-label fw-bold">Email Address</label>
+                  <input class="form-control py-2" v-model="email" type="email" placeholder="Email" required />
                 </div>
+
                 <div class="mb-3">
-                  <label for="passwordInput" class="form-label fw-bold">Password</label>
-                  <input class="form-control py-2" id="passwordInput" v-model="password" type="password" placeholder="Password" required />
+                  <label class="form-label fw-bold">Mobile Number</label>
+                  <input class="form-control py-2" v-model="mobileNumber" type="text" placeholder="Mobile Number" required />
                 </div>
+
+                <div class="mb-3">
+                  <label class="form-label fw-bold">Date of Birth</label>
+                  <input class="form-control py-2" v-model="dateOfBirth" type="date" required />
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label fw-bold">Password</label>
+                  <input class="form-control py-2" v-model="password" type="password" placeholder="Password" required />
+                </div>
+
                 <div class="mb-4">
-                  <label for="confirmPasswordInput" class="form-label fw-bold">Confirm Password</label>
-                  <input class="form-control py-2" id="confirmPasswordInput" v-model="confirmPassword" type="password" placeholder="Confirm Password" required />
+                  <label class="form-label fw-bold">Confirm Password</label>
+                  <input class="form-control py-2" v-model="confirmPassword" type="password" placeholder="Confirm Password" required />
                 </div>
+
                 <div class="d-grid mb-3">
                   <button type="submit" class="btn btn-primary btn-lg fw-bold py-2">Sign Up</button>
                 </div>
@@ -80,7 +112,7 @@ const handleRegister = async (e) => {
             <div class="text-center mt-4">
               <p class="mb-0">
                 Already have an account?
-                <a href="./login.html" class="text-decoration-none fw-bold">Sign In</a>
+                <router-link to="/login" class="text-decoration-none fw-bold">Sign In</router-link>
               </p>
             </div>
           </div>
@@ -91,12 +123,10 @@ const handleRegister = async (e) => {
 </template>
 
 <style scoped>
-
-    .register-image {
-      background-image: url("@/assets/images/register_image.jpg");
-      background-size: cover;
-      background-position: center;
-      height: 480px;
-    }
-  
+.register-image {
+  background-image: url("@/assets/images/register_image.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 480px;
+}
 </style>
