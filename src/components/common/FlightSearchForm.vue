@@ -22,7 +22,8 @@ const {
   isSearching,
 } = storeToRefs(flightStore);
 const { setFlightSearchData, searchFlights } = flightStore;
-const isReturnDateDisabled = ref(tripType === 'oneWayTrip');
+const isReturnDateDisabled = ref(tripType.value === 'oneWayTrip');
+
 
 // --- Form state ---
 const form = reactive({
