@@ -20,6 +20,7 @@ const {
   pax,
   cabin,
   isSearching,
+  flights
 } = storeToRefs(flightStore);
 const { setFlightSearchData, searchFlights } = flightStore;
 const isReturnDateDisabled = ref(tripType.value === 'oneWayTrip');
@@ -86,7 +87,7 @@ function validateForm() {
   return valid;
 }
 
-function submitForm() {
+async function submitForm() {
   if (!validateForm()) return;
 
   // Update store
@@ -94,13 +95,14 @@ function submitForm() {
     ...form,
     pax: form.paxCabin.pax,
     cabin: form.paxCabin.cabin,
+    flightType: form.to.country === form.from.country ? 'domestic' : 'international'
   });
 
   // Search flights
-  searchFlights();
+  const success = await searchFlights();
 
   //Redirect users to flights results page
-  router.push({ name: 'flights' });
+  if (success && flights.value.length > 0) router.push({ name: 'flights' });
 }
 </script>
 

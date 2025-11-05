@@ -3,7 +3,11 @@ import FlightListItem from '@/components/common/FlightListItem.vue';
 import FlightSearchModifier from '@/components/common/FlightSearchModifier.vue';
 import ProgressBar from '@/components/common/ProgressBar.vue';
 import StickyButtonGroup from '@/components/ui/StickyButtonGroup.vue';
-import { flights } from '@/data/flights';
+// import { flights } from '@/data/flights';
+import { useFlightSearchStore } from '@/stores/flightSearch';
+
+const { flights } = useFlightSearchStore()
+
 </script>
 
 <template>
@@ -28,7 +32,7 @@ import { flights } from '@/data/flights';
           </span>
         </div>
         <div class="list-group">
-          <FlightListItem v-for="(flight, index) in flights" :key="flight.flightNumber" v-bind="flight"
+          <FlightListItem v-for="(flight, index) in flights" :key="flight.flightNumber" :flightData="flight"
             :index="index" />
         </div>
       </div>

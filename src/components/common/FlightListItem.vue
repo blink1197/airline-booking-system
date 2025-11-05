@@ -1,36 +1,68 @@
 <script setup>
-import AirPlaneTakeLandingIcon from '../icons/AirPlaneTakeLandingIcon.vue';
-import AirPlaneTakeOffIcon from '../icons/AirPlaneTakeOffIcon.vue';
-defineProps({
-  departureTime: String,
-  arrivalTime: String,
-  departureCode: String,
-  arrivalCode: String,
-  duration: String,
-  flightNumber: String,
-  price: [String, Number],
-  index: Number,
-  isSelected: Boolean
+import { useFlightSearchStore } from '@/stores/flightSearch'
+import { formatMinutes, formatTimeReadable } from '@/utils/date'
+import { formatMoney } from '@/utils/string'
+import { storeToRefs } from 'pinia'
+import { computed } from 'vue'
+import AirPlaneTakeLandingIcon from '../icons/AirPlaneTakeLandingIcon.vue'
+import AirPlaneTakeOffIcon from '../icons/AirPlaneTakeOffIcon.vue'
+
+// Store setup
+const flightStore = useFlightSearchStore()
+const { selectFlight, clearSelectedFlight } = flightStore
+const { selectedFlight } = storeToRefs(flightStore)
+
+const props = defineProps({
+  flightData: { type: Object, required: true },
+  index: { type: Number, required: true }
 })
 
+// Computed: check if this flight is selected
+const isSelected = computed(() =>
+  selectedFlight.value?.flightNumber === props.flightData.flightNumber
+)
+
+// Toggle selection
+function handleSelect() {
+  if (isSelected.value) {
+    clearSelectedFlight()
+  } else {
+    selectFlight(props.flightData)
+  }
+}
+
+const {
+  departureTime,
+  arrivalTime,
+  origin,
+  destination,
+  flightDuration,
+  flightNumber,
+  airline,
+  basePrice
+} = props.flightData
 </script>
 
-
 <template>
-  <a href="#" class="list-group-item list-group-item-action container list-odd mb-1 border"
-    :class="index % 2 === 0 ? 'list-even' : 'list-odd'">
+  <div class="list-group-item list-group-item-action container mb-1 border shadow-md position-relative"
+    :class="[index % 2 === 0 ? 'list-even' : 'list-odd', { selected: isSelected }]" @click="handleSelect">
+    <!-- Checkmark icon -->
+    <transition name="fade">
+      <i v-if="isSelected" class="bi bi-check-circle-fill checkmark position-absolute text-primary"></i>
+    </transition>
+
     <div class="row text-primary">
       <!-- Left side (flight info) -->
-      <div class="col-8 px-0 d-md-flex flex-row justify-content-around">
+      <div class="col-8 px-0 d-md-flex flex-row justify-content-around w-50">
         <div class="d-flex gap-2 align-items-center p-2">
           <!-- Departure -->
           <span class="d-flex align-items-start flex-column">
-            <p class="m-0 small-text fw-bold">{{ departureTime }}</p>
+            <p class="m-0 small-text fw-bold">{{ formatTimeReadable(departureTime) }}</p>
             <span class="d-flex gap-1 align-items-center">
               <slot name="departure-icon">
                 <AirPlaneTakeOffIcon width="18" height="12" />
               </slot>
-              <span class="smaller-text">{{ departureCode }}</span>
+              <span class="smaller-text">{{ origin }}</span>
             </span>
           </span>
 
@@ -42,33 +74,40 @@ defineProps({
 
           <!-- Arrival -->
           <span class="d-flex justify-content-between align-items-start flex-column">
-            <p class="m-0 small-text fw-bold">{{ arrivalTime }}</p>
+            <p class="m-0 small-text fw-bold">{{ formatTimeReadable(arrivalTime) }}</p>
             <span class="d-flex gap-1 align-items-center">
               <slot name="arrival-icon">
                 <AirPlaneTakeLandingIcon width="18" height="12" />
               </slot>
-              <span class="smaller-text">{{ arrivalCode }}</span>
+              <span class="smaller-text">{{ destination }}</span>
             </span>
           </span>
         </div>
 
         <!-- Duration + flight number -->
         <div class="d-flex gap-5 align-items-center p-2">
-          <span class="smaller-text fw-bold">{{ duration }}</span>
+          <span class="smaller-text fw-bold">{{ formatMinutes(flightDuration) }}</span>
           <span class="smaller-text fw-bold">{{ flightNumber }}</span>
         </div>
       </div>
 
       <!-- Right side (price) -->
-      <div class="col-4 d-flex flex-column align-items-start align-items-md-center justify-content-center gap-1 p-0">
-        <p class="small-text m-0">All-in fare</p>
-        <p class="fw-bold m-0">&#8369; {{ price }}</p>
+      <div
+        class="col-4 d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-around gap-1 p-0 w-50 ps-5 ps-sm-0">
+        <div class="order-sm-2">
+          <p class="small-text m-0">All-in fare</p>
+          <p class="fw-bold m-0">{{ formatMoney(basePrice) }}</p>
+        </div>
+        <div class="order-sm-1">
+          <span class="d-flex align-items-center justify-content-start gap-1">
+            <img :src="`/images/airlines/${airline.airlineId}.png`" alt="Airline Logo" class="carrier-logo" />
+            <p class="extra-small-text-regular m-0">{{ airline.name }}</p>
+          </span>
+        </div>
       </div>
     </div>
-  </a>
+  </div>
 </template>
-
-
 
 <style scoped>
 .list-odd {
@@ -77,5 +116,41 @@ defineProps({
 
 .list-even {
   background-color: var(--color-white);
+}
+
+.carrier-logo {
+  width: 16px;
+  height: 16px;
+}
+
+.list-group-item:hover {
+  background-color: color-mix(in srgb, var(--color-primary) 20%, white);
+  color: white;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  cursor: pointer;
+}
+
+/* Highlight selected */
+.selected {
+  border: 2px solid var(--color-primary);
+  background-color: color-mix(in srgb, var(--color-primary) 10%, white);
+}
+
+/* Checkmark positioning */
+.checkmark {
+  top: 8px;
+  right: 10px;
+  font-size: 1.4rem;
+}
+
+/* Fade-in animation for the icon */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

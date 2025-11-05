@@ -14,12 +14,16 @@ export const useFlightSearchStore = defineStore(
     const departureDate = ref('')
     const returnDate = ref('')
     const pax = ref({ adults: 1, children: 0, infants: 0 })
+    const flightType = ref('');
     const cabin = ref('Economy')
 
     // Search Results
     const flights = ref([]);
     const isSearching = ref(false);
     const error = ref(null);
+
+    // Selected Flight
+    const selectedFlight = ref(null);
 
     async function searchFlights() {
       const url = buildUrl("/flights/search", {
@@ -30,16 +34,19 @@ export const useFlightSearchStore = defineStore(
         passengers: getTotalPassengers(pax.value),
         cabin: cabin.value,
         tripType: tripType.value,
+        flightType: flightType.value
       });
 
       try {
         isSearching.value = true;
         error.value = null;
-        const res = await api.get(url);
-        console.log(res);
+        const response = await api.get(url);
+        flights.value = response.data.results
+        return true;
       } catch (err) {
         console.error("Error fetching flights:", err);
         error.value = err.response?.data?.message || "Failed to fetch flights";
+        return false;
       } finally {
         isSearching.value = false;
       }
@@ -48,6 +55,7 @@ export const useFlightSearchStore = defineStore(
 
     function setFlightSearchData(data) {
       tripType.value = data.tripType || tripType.value
+      flightType.value = data.flightType || flightType.value
       from.value = data.from || from.value
       to.value = data.to || to.value
       departureDate.value = data.departureDate || departureDate.value
@@ -57,6 +65,7 @@ export const useFlightSearchStore = defineStore(
     }
 
     function resetFlightSearch() {
+      flightType.value = ''
       tripType.value = 'oneWayTrip'
       from.value = null
       to.value = null
@@ -66,10 +75,20 @@ export const useFlightSearchStore = defineStore(
       cabin.value = 'Economy'
     }
 
+
+    function selectFlight(flight) {
+      selectedFlight.value = flight;
+    }
+
+    function clearSelectedFlight() {
+      selectedFlight.value = null;
+    }
+
     return {
-      tripType, from, to, departureDate, returnDate, pax, cabin,
-      flights, isSearching, error,
-      setFlightSearchData, resetFlightSearch, searchFlights
+      tripType, flightType, from, to, departureDate, returnDate, pax, cabin,
+      flights, isSearching, selectedFlight, error,
+      setFlightSearchData, resetFlightSearch, searchFlights,
+      selectFlight, clearSelectedFlight
     }
   },
   {
