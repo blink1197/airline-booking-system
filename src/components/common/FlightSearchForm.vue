@@ -157,10 +157,11 @@ async function submitForm() {
           :disabled="isSearching">
 
           <div v-if="isSearching" class="spinner-border spinner-border-sm" role="status">
-            <span class="visually-hidden">Searching</span>
+            <span class="visually-hidden">Searching...</span>
           </div>
           <i v-else class="bi bi-search"></i>
-          <span>Search Flight</span>
+          <span v-if="isSearching">Searching...</span>
+          <span v-else="isSearching">Search Flight</span>
         </button>
       </div>
     </div>
