@@ -2,6 +2,7 @@
 
   import { ref } from 'vue'
   import { useRouter } from 'vue-router'
+  import api from '../api/api.js'
 
   const router = useRouter()
 
@@ -10,19 +11,34 @@
   const password = ref('')
 
   
-  const handleLogin = (e) => {
-    e.preventDefault()
+  const handleLogin = async () => {
+    try {
+      const res = await api.post('/users/login', {
+        email: email.value,
+        password: password.value
+      })
 
-    // temporary lang for frontend purposes 
-    if (email.value === 'admin@email.com' && password.value === '123456') {
-      
-      localStorage.setItem('isAuthenticated', 'true')
+      // Store token
+      localStorage.setItem('token', res.data.token)
+      console.log('Token saved:', localStorage.getItem('token'))
 
-      router.push('/')
-    } else {
+      // Navigate after token is stored
+      router.push('/profile')
+    } catch (err) {
       alert('Invalid email or password')
     }
   }
+
+
+  const getBookings = async () => {
+    try {
+      const res = await api.get('/bookings/history') // token is auto-attached
+      console.log(res.data)
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
 
 </script>
 
@@ -42,7 +58,7 @@
                   Log into your Flyx account to manage your bookings.
                 </p>
 
-                <form @submit="handleLogin">
+                <form @submit.prevent="handleLogin">
                   <div class="mb-3">
                     <label for="emailInput" class="form-label fw-bold">Email address</label>
                     <input
@@ -76,7 +92,7 @@
               <div class="text-center mt-4">
                 <p class="mb-0">
                   Don't have an account?
-                  <a href="./register.html" class="text-decoration-none fw-bold">Sign Up</a>
+                  <a href="./register" class="text-decoration-none fw-bold">Sign Up</a>
                 </p>
               </div>
             </div>
