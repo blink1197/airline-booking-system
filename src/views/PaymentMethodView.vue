@@ -10,7 +10,7 @@ const termsAccepted = ref(false);
 
 <template>
   <div class="container-fluid d-flex flex-column p-0 flight payment-page">
-    <main class="container-fluid px-2 pt-1 pb-2">
+    <div class="container-fluid px-2 pt-1 pb-2">
       <!-- Progress Bar -->
       <ProgressBar title="Payment" :steps="5" :currentStep="4" />
 
@@ -41,7 +41,7 @@ const termsAccepted = ref(false);
       <!-- Sticky Button -->
       <StickyButtonGroup primaryText="Continue" primaryLink="/confirmation" secondaryText="Back"
         secondaryLink="/payment" :showSecondary="true" />
-    </main>
+    </div>
   </div>
 </template>
 

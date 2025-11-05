@@ -1,5 +1,5 @@
 <template>
-  <main class="container my-5 flex-grow-1 mx-auto px-2">
+  <div class="container my-5 flex-grow-1 mx-auto px-2">
     <div class="profile-header mb-5">
       <h1 class="fw-bold">Hello, {{ user.firstName }}!</h1>
       <p class="text-muted">
@@ -10,30 +10,14 @@
     <!-- Booking tabs -->
     <ul class="nav nav-tabs profile-tabs mb-4" id="profileTab" role="tablist">
       <li class="nav-item" role="presentation">
-        <button
-          class="nav-link active"
-          id="current-tab"
-          data-bs-toggle="tab"
-          data-bs-target="#current-status"
-          type="button"
-          role="tab"
-          aria-controls="current-status"
-          aria-selected="true"
-        >
+        <button class="nav-link active" id="current-tab" data-bs-toggle="tab" data-bs-target="#current-status"
+          type="button" role="tab" aria-controls="current-status" aria-selected="true">
           Booking Status
         </button>
       </li>
       <li class="nav-item" role="presentation">
-        <button
-          class="nav-link"
-          id="history-tab"
-          data-bs-toggle="tab"
-          data-bs-target="#booking-history"
-          type="button"
-          role="tab"
-          aria-controls="booking-history"
-          aria-selected="false"
-        >
+        <button class="nav-link" id="history-tab" data-bs-toggle="tab" data-bs-target="#booking-history" type="button"
+          role="tab" aria-controls="booking-history" aria-selected="false">
           Booking History
         </button>
       </li>
@@ -41,12 +25,7 @@
 
     <div class="tab-content" id="profileTabContent">
       <!-- Current booking tab -->
-      <div
-        class="tab-pane fade show active"
-        id="current-status"
-        role="tabpanel"
-        aria-labelledby="current-tab"
-      >
+      <div class="tab-pane fade show active" id="current-status" role="tabpanel" aria-labelledby="current-tab">
         <div v-if="currentBooking" class="alert alert-info" role="alert">
           <h4 class="alert-heading">
             Upcoming Flight: {{ currentBooking.flight.fromLocation }} to
@@ -69,31 +48,19 @@
       </div>
 
       <!-- Booking history tab -->
-      <div
-        class="tab-pane fade"
-        id="booking-history"
-        role="tabpanel"
-        aria-labelledby="history-tab"
-      >
-        <div
-          v-for="booking in bookingHistory"
-          :key="booking.bookingId"
-          class="card shadow-sm mb-3"
-        >
+      <div class="tab-pane fade" id="booking-history" role="tabpanel" aria-labelledby="history-tab">
+        <div v-for="booking in bookingHistory" :key="booking.bookingId" class="card shadow-sm mb-3">
           <div class="card-body">
             <div class="d-flex justify-content-between align-items-center">
               <h5 class="mb-1 fw-bold">
                 Departure: {{ booking.flight.fromLocation }} to
                 {{ booking.flight.toLocation }}
               </h5>
-              <span
-                class="badge"
-                :class="{
-                  'bg-success': booking.status === 'Completed',
-                  'bg-warning text-dark': booking.status === 'Cancelled',
-                  'bg-info text-dark': booking.status === 'Confirmed'
-                }"
-              >
+              <span class="badge" :class="{
+                'bg-success': booking.status === 'Completed',
+                'bg-warning text-dark': booking.status === 'Cancelled',
+                'bg-info text-dark': booking.status === 'Confirmed'
+              }">
                 {{ booking.status }}
               </span>
             </div>
@@ -111,12 +78,12 @@
         </div>
       </div>
     </div>
-  </main>
+  </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
 import api from '@/api/api.js'
+import { onMounted, ref } from 'vue'
 
 const user = ref({
   firstName: 'User',

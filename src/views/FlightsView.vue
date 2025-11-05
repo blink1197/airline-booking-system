@@ -13,7 +13,7 @@ const { flights, isSearching, error } = storeToRefs(flightStore)
 
 <template>
   <div class="container-fluid d-flex flex-column p-0 flight flights-page">
-    <main class="container-fluid px-2 pt-1 pb-2">
+    <div class="container-fluid px-2 pt-1 pb-2">
       <!-- Progress -->
       <ProgressBar title="Flights" :steps="5" :currentStep="1" />
 
@@ -22,7 +22,8 @@ const { flights, isSearching, error } = storeToRefs(flightStore)
         <FlightSearchModifier />
 
         <!-- Filters header -->
-        <div class="mx-1 mt-1 mb-3 py-2 d-flex justify-content-between align-items-center smaller-text">
+        <div class="mx-1 mt-1 mb-3 py-2 d-flex justify-content-between align-items-center smaller-text"
+          v-if="flights.length !== 0">
           <span class="d-flex gap-1 justify-content-between align-items-center">
             <i class="bi bi-funnel"></i>
             Filters
@@ -39,22 +40,23 @@ const { flights, isSearching, error } = storeToRefs(flightStore)
             <p class="mt-2 small">Searching flights...</p>
           </div>
 
-          <div v-else-if="error" class="alert alert-danger text-center">
-            {{ error }}
+          <div v-else-if="error" class="alert alert-danger text-center mt-2">
+            {{ error }}. Please try again.
           </div>
 
           <div v-else-if="flights.length === 0" class="text-center py-5">
-            <p class="text-muted">No flights found for the selected route.</p>
+            <p class="text-muted">No flights found.</p>
           </div>
 
           <FlightListItem v-else v-for="(flight, index) in flights" :key="flight.flightNumber" :flightData="flight"
             :index="index" />
         </div>
       </div>
-    </main>
+    </div>
 
     <!-- Sticky Button -->
-    <StickyButtonGroup primaryText="Continue" primaryLink="/guests" secondaryText="Back" :showSecondary="false" />
+    <StickyButtonGroup primaryText="Continue" primaryLink="/guests" secondaryText="Back" :showSecondary="false"
+      v-if="flights.length !== 0" />
   </div>
 </template>
 

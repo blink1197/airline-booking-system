@@ -18,7 +18,7 @@ onMounted(() => {
 
 <template>
   <div class="container-fluid d-flex flex-column min-vh-100 p-0">
-    <main class="container-fluid">
+    <div class="container-fluid p-0">
       <section class="hero container py-5">
         <h1
           class="hero-title d-flex flex-column justify-content-center align-items-center gap-2 fw-bold fs-1 mb-5 mt-5 pt-md-5">
@@ -56,7 +56,7 @@ onMounted(() => {
           </div>
         </div>
       </section>
-    </main>
+    </div>
   </div>
 </template>
 

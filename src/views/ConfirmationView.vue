@@ -4,7 +4,7 @@ import ProgressBar from '@/components/common/ProgressBar.vue';
 
 <template>
   <div class="container-fluid d-flex flex-column p-0 flight confirmation-page">
-    <main class="container-fluid px-2 pt-1 pb-2">
+    <div class="container-fluid px-2 pt-1 pb-2">
       <!-- Progress Bar -->
       <ProgressBar title="Confirmation" :steps="5" :currentStep="6" />
 
@@ -127,7 +127,7 @@ import ProgressBar from '@/components/common/ProgressBar.vue';
         </div>
       </div>
 
-    </main>
+    </div>
   </div>
 </template>
 

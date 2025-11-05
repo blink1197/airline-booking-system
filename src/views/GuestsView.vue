@@ -110,7 +110,7 @@ watch(contactForm, (v) => contactStore.setContact(v), { deep: true })
 
 <template>
   <div class="container-fluid d-flex flex-column p-0 flight guests-page">
-    <main class="container-fluid px-2 pt-1 pb-2">
+    <div class="container-fluid px-2 pt-1 pb-2">
       <!-- Progress Bar -->
       <ProgressBar title="Guests" :steps="5" :currentStep="2" />
 
@@ -134,7 +134,7 @@ watch(contactForm, (v) => contactStore.setContact(v), { deep: true })
       <!-- Sticky Button -->
       <StickyButtonGroup primaryText="Continue" primaryLink="/add-ons" secondaryText="Back" secondaryLink="/flights"
         :showSecondary="true" />
-    </main>
+    </div>
   </div>
 </template>
 

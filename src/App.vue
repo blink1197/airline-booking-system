@@ -5,13 +5,30 @@ import NavbarComponent from './components/layout/NavbarComponent.vue';
 </script>
 
 <template>
-  <header>
-    <NavbarComponent />
-  </header>
+  <div class="app-container">
+    <header>
+      <NavbarComponent />
+    </header>
 
-  <RouterView />
+    <main class="main-content">
+      <RouterView />
+    </main>
 
-  <FooterComponent />
+    <footer>
+      <FooterComponent />
+    </footer>
+  </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  /* pushes footer to bottom if content is short */
+}
+</style>
