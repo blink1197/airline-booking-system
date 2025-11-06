@@ -10,15 +10,16 @@ import { usePassengersStore } from '@/stores/passengers'
 import { computed, ref, watch } from 'vue'
 
 // Stores
-const flightStore = useFlightSearchStore()
-const passengersStore = usePassengersStore()
-const contactStore = useContactStore()
+const flightStore = useFlightSearchStore();
+const { pax, to, from, cabin } = flightStore;
+const passengersStore = usePassengersStore();
+const contactStore = useContactStore();
 
-const { pax, to, from, cabin } = flightStore
-const activeTabIndex = ref(0)
+const activeTabIndex = ref(0);
 
 // Generate Passenger Tabs
 const tabItems = computed(() => {
+  if (!from || !to) return [];
   const items = []
   let id = 1
 
@@ -87,8 +88,6 @@ function copyFirstGuestDetails(isChecked) {
   }
 }
 
-
-
 // Watchers
 watch(
   tabItems,
@@ -109,7 +108,6 @@ watch(
   },
   { immediate: true }
 )
-
 // Sync passenger forms to Pinia
 watch(passengerForms, (v) => {
   passengersStore.setPassengers(v)
@@ -119,6 +117,20 @@ watch(passengerForms, (v) => {
 watch(contactForm, (v) => {
   contactStore.setContact(v)
 }, { deep: true })
+
+// Redirect users to home if they proceeded to this page withoug
+defineOptions({
+  beforeRouteEnter(to, from, next) {
+    const flightStore = useFlightSearchStore()
+    if (!flightStore.selectedFlight) {
+      next({ name: 'flights' })
+    } else {
+      next()
+    }
+  },
+})
+
+
 </script>
 
 <template>
