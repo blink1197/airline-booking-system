@@ -18,5 +18,5 @@ export const usePassengersStore = defineStore('passengers', () => {
     resetPassengers
   }
 }, {
-  persist: true
+  persist: false
 })
