@@ -32,7 +32,7 @@ const tabItems = computed(() => {
         id: id++,
         label: `${type} ${i + 1}`,
         icon: 'bi bi-person',
-        itenerary: `${from._id} ⟶ ${to._id}`,
+        itenerary: `${from.airportId} ⟶ ${to.airportId}`,
         cabin: `${cabin} Class`,
       })
     }
