@@ -6,10 +6,11 @@ import ProgressBar from '@/components/common/ProgressBar.vue';
 import CardComponent from '@/components/ui/CardComponent.vue';
 import StickyButtonGroup from '@/components/ui/StickyButtonGroup.vue';
 import { useAddonsStore } from '@/stores/add-ons';
+import { useFlightSearchStore } from '@/stores/flightSearch';
 import { computed } from 'vue';
 
 const addOnStore = useAddonsStore();
-const { addOns, toggleAddOn } = addOnStore
+const { addOns, toggleAddOn } = addOnStore;
 
 // Function to handle toggling the add-on
 function toggleAddon(name) {
@@ -37,7 +38,21 @@ const travelInsuranceProps = computed(() => {
   };
 });
 
+
+// Redirect users to home if they proceeded to this page without selectedFlight in the store
+defineOptions({
+  beforeRouteEnter(to, from, next) {
+    const flightStore = useFlightSearchStore()
+    if (!flightStore.selectedFlight) {
+      next({ name: 'flights' })
+    } else {
+      next()
+    }
+  },
+})
 </script>
+
+
 
 <template>
   <div class="container-fluid d-flex flex-column p-0 flight addons-page">

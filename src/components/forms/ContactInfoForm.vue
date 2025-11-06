@@ -50,17 +50,20 @@ const localForm = computed({
         <div class="col-12">
           <div class="row g-2">
             <div class="col-3 col-md-2">
-              <label for="title" class="form-label extra-small-text-bold">Title*</label>
+              <label for="title" class="form-label extra-small-text-bold">Title<span
+                  class="text-danger">*</span></label>
               <DropdownComponent label="" placeholder="Select" v-model="localForm.title" :items="['Mr', 'Ms']"
                 :is-disabled="localForm.useFirstGuestDetails" />
             </div>
             <div class="col-9 col-md-5">
-              <label for="firstName" class="form-label extra-small-text-bold">First Name*</label>
+              <label for="firstName" class="form-label extra-small-text-bold">First Name<span
+                  class="text-danger">*</span></label>
               <input type="text" class="form-control" :disabled="localForm.useFirstGuestDetails" id="firstName"
                 v-model="localForm.firstName" />
             </div>
             <div class="col-12 col-md-5">
-              <label for="lastName" class="form-label extra-small-text-bold">Last Name*</label>
+              <label for="lastName" class="form-label extra-small-text-bold">Last Name<span
+                  class="text-danger">*</span></label>
               <input type="text" class="form-control" :disabled="localForm.useFirstGuestDetails" id="lastName"
                 v-model="localForm.lastName" />
             </div>
@@ -76,12 +79,14 @@ const localForm = computed({
         <div class="col-12 mt-0">
           <div class="row g-2">
             <div class="col-4 col-md-4">
-              <label for="countryCode" class="form-label extra-small-text-bold">Country Code*</label>
+              <label for="countryCode" class="form-label extra-small-text-bold">Country Code<span
+                  class="text-danger">*</span></label>
               <input type="text" class="form-control" id="countryCode" v-model="localForm.countryCode"
                 placeholder="e.g. +63" />
             </div>
             <div class="col-8 col-md-8">
-              <label for="mobileNumber" class="form-label extra-small-text-bold">Mobile Number*</label>
+              <label for="mobileNumber" class="form-label extra-small-text-bold">Mobile Number<span
+                  class="text-danger">*</span></label>
               <input type="text" class="form-control" id="mobileNumber" v-model="localForm.mobileNumber"
                 placeholder="e.g. 9123456789" />
             </div>
@@ -90,13 +95,14 @@ const localForm = computed({
 
         <!-- Email fields -->
         <div class="col-12 col-md-9">
-          <label for="email" class="form-label small-text-bold">Email*</label>
+          <label for="email" class="form-label small-text-bold">Email<span class="text-danger">*</span></label>
           <input type="email" class="form-control" id="email" v-model="localForm.email"
             placeholder="email@example.com" />
         </div>
 
         <div class="col-12 col-md-9">
-          <label for="confirmEmail" class="form-label small-text-bold">Confirm Email*</label>
+          <label for="confirmEmail" class="form-label small-text-bold">Confirm Email<span
+              class="text-danger">*</span></label>
           <input type="email" class="form-control" id="confirmEmail" v-model="localForm.confirmEmail"
             placeholder="email@example.com" />
         </div>

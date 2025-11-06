@@ -63,15 +63,17 @@ const localForm = computed({
       <div class="col-12">
         <div class="row g-2">
           <div class="col-4 col-md-2">
-            <label for="title" class="form-label extra-small-text-bold">Title*</label>
+            <label for="title" class="form-label extra-small-text-bold">Title<span class="text-danger">*</span></label>
             <DropdownComponent label="" placeholder="Select" v-model="localForm.title" :items="['Mr', 'Ms']" />
           </div>
           <div class="col-8 col-md-5">
-            <label for="firstName" class="form-label extra-small-text-bold">First Name*</label>
+            <label for="firstName" class="form-label extra-small-text-bold">First Name<span
+                class="text-danger">*</span></label>
             <input type="text" class="form-control" id="firstName" v-model="localForm.firstName" />
           </div>
           <div class="col-12 col-md-5">
-            <label for="lastName" class="form-label extra-small-text-bold">Last Name*</label>
+            <label for="lastName" class="form-label extra-small-text-bold">Last Name<span
+                class="text-danger">*</span></label>
             <input type="text" class="form-control" id="lastName" v-model="localForm.lastName" />
           </div>
         </div>
@@ -80,7 +82,7 @@ const localForm = computed({
 
     <!-- Birth -->
     <div>
-      <p class="small-text-bold m-0">Birth</p>
+      <p class="small-text-bold m-0">Birth<span class="text-danger">*</span></p>
     </div>
     <div class="row ">
       <div class="col-12 d-flex gap-2 mt-1">
@@ -102,7 +104,7 @@ const localForm = computed({
 
     <div class="row mt-1">
       <div class="col-8">
-        <label class="form-label small-text-bold">Nationality*</label>
+        <label class="form-label small-text-bold">Nationality<span class="text-danger">*</span></label>
         <input v-model="localForm.nationality" type="text" class="form-control" />
       </div>
     </div>

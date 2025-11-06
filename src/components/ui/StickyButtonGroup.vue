@@ -1,7 +1,8 @@
 <template>
   <div class="py-3 px-3 d-flex gap-2 sticky-bottom-btn flex-md-row justify-content-md-end">
     <!-- Primary Button -->
-    <router-link :to="primaryLink" class="btn btn-primary w-100 p-2 order-md-2 order-2">
+    <router-link :to="primaryLink" class="btn btn-primary w-100 p-2 order-md-2 order-2"
+      :class="{ 'disabled': isPrimaryDisabled }">
       {{ primaryText }}
     </router-link>
 
@@ -36,6 +37,10 @@ defineProps({
     type: Boolean,
     default: true,
   },
+  isPrimaryDisabled: {
+    type: Boolean,
+    default: false
+  }
 })
 </script>
 
@@ -52,5 +57,10 @@ defineProps({
   .btn {
     max-width: 25%;
   }
+}
+
+.router-link.disabled {
+  pointer-events: none;
+  opacity: 0.5;
 }
 </style>

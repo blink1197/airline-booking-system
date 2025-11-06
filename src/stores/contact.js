@@ -36,5 +36,5 @@ export const useContactStore = defineStore('contact', () => {
     resetContact
   }
 }, {
-  persist: true
+  persist: false
 })
