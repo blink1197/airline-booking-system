@@ -1,7 +1,26 @@
+<script setup>
+import airplane from '@/assets/images/airplane.png';
+
+</script>
+
 <template>
-  <div>
-    <h1>This is Not Found page</h1>
+  <div class="text-dark">
+    <div class="d-flex align-items-center justify-content-center min-vh-100 px-2">
+      <div class="text-center wrapper">
+        <img :src="airplane" class="img-fluid mb-5" />
+        <h1 class="display-1 fw-bold">404</h1>
+        <p class="fs-2 fw-medium mt-4">Oops! Page not found</p>
+        <p class="mt-4 mb-5">The page you're looking for doesn't exist or has been moved.</p>
+        <router-link :to="{ name: 'home' }" class="btn btn-light fw-semibold rounded-pill px-4 py-2 custom-btn">
+          Go Home
+        </router-link>
+      </div>
+    </div>
   </div>
 </template>
 
-<style></style>
+<style scoped>
+.wrapper {
+  margin-top: -200px;
+}
+</style>
