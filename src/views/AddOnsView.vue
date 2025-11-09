@@ -6,11 +6,16 @@ import ProgressBar from '@/components/common/ProgressBar.vue';
 import CardComponent from '@/components/ui/CardComponent.vue';
 import StickyButtonGroup from '@/components/ui/StickyButtonGroup.vue';
 import { useAddonsStore } from '@/stores/add-ons';
+import { useBookingStore } from '@/stores/booking';
 import { useFlightSearchStore } from '@/stores/flightSearch';
-import { computed } from 'vue';
+import { computed, nextTick } from 'vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const addOnStore = useAddonsStore();
+const bookingStore = useBookingStore();
 const { addOns, toggleAddOn } = addOnStore;
+const { bookFlight, isBooking, bookingError, bookedFlightDetails } = bookingStore;
 
 // Function to handle toggling the add-on
 function toggleAddon(name) {
@@ -37,6 +42,20 @@ const travelInsuranceProps = computed(() => {
     'onSecondary-click': () => toggleAddon('travel insurance')
   };
 });
+
+
+async function handlePrimaryBtnClick() {
+  const success = await bookFlight();
+
+  if (success && bookingStore.bookedFlightDetails) {
+    await nextTick();
+    router.push('/payment');
+  } else {
+    // Display booking error
+    console.log("error in booking: ", bookingError)
+  }
+
+}
 
 
 // Redirect users to home if they proceeded to this page without selectedFlight in the store
@@ -82,8 +101,8 @@ defineOptions({
         </div>
       </div>
       <!-- Sticky Button -->
-      <StickyButtonGroup primaryText="Continue" primaryLink="/payment" secondaryText="Back" secondaryLink="/guests"
-        :showSecondary="true" />
+      <StickyButtonGroup primaryText="Continue" :primaryFunction="handlePrimaryBtnClick" secondaryText="Back"
+        secondaryLink="/guests" :showSecondary="true" :isPrimaryDisabled="isBooking" />
     </div>
   </div>
 </template>
