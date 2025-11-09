@@ -11,7 +11,7 @@ import AirPlaneTakeOffIcon from '../icons/AirPlaneTakeOffIcon.vue'
 // Store setup
 const flightStore = useFlightSearchStore()
 const { selectFlight, clearSelectedFlight } = flightStore
-const { selectedFlight, pax } = storeToRefs(flightStore)
+const { selectedFlight, pax, cabin } = storeToRefs(flightStore)
 
 const props = defineProps({
   flightData: { type: Object, required: true },
@@ -40,11 +40,11 @@ const {
   flightDuration,
   flightNumber,
   airline,
-  basePrice
+  pricePerCabin
 } = props.flightData
 
 const totalPassengers = getTotalPassengers(pax.value);
-const totalPrice = basePrice * totalPassengers;
+const totalPrice = pricePerCabin[cabin.value.toLowerCase()] * totalPassengers;
 </script>
 
 <template>
