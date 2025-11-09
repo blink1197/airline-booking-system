@@ -5,7 +5,8 @@ export const usePassengersStore = defineStore('passengers', () => {
   const passengers = ref([])
 
   function setPassengers(data) {
-    passengers.value = data
+    const formattedData = data.map((passenger) => { return { ...passenger, dateOfBirth: `${passenger.year}-${passenger.month}-${passenger.day}` } })
+    passengers.value = formattedData
   }
 
   function resetPassengers() {
