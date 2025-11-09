@@ -1,29 +1,35 @@
 <template>
   <div class="py-3 px-3 d-flex gap-2 sticky-bottom-btn flex-md-row justify-content-md-end">
     <!-- Primary Button -->
-    <router-link :to="primaryLink" class="btn btn-primary w-100 p-2 order-md-2 order-2"
-      :class="{ 'disabled': isPrimaryDisabled }">
+    <component :is="primaryFunction ? 'button' : 'router-link'" :to="!primaryFunction ? primaryLink : undefined"
+      class="btn btn-primary w-100 p-2 order-md-2 order-2" :class="{ 'disabled': isPrimaryDisabled }"
+      @click="handlePrimaryClick">
       {{ primaryText }}
-    </router-link>
+    </component>
 
     <!-- Secondary Button (conditionally rendered) -->
-    <router-link v-if="showSecondary" :to="secondaryLink" class="btn btn-secondary w-100 p-2 ">
+    <router-link v-if="showSecondary" :to="secondaryLink" class="btn btn-secondary w-100 p-2"
+      :class="{ 'disabled': isSecondaryDisabled }">
       {{ secondaryText }}
     </router-link>
   </div>
 </template>
 
 <script setup>
-import { defineProps } from 'vue';
+import { defineProps } from 'vue'
 
-defineProps({
+const props = defineProps({
   primaryText: {
     type: String,
     default: 'Continue',
   },
   primaryLink: {
     type: [String, Object],
-    required: true,
+    default: null,
+  },
+  primaryFunction: {
+    type: Function,
+    default: null,
   },
   secondaryText: {
     type: String,
@@ -39,9 +45,26 @@ defineProps({
   },
   isPrimaryDisabled: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
+  isSecondaryDisabled: {
+    type: Boolean,
+    default: false,
+  },
 })
+
+function handlePrimaryClick(e) {
+  if (props.isPrimaryDisabled) {
+    e.preventDefault()
+    return
+  }
+
+  // If a custom function is passed, call it instead of navigating
+  if (props.primaryFunction) {
+    e.preventDefault()
+    props.primaryFunction()
+  }
+}
 </script>
 
 <style scoped>
@@ -59,7 +82,8 @@ defineProps({
   }
 }
 
-.router-link.disabled {
+.router-link.disabled,
+button.disabled {
   pointer-events: none;
   opacity: 0.5;
 }

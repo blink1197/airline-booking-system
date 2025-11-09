@@ -4,9 +4,9 @@ import { computed, reactive } from 'vue'
 export const useAddonsStore = defineStore(
   'addons', () => {
     const addOns = reactive({
-      'travel insurance': { addOnName: 'travel insurance', selected: true, price: 0 },
-      'extra baggage': { addOnName: 'extra baggage', selected: false, price: 0 },
-      'seat selector': { addOnName: 'seat selector', selected: false, price: 0 }
+      'travel insurance': { addOnName: 'travelInsurance', selected: true, price: 0 },
+      'extra baggage': { addOnName: 'extraBaggage', selected: false, price: 0 },
+      'seat selector': { addOnName: 'seatSelector', selected: false, price: 0 }
     })
 
     const addonsList = computed(() => Object.values(addOns))
