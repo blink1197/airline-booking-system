@@ -7,7 +7,7 @@ import { useFlightSearchStore } from '@/stores/flightSearch';
 import { storeToRefs } from 'pinia';
 
 const flightStore = useFlightSearchStore()
-const { flights, isSearching, error } = storeToRefs(flightStore)
+const { flights, isSearching, error, selectedFlight } = storeToRefs(flightStore)
 
 </script>
 
@@ -56,7 +56,7 @@ const { flights, isSearching, error } = storeToRefs(flightStore)
 
     <!-- Sticky Button -->
     <StickyButtonGroup primaryText="Continue" primaryLink="/guests" secondaryText="Back" :showSecondary="false"
-      v-if="flights.length !== 0" />
+      v-if="flights.length !== 0" :isPrimaryDisabled="!selectedFlight" />
   </div>
 </template>
 
