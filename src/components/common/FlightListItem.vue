@@ -66,7 +66,7 @@ const totalPrice = basePrice * totalPassengers;
               <slot name="departure-icon">
                 <AirPlaneTakeOffIcon width="18" height="12" />
               </slot>
-              <span class="smaller-text">{{ origin }}</span>
+              <span class="smaller-text">{{ origin.airportId }}</span>
             </span>
           </span>
 
@@ -83,7 +83,7 @@ const totalPrice = basePrice * totalPassengers;
               <slot name="arrival-icon">
                 <AirPlaneTakeLandingIcon width="18" height="12" />
               </slot>
-              <span class="smaller-text">{{ destination }}</span>
+              <span class="smaller-text">{{ destination.airportId }}</span>
             </span>
           </span>
         </div>
