@@ -4,8 +4,11 @@ import StickyButtonGroup from '@/components/ui/StickyButtonGroup.vue';
 import { useBookingStore } from '@/stores/booking';
 import { formatDateReadable, formatTimeReadable } from '@/utils/date';
 import { capitalize, formatMoney, formatTaxName } from '@/utils/string';
-import { computed, ref } from 'vue';
+import { computed, onBeforeMount, ref } from 'vue';
+import { useRouter } from 'vue-router';
 
+
+const router = useRouter();
 const bookingStore = useBookingStore();
 const { bookedFlightDetails } = bookingStore;
 
@@ -36,6 +39,11 @@ const cabinClass = computed(() => flightPrice.value?.cabin || '');
 const seatNumbers = computed(() => bookedFlightDetails?.seatNumbers || []);
 
 const termsAccepted = ref(false);
+
+onBeforeMount(() => {
+  if (!bookedFlightDetails) router.push('/flights');
+})
+
 </script>
 
 <template>
