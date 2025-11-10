@@ -14,7 +14,8 @@ export const useBookingStore = defineStore('booking', () => {
   const isBooking = ref(false);
   const bookingError = ref(null);
 
-  const bookedFlightDetails = ref(null)
+  const bookedFlightDetails = ref(null);
+  const paidFlightDetails = ref(null);
 
   const bookingData = computed(() => ({
     flightId: flightStore.selectedFlight._id,
@@ -55,6 +56,7 @@ export const useBookingStore = defineStore('booking', () => {
     bookingData,
     bookFlight,
     bookedFlightDetails,
+    paidFlightDetails,
     isBooking,
     bookingError,
     resetBooking
