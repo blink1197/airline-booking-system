@@ -1,9 +1,73 @@
 <script setup>
+import api from '@/api/api';
 import ProgressBar from '@/components/common/ProgressBar.vue';
 import PaymentForm from '@/components/forms/PaymentForm.vue';
 import StickyButtonGroup from '@/components/ui/StickyButtonGroup.vue';
+import { useBookingStore } from '@/stores/booking';
+import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
+const paymentForm = ref(null)
+const bookingStore = useBookingStore();
+const { bookedFlightDetails } = bookingStore;
+const { paidFlightDetails } = storeToRefs(bookingStore);
+
+const isloading = ref(false);
+
+const handlePayment = async () => {
+  try {
+    isloading.value = true;
+
+    // Validate form
+    const result = paymentForm.value.submitForm()
+    if (!result.valid) {
+      console.log('Form validation failed:', result.errors)
+      return
+    }
+
+    // Prepare request body
+    const {
+      firstName,
+      lastName,
+      streetAddress,
+      city,
+      country,
+      contactNumber,
+      email,
+      cardNumber,
+      cvv,
+      expDate,
+    } = result.data
+
+    const reqBody = {
+      bookingId: bookedFlightDetails._id,
+      amount: bookedFlightDetails.totalAmount,
+      paymentMethod: 'Credit Card',
+      billingInfo: { firstName, lastName, streetAddress, city, country, contactNumber, email },
+      cardInfo: { cardNumber, cvv, expDate },
+    }
+
+    // Call API
+    const response = await api.post('/payments/charge', reqBody)
+
+    // Handle API response
+    if (response.data.status === 'Success') {
+      console.log('Payment successful:', response.data)
+      paidFlightDetails.value = response.data.payment
+      router.push('/confirmation')
+    } else {
+      console.error('Payment failed:', response.data.message || response.data)
+      alert('Payment failed. Please try again.')
+    }
+  } catch (error) {
+    console.error('Error during payment:', error)
+    alert('An error occurred while processing your payment. Please try again.')
+  } finally {
+    isloading.value = false;
+  }
+}
 
 const termsAccepted = ref(false);
 </script>
@@ -20,7 +84,7 @@ const termsAccepted = ref(false);
       </div>
 
       <div class="px-2">
-        <PaymentForm />
+        <PaymentForm ref="paymentForm" />
       </div>
 
       <div class="payment-card mx-2 small-text-regular p-3 mb-4 bg-white rounded">
@@ -39,8 +103,8 @@ const termsAccepted = ref(false);
         </div>
       </div>
       <!-- Sticky Button -->
-      <StickyButtonGroup primaryText="Continue" primaryLink="/confirmation" secondaryText="Back"
-        secondaryLink="/payment" :showSecondary="true" />
+      <StickyButtonGroup primaryText="Continue" :primaryFunction="handlePayment" secondaryText="Back"
+        secondaryLink="/payment" :showSecondary="true" :isPrimaryDisabled="!termsAccepted" />
     </div>
   </div>
 </template>
