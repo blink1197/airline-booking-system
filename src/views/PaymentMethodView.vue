@@ -5,7 +5,7 @@ import PaymentForm from '@/components/forms/PaymentForm.vue';
 import StickyButtonGroup from '@/components/ui/StickyButtonGroup.vue';
 import { useBookingStore } from '@/stores/booking';
 import { storeToRefs } from 'pinia';
-import { ref } from 'vue';
+import { onBeforeMount, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
@@ -70,6 +70,10 @@ const handlePayment = async () => {
 }
 
 const termsAccepted = ref(false);
+
+onBeforeMount(() => {
+  if (!bookedFlightDetails) router.push('/flights');
+})
 </script>
 
 <template>
