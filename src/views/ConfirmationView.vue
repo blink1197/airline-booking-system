@@ -3,16 +3,25 @@ import BoardingPass from '@/components/common/BoardingPass.vue';
 import ProgressBar from '@/components/common/ProgressBar.vue';
 import ReceiptCard from '@/components/common/ReceiptCard.vue';
 import { useBookingStore } from '@/stores/booking';
-import { onBeforeMount } from 'vue';
+
 
 const bookingStore = useBookingStore();
 const { paidFlightDetails } = bookingStore;
 
-const passengers = paidFlightDetails.bookingId.passengers;
+const passengers = paidFlightDetails?.bookingId.passengers;
 
-onBeforeMount(() => {
-  if (!paidFlightDetails) router.push('/flights');
-})
+defineOptions({
+  beforeRouteEnter(to, from, next) {
+    const bookingStore = useBookingStore();
+    const paidFlightDetails = bookingStore.paidFlightDetails;
+
+    if (!paidFlightDetails) {
+      next('/flights');
+    } else {
+      next();
+    }
+  }
+});
 </script>
 
 <template>
