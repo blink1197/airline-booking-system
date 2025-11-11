@@ -9,7 +9,8 @@ import { reactive, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
-const { airports } = useAirportsStore();
+const airportStore = useAirportsStore();
+const { airports, isLoading } = storeToRefs(airportStore);
 const flightStore = useFlightSearchStore();
 const {
   tripType,
@@ -136,13 +137,15 @@ async function submitForm() {
 
       <!-- Departure -->
       <div class="col-12 col-md-6 mt-2">
-        <DestinationSelect label="Departure" v-model="form.from" :options="airports" placeholder="From" />
+        <DestinationSelect label="Departure" v-model="form.from" :options="airports" placeholder="From"
+          :is-disabled="isLoading" />
         <div class="text-danger small" style="min-height:1.5em">{{ errors.from }}</div>
       </div>
 
       <!-- Destination -->
       <div class="col-12 col-md-6 mt-2">
-        <DestinationSelect label="Destination" v-model="form.to" :options="airports" placeholder="To" />
+        <DestinationSelect label="Destination" v-model="form.to" :options="airports" placeholder="To"
+          :is-disabled="isLoading" />
         <div class="text-danger small" style="min-height:1.5em">{{ errors.to }}</div>
       </div>
 
