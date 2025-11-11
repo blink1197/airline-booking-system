@@ -5,19 +5,30 @@ import getawayImage3 from '@/assets/images/getaway3.jpg';
 import FlightSearchForm from '@/components/common/FlightSearchForm.vue';
 import CardComponent from '@/components/ui/CardComponent.vue';
 import { useAirportsStore } from '@/stores/airports';
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 
+const airportStore = useAirportsStore();
+const isReady = ref(false);
 
-const { fetchAirports } = useAirportsStore();
-
-onMounted(() => {
-  // Fetch airports
-  fetchAirports();
+onMounted(async () => {
+  try {
+    await airportStore.fetchAirports();
+  } catch (error) {
+    console.error("Failed to fetch airports:", error);
+  } finally {
+    isReady.value = true;
+  }
 });
 </script>
 
 <template>
-  <div class="container-fluid d-flex flex-column min-vh-100 p-0">
+  <div v-if="!isReady" class="d-flex justify-content-center align-items-center min-vh-100">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <div v-else class="container-fluid d-flex flex-column min-vh-100 p-0">
     <div class="container-fluid p-0">
       <section class="hero container py-5">
         <h1
@@ -36,7 +47,7 @@ onMounted(() => {
       <section class="getaways">
         <div class="container py-5">
           <h2 class="section-title mb-1">Discover the world's favorite getaways!</h2>
-          <p class="mb-5"> From beaches to cities — your dream destination awaits.</p>
+          <p class="mb-5">From beaches to cities — your dream destination awaits.</p>
           <div class="row g-4">
             <div class="col-md-6 col-lg-4">
               <CardComponent :image="getawayImage1" title="Iloilo"
@@ -59,7 +70,6 @@ onMounted(() => {
     </div>
   </div>
 </template>
-
 
 <style scoped>
 .hero {

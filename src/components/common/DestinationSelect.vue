@@ -1,34 +1,6 @@
-<template>
-  <div class="position-relative">
-    <label :for="id" class="form-label fw-semibold">{{ label }}</label>
-
-    <!-- Input Field -->
-    <input type="text" class="form-control" :id="id" v-model="searchTerm" :placeholder="placeholder"
-      @focus="isOpen = true" @blur="closeDropdown" @input="filterOptions" />
-
-    <!-- Dropdown List -->
-    <ul v-if="isOpen" class="list-group position-absolute w-100 mt-1 z-3" style="max-height: 220px; overflow-y: auto;">
-      <!-- Show filtered options -->
-      <li v-for="option in filteredOptions" :key="option.airportId" class="list-group-item list-group-item-action"
-        :class="{ active: option.airportId === selectedValue?.airportId }" @mousedown.prevent="selectOption(option)">
-        <div class="fw-semibold">
-          {{ option.city }} - {{ option.airportId }}
-        </div>
-        <div class="small fw-light">
-          {{ option.name }}, {{ option.country }}
-        </div>
-      </li>
-
-      <!-- No results message -->
-      <li v-if="filteredOptions.length === 0" class="list-group-item text-center text-muted" style="cursor: default;">
-        No airports found
-      </li>
-    </ul>
-  </div>
-</template>
-
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch } from 'vue';
+
 
 const props = defineProps({
   id: {
@@ -50,6 +22,10 @@ const props = defineProps({
   placeholder: {
     type: String,
     default: 'Type or select destination'
+  },
+  isDisabled: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -94,6 +70,36 @@ function closeDropdown() {
   setTimeout(() => (isOpen.value = false), 150)
 }
 </script>
+
+<template>
+  <div class="position-relative">
+    <label :for="id" class="form-label fw-semibold">{{ label }}</label>
+
+    <!-- Input Field -->
+    <input type="text" class="form-control" :id="id" v-model="searchTerm" :placeholder="placeholder"
+      @focus="isOpen = true" @blur="closeDropdown" @input="filterOptions" :disabled="isDisabled" />
+
+    <!-- Dropdown List -->
+    <ul v-if="isOpen" class="list-group position-absolute w-100 mt-1 z-3" style="max-height: 220px; overflow-y: auto;">
+      <!-- Show filtered options -->
+      <li v-for="option in filteredOptions" :key="option.airportId" class="list-group-item list-group-item-action"
+        :class="{ active: option.airportId === selectedValue?.airportId }" @mousedown.prevent="selectOption(option)">
+        <div class="fw-semibold">
+          {{ option.city }} - {{ option.airportId }}
+        </div>
+        <div class="small fw-light">
+          {{ option.name }}, {{ option.country }}
+        </div>
+      </li>
+
+      <!-- No results message -->
+      <li v-if="filteredOptions.length === 0" class="list-group-item text-center text-muted" style="cursor: default;">
+        No airports found
+      </li>
+    </ul>
+  </div>
+</template>
+
 
 <style scoped>
 .list-group-item {
