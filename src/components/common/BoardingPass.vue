@@ -25,8 +25,7 @@ const qrData = computed(() => {
 });
 const qrDataJSON = computed(() => JSON.stringify(qrData.value));
 
-async function downloadBoardingPass() {
-
+function downloadBoardingPass() {
   const baseURL =
     import.meta.env.MODE === "development"
       ? import.meta.env.VITE_AIRLINE_BOOKING_SYSTEM_API_LOCAL
@@ -34,11 +33,12 @@ async function downloadBoardingPass() {
 
   window.open(`${baseURL}/tickets/${props.bookingDetails._id}/${props.passengerDetails._id}?passengerIndex=${props.index}`, '_blank');
 }
+
 </script>
 
 <template>
-  <div class="confirmation-wrapper mb-4">
-    <div class="row confirmation-card mx-0 align-items-stretch">
+  <div class="mb-4">
+    <div class="row mx-0 align-items-stretch">
       <!-- Left color accent bar -->
       <div class="col-1 bg-primary rounded-start"></div>
 
