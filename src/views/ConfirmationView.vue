@@ -1,6 +1,7 @@
 <script setup>
 import BoardingPass from '@/components/common/BoardingPass.vue';
 import ProgressBar from '@/components/common/ProgressBar.vue';
+import ReceiptCard from '@/components/common/ReceiptCard.vue';
 import { useBookingStore } from '@/stores/booking';
 import { onBeforeMount } from 'vue';
 
@@ -20,7 +21,7 @@ onBeforeMount(() => {
       <!-- Progress Bar -->
       <ProgressBar title="Confirmation" :steps="5" :currentStep="6" />
 
-      <!-- Contact Information -->
+      <!-- Confirmation Message -->
       <div class="px-2">
         <div class="d-flex align-items-center mb-2">
           <div class="bg-success rounded-circle d-flex align-items-center justify-content-center me-2 flex-shrink-0">
@@ -28,61 +29,43 @@ onBeforeMount(() => {
           </div>
           <span class="normal-text-bold">Your flight is confirmed!</span>
         </div>
-        <p class="extra-small-text-regular mx-0 mb-4">
+        <p class="extra-small-text-regular mx-0">
           Your booking is complete. Check your flight details below
           and get ready for your trip.
         </p>
+
+        <p class="extra-small-text-regular mx-0">
+          You can track your <strong>booking and flight status</strong> anytime from your <strong>user account</strong>
+          using your booking number.
+        </p>
+        <p class="extra-small-text-regular mx-0 mb-4">
+          Don't have an account yet?
+          <router-link :to="{ path: '/register' }" target="_blank">
+            Sign up
+          </router-link>
+          here to easily manage your flights and future bookings.
+        </p>
       </div>
 
+      <!-- Boarding Passes -->
       <div class="px-2 mb-4">
         <h6 class="normal-text-bold">Boarding Pass</h6>
         <p class="extra-small-text-regular mt-0 mb-3">
           Present this boarding pass at the gate and keep it until baggage claim.
         </p>
-
       </div>
-
-
       <BoardingPass v-for="(passenger, index) in passengers" :bookingDetails="paidFlightDetails.bookingId"
         :passengerDetails="passenger" :index="index" />
 
-      <!-- <div class="row confirmation-card mx-0  mb-4">
-        <div class="col-1 bg-primary rounded-start">
-        </div>
-        <div class="col-11 p-2 bg-white container rounded-end p-md-4 ">
-          <p class="extra-small-text-regular text-center">Receipt Number: <strong>MNLCERT0001</strong>
-          </p>
-          <div class="mb-3">
-            <div class="d-flex">
-              <p class="p-0 m-0 extra-small-text-bold">Name:</p>
-              <p class="ms-auto p-0 m-0 extra-small-text-regular">FirstName LastName</p>
-            </div>
-            <div class="d-flex">
-              <p class="p-0 m-0 extra-small-text-bold">Card Number:</p>
-              <p class="ms-auto p-0 m-0 extra-small-text-regular">VISA xxxx xxxx xxxx 5465</p>
-            </div>
-            <div class="d-flex">
-              <p class="p-0 m-0 extra-small-text-bold">Basic Economy:</p>
-              <p class="ms-auto p-0 m-0 extra-small-text-regular">₱ 6,752.72</p>
-            </div>
-            <div class="d-flex">
-              <p class="p-0 m-0 extra-small-text-bold">Travel Insurance:</p>
-              <p class="ms-auto p-0 m-0 extra-small-text-regular">₱ 584.00</p>
-            </div>
-            <div class="d-flex">
-              <p class="p-0 m-0 extra-small-text-bold">Taxes and Fees:</p>
-              <p class="ms-auto p-0 m-0 extra-small-text-regular">₱ 0.00</p>
-            </div>
-            <div class="d-flex">
-              <p class="p-0 m-0 extra-small-text-bold">Total:</p>
-              <p class="ms-auto p-0 m-0 extra-small-text-bold">₱ 7,336.72</p>
-            </div>
-          </div>
-          <div class="">
-            <button class="btn btn-primary w-100">Download Receipt</button>
-          </div>
-        </div>
-      </div> -->
+      <!-- Receipt -->
+      <div class="px-2 mb-4">
+        <h6 class="normal-text-bold">Receipt</h6>
+        <p class="extra-small-text-regular mt-0 mb-3">
+          Here's everything included in your flight purchase.
+        </p>
+      </div>
+
+      <ReceiptCard />
 
     </div>
   </div>

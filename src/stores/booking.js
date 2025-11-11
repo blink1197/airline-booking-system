@@ -32,7 +32,6 @@ export const useBookingStore = defineStore('booking', () => {
       bookingError.value = null;
       const response = await api.post('/bookings', bookingData.value);
       bookedFlightDetails.value = response.data.booking
-      console.log(bookedFlightDetails)
       return true;
     } catch (err) {
       console.error("Error booking flight:", err);
