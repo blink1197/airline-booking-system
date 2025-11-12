@@ -2,14 +2,21 @@
   <div class="py-3 px-3 d-flex gap-2 sticky-bottom-btn flex-md-row justify-content-md-end">
     <!-- Primary Button -->
     <component :is="primaryFunction ? 'button' : 'router-link'" :to="!primaryFunction ? primaryLink : undefined"
-      class="btn btn-primary w-100 p-2 order-md-2 order-2" :class="{ 'disabled': isPrimaryDisabled }"
-      @click="handlePrimaryClick">
-      {{ primaryText }}
+      class="btn btn-primary w-100 p-2 order-md-2 order-2 d-flex align-items-center justify-content-center"
+      :disabled="isPrimaryDisabled || isLoading" @click="handlePrimaryClick">
+      <!-- Spinner and text -->
+      <template v-if="isLoading">
+        <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+        {{ primaryLoadingText }}
+      </template>
+      <template v-else>
+        {{ primaryText }}
+      </template>
     </component>
 
-    <!-- Secondary Button (conditionally rendered) -->
+    <!-- Secondary Button -->
     <router-link v-if="showSecondary" :to="secondaryLink" class="btn btn-secondary w-100 p-2"
-      :class="{ 'disabled': isSecondaryDisabled }">
+      :class="{ disabled: isSecondaryDisabled }">
       {{ secondaryText }}
     </router-link>
   </div>
@@ -51,15 +58,22 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  isLoading: {
+    type: Boolean,
+    default: false,
+  },
+  primaryLoadingText: {
+    type: String,
+    default: 'Loading...',
+  },
 })
 
 function handlePrimaryClick(e) {
-  if (props.isPrimaryDisabled) {
+  if (props.isPrimaryDisabled || props.isLoading) {
     e.preventDefault()
     return
   }
 
-  // If a custom function is passed, call it instead of navigating
   if (props.primaryFunction) {
     e.preventDefault()
     props.primaryFunction()
@@ -82,9 +96,9 @@ function handlePrimaryClick(e) {
   }
 }
 
-.router-link.disabled,
-button.disabled {
+button:disabled,
+.router-link.disabled {
   pointer-events: none;
-  opacity: 0.5;
+  opacity: 0.6;
 }
 </style>
