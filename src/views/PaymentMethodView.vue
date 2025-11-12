@@ -14,11 +14,11 @@ const bookingStore = useBookingStore();
 const { bookedFlightDetails } = bookingStore;
 const { paidFlightDetails } = storeToRefs(bookingStore);
 
-const isloading = ref(false);
+const isLoading = ref(false);
 
 const handlePayment = async () => {
   try {
-    isloading.value = true;
+    isLoading.value = true;
 
     // Validate form
     const result = paymentForm.value.submitForm()
@@ -54,7 +54,6 @@ const handlePayment = async () => {
 
     // Handle API response
     if (response.data.status === 'Success') {
-      console.log('Payment successful:', response.data)
       paidFlightDetails.value = response.data.payment
       router.push('/confirmation')
     } else {
@@ -65,7 +64,7 @@ const handlePayment = async () => {
     console.error('Error during payment:', error)
     alert('An error occurred while processing your payment. Please try again.')
   } finally {
-    isloading.value = false;
+    isLoading.value = false;
   }
 }
 
