@@ -20,17 +20,27 @@
             <router-link class="nav-link" to="/">Home</router-link>
             <router-link class="nav-link" to="/about">About</router-link>
             <router-link class="nav-link" to="/contact">Contact</router-link>
-            <router-link class="nav-link" to="/login">Sign In</router-link>
-            <router-link class="btn btn-primary" to="/register" role="button">Sign Up</router-link>
+            <router-link class="nav-link" to="/admin" v-if="isLoggedIn && isAdmin">Dashboard</router-link>
+            <router-link class="nav-link" to="/login" v-if="!isLoggedIn">Sign In</router-link>
+            <button class="btn btn-outline-primary" @click="logout" v-if="isLoggedIn">Log out</button>
+            <router-link class="btn btn-primary" to="/register" role="button" v-if="!isLoggedIn">Sign Up</router-link>
           </div>
         </div>
       </div>
     </div>
   </nav>
+
+
 </template>
 
 <script setup>
-import { computed, nextTick, ref } from 'vue'
+import { useUserStore } from '@/stores/user';
+import { storeToRefs } from 'pinia';
+import { computed, nextTick, ref } from 'vue';
+
+const userStore = useUserStore();
+const { logout } = userStore;
+const { isLoggedIn, isAdmin } = storeToRefs(userStore)
 
 const visible = ref(false)
 const menu = ref(null)
