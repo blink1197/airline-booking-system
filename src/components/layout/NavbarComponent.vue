@@ -20,6 +20,7 @@
             <router-link class="nav-link" to="/">Home</router-link>
             <router-link class="nav-link" to="/about">About</router-link>
             <router-link class="nav-link" to="/contact">Contact</router-link>
+            <router-link class="nav-link" to="/profile" v-if="isLoggedIn && !isAdmin">Profile</router-link>
             <router-link class="nav-link" to="/admin" v-if="isLoggedIn && isAdmin">Dashboard</router-link>
             <router-link class="nav-link" to="/login" v-if="!isLoggedIn">Sign In</router-link>
             <button class="btn btn-outline-primary" @click="logout" v-if="isLoggedIn">Log out</button>
