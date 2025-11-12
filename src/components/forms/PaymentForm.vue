@@ -239,4 +239,8 @@ img {
 .text-danger {
   font-size: 0.8rem;
 }
+
+.form-control {
+  border-color: var(--color-primary) !important;
+}
 </style>
