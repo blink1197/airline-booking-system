@@ -1,10 +1,13 @@
 <script setup>
 
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-import api from '../api/api.js'
+import { useUserStore } from '@/stores/user.js';
+import { ref } from 'vue';
+import api from '../api/api.js';
 
-const router = useRouter()
+const userStore = useUserStore();
+
+const { login } = userStore;
+
 
 
 const email = ref('')
@@ -12,28 +15,12 @@ const password = ref('')
 
 
 const handleLogin = async () => {
-  try {
-    const res = await api.post('/users/login', {
-      email: email.value,
-      password: password.value
-    })
+  const result = await login(email.value, password.value);
 
-    // Store token
-    localStorage.setItem('token', res.data.token)
-
-    // store user object
-    const user = res.data.user
-    localStorage.setItem('user', JSON.stringify(user))
-
-    // redirect based on role
-    if (user.role === "Admin") {
-      router.push("/admin")
-    } else {
-      router.push("/profile")
-    }
-  } catch (err) {
-    alert('Invalid email or password');
+  if (!result.success) {
+    alert(result.message)
   }
+
 };
 
 

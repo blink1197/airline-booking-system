@@ -23,18 +23,19 @@
       </li>
     </ul>
 
-    <div class="tab-content" id="profileTabContent">
+    <div class="tab-content" id="profileTabContents">
       <!-- Current booking tab -->
       <div class="tab-pane fade show active" id="current-status" role="tabpanel" aria-labelledby="current-tab">
-        <div v-if="currentBooking" class="alert alert-info" role="alert">
+        <div v-if="currentBooking && currentBooking.flights && currentBooking.flights.length" class="alert alert-info"
+          role="alert">
           <h4 class="alert-heading">
-            Upcoming Flight: {{ currentBooking.flight.fromLocation }} to
-            {{ currentBooking.flight.toLocation }}
+            Upcoming Flight: {{ currentBooking.flights[0].origin.airportId }} to
+            {{ currentBooking.flights[0].destination.airportId }}
           </h4>
           <p>
-            Flight {{ currentBooking.flight.flightId }}. Departure:
-            {{ formatDate(currentBooking.flight.departureDate) }} at
-            {{ formatTime(currentBooking.flight.departureDate) }}. Status:
+            Flight {{ currentBooking.flights[0].flightNumber }}. Departure:
+            {{ formatDateReadable(currentBooking.flights[0].departureTime) }} at
+            {{ formatTimeReadable(currentBooking.flights[0].departureTime) }}. Status:
             <strong>{{ currentBooking.status }}</strong>.
           </p>
           <hr>
@@ -53,8 +54,8 @@
           <div class="card-body">
             <div class="d-flex justify-content-between align-items-center">
               <h5 class="mb-1 fw-bold">
-                Departure: {{ booking.flight.fromLocation }} to
-                {{ booking.flight.toLocation }}
+                Departure: {{ booking.flights[0].origin.airportId }} to
+                {{ booking.flights[0].destination.airportId }}
               </h5>
               <span class="badge" :class="{
                 'bg-success': booking.status === 'Completed',
@@ -65,10 +66,10 @@
               </span>
             </div>
             <p class="mb-1 text-muted">
-              Flight {{ booking.flight.flightId }} •
-              {{ formatDate(booking.flight.departureDate) }}
+              Flight {{ booking.flights[0].flightNumber }} •
+              {{ formatDateReadable(booking.flights[0].departureTime) }}
             </p>
-            <small>Total paid: {{ booking.totalAmount }} PHP</small>
+            <small>Total paid: {{ formatMoney(booking.totalAmount) }} PHP</small>
           </div>
         </div>
 
@@ -82,14 +83,15 @@
 </template>
 
 <script setup>
-import api from '@/api/api.js'
-import { onMounted, ref } from 'vue'
+import api from '@/api/api.js';
+import { useUserStore } from '@/stores/user';
+import { formatDateReadable, formatTimeReadable } from '@/utils/date';
+import { formatMoney } from '@/utils/string';
+import { onMounted, ref } from 'vue';
 
-const user = ref({
-  firstName: 'User',
-  lastName: '',
-  email: ''
-})
+const userStore = useUserStore();
+
+const { user } = userStore;
 
 const currentBooking = ref(null)
 const bookingHistory = ref([])
@@ -98,15 +100,6 @@ const bookingHistory = ref([])
 const formatDate = (datetime) => new Date(datetime).toLocaleDateString()
 const formatTime = (datetime) => new Date(datetime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
 
-// Fetch user info
-const fetchUserProfile = async () => {
-  try {
-    const res = await api.get('/users/details')
-    user.value = res.data
-  } catch (err) {
-    console.error(err)
-  }
-}
 
 // Fetch current booking
 const fetchCurrentBooking = async () => {
@@ -114,7 +107,7 @@ const fetchCurrentBooking = async () => {
     const res = await api.get('/bookings/current')
     currentBooking.value = res.data
   } catch (err) {
-    console.error(err)
+    console.error('Error fetching current booking:', err)
   }
 }
 
@@ -123,13 +116,14 @@ const fetchBookingHistory = async () => {
   try {
     const res = await api.get('/bookings/history')
     bookingHistory.value = res.data
+    console.log('booking history after assignment:', bookingHistory.value)
   } catch (err) {
     console.error(err)
   }
 }
 
 onMounted(() => {
-  fetchUserProfile()
+  // fetchUserProfile()
   fetchCurrentBooking()
   fetchBookingHistory()
 })
