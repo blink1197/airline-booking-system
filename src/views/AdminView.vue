@@ -23,6 +23,22 @@
       <BookingManagement />
     </div>
 
+    <div v-if="section === 'airlines'">
+      <AirlineManagement />
+    </div>
+
+    <div v-if="section === 'airports'">
+      <AirportManagement />
+    </div>
+
+    <div v-if="section === 'passengers'">
+      <PassengerManagement />
+    </div>
+
+    <div v-if="section === 'payments'">
+      <PaymentManagement />
+    </div>
+
   </main>
 </template>
 
@@ -31,6 +47,10 @@ import { ref } from "vue";
 import UserManagement from "@/components/adminDashboard/UserManagement.vue";
 import FlightManagement from "@/components/adminDashboard/FlightManagement.vue";
 import BookingManagement from "@/components/adminDashboard/BookingManagement.vue";
+import AirlineManagement from "@/components/adminDashboard/AirlineManagement.vue";
+import AirportManagement from "@/components/adminDashboard/AirportManagement.vue";
+import PassengerManagement from "@/components/adminDashboard/PassengerManagement.vue";
+import PaymentManagement from "@/components/adminDashboard/PaymentManagement.vue";
 
 const section = ref("users"); // default section
 </script>
