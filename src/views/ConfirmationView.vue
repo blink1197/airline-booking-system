@@ -16,7 +16,7 @@ defineOptions({
     const paidFlightDetails = bookingStore.paidFlightDetails;
 
     if (!paidFlightDetails) {
-      next('/flights');
+      next('/');
     } else {
       next();
     }

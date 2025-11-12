@@ -118,12 +118,12 @@ watch(contactForm, (v) => {
   contactStore.setContact(v)
 }, { deep: true })
 
-// Redirect users to home if they proceeded to this page withoug
+// Redirect users to home if they proceeded to this page without selected flight
 defineOptions({
   beforeRouteEnter(to, from, next) {
     const flightStore = useFlightSearchStore()
     if (!flightStore.selectedFlight) {
-      next({ name: 'flights' })
+      next('/');
     } else {
       next()
     }
