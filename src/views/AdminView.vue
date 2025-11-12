@@ -10,16 +10,34 @@
       <button class="btn btn-primary" @click="section = 'payments'">Payments Management</button>
     </div>
 
-    <UserManagement v-if="section === 'users'" />
-    <!-- Other management components will be added here using v-if -->
+    <!-- Conditional rendering of components -->
+    <div v-if="section === 'users'">
+      <UserManagement />
+    </div>
+
+    <div v-if="section === 'flights'">
+      <FlightManagement />
+    </div>
+
+    <div v-if="section === 'bookings'">
+      <BookingManagement />
+    </div>
+
   </main>
 </template>
 
 <script setup>
 import { ref } from "vue";
 import UserManagement from "@/components/adminDashboard/UserManagement.vue";
-// Other management components will be added later
-// import FlightManagement from "@/components/adminDashboard/FlightManagement.vue";
+import FlightManagement from "@/components/adminDashboard/FlightManagement.vue";
+import BookingManagement from "@/components/adminDashboard/BookingManagement.vue";
 
 const section = ref("users"); // default section
 </script>
+
+
+<style scoped>
+button {
+  min-width: 150px;
+}
+</style>
