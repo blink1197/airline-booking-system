@@ -20,14 +20,21 @@ const handleLogin = async () => {
 
     // Store token
     localStorage.setItem('token', res.data.token)
-    console.log('Token saved:', localStorage.getItem('token'))
 
-    // Navigate after token is stored
-    router.push('/profile')
+    // store user object
+    const user = res.data.user
+    localStorage.setItem('user', JSON.stringify(user))
+
+    // redirect based on role
+    if (user.role === "Admin") {
+      router.push("/admin")
+    } else {
+      router.push("/profile")
+    }
   } catch (err) {
-    alert('Invalid email or password')
+    alert('Invalid email or password');
   }
-}
+};
 
 
 const getBookings = async () => {
