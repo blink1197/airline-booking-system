@@ -24,6 +24,7 @@ export const useUserStore = defineStore('user', () => {
 
   // Computed state
   const isLoggedIn = computed(() => !!(user.token && user.email));
+  const isAdmin = computed(() => user.role === 'Admin');
 
   // Fetch user details
   async function getUserDetails(token) {
@@ -111,6 +112,7 @@ export const useUserStore = defineStore('user', () => {
   return {
     user,
     isLoggedIn,
+    isAdmin,
     getUserDetails,
     login,
     logout,
