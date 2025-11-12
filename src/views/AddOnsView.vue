@@ -8,14 +8,19 @@ import StickyButtonGroup from '@/components/ui/StickyButtonGroup.vue';
 import { useAddonsStore } from '@/stores/add-ons';
 import { useBookingStore } from '@/stores/booking';
 import { useFlightSearchStore } from '@/stores/flightSearch';
-import { computed, nextTick } from 'vue';
+import { storeToRefs } from 'pinia';
+import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
 const addOnStore = useAddonsStore();
 const bookingStore = useBookingStore();
-const { addOns, toggleAddOn } = addOnStore;
-const { bookFlight, isBooking, bookingError, bookedFlightDetails } = bookingStore;
+
+const { toggleAddOn } = addOnStore;
+const { bookFlight } = bookingStore;
+
+const { addOns } = storeToRefs(addOnStore);
+const { isBooking, bookingError } = storeToRefs(bookingStore);
 
 // Function to handle toggling the add-on
 function toggleAddon(name) {
@@ -24,7 +29,7 @@ function toggleAddon(name) {
 
 // Computed object for Travel Insurance card props
 const travelInsuranceProps = computed(() => {
-  const selected = addOns['travel insurance'].selected;
+  const selected = addOns.value['travel insurance'].selected;
 
   return {
     image: insuranceImage,
@@ -47,12 +52,11 @@ const travelInsuranceProps = computed(() => {
 async function handlePrimaryBtnClick() {
   const success = await bookFlight();
 
-  if (success && bookingStore.bookedFlightDetails) {
-    await nextTick();
+  if (success) {
     router.push('/payment');
   } else {
     // Display booking error
-    console.log("error in booking: ", bookingError)
+    console.log("error in booking: ", bookingError.value)
   }
 
 }
@@ -63,7 +67,7 @@ defineOptions({
   beforeRouteEnter(to, from, next) {
     const flightStore = useFlightSearchStore()
     if (!flightStore.selectedFlight) {
-      next({ name: 'flights' })
+      next('/');
     } else {
       next()
     }
@@ -102,7 +106,8 @@ defineOptions({
       </div>
       <!-- Sticky Button -->
       <StickyButtonGroup primaryText="Continue" :primaryFunction="handlePrimaryBtnClick" secondaryText="Back"
-        secondaryLink="/guests" :showSecondary="true" :isPrimaryDisabled="isBooking" />
+        secondaryLink="/guests" :showSecondary="true" :isPrimaryDisabled="isBooking" primaryLoadingText="Processing..."
+        :isLoading="isBooking" />
     </div>
   </div>
 </template>
