@@ -26,6 +26,10 @@ export const useFlightSearchStore = defineStore(
     const selectedFlight = ref(null);
 
     async function searchFlights() {
+      // Reset selected flight
+
+      selectedFlight.value = null;
+
       const url = buildUrl("/flights/search", {
         origin: from.value.airportId,
         destination: to.value.airportId,

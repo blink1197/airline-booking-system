@@ -30,7 +30,7 @@ const localForm = computed({
 </script>
 
 <template>
-  <div class="row guests-card mx-0 shadow-sm border rounded overflow-hidden">
+  <div class="row guests-card mx-0 border rounded overflow-hidden">
     <div class="col-md-2 bg-primary d-none d-md-block"></div>
     <div class="col-12 col-md-10 p-3 bg-white">
       <form class="row g-3">
@@ -49,13 +49,13 @@ const localForm = computed({
         <!-- Name fields -->
         <div class="col-12">
           <div class="row g-2">
-            <div class="col-3 col-md-2">
+            <div class="col-4 col-md-2">
               <label for="title" class="form-label extra-small-text-bold">Title<span
                   class="text-danger">*</span></label>
               <DropdownComponent label="" placeholder="Select" v-model="localForm.title" :items="['Mr', 'Ms']"
                 :is-disabled="localForm.useFirstGuestDetails" />
             </div>
-            <div class="col-9 col-md-5">
+            <div class="col-8 col-md-5">
               <label for="firstName" class="form-label extra-small-text-bold">First Name<span
                   class="text-danger">*</span></label>
               <input type="text" class="form-control" :disabled="localForm.useFirstGuestDetails" id="firstName"
@@ -114,5 +114,9 @@ const localForm = computed({
 <style scoped>
 .form-control {
   border-color: var(--color-primary) !important;
+}
+
+.guests-card {
+  box-shadow: var(--shadow-card);
 }
 </style>

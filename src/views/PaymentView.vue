@@ -4,7 +4,7 @@ import StickyButtonGroup from '@/components/ui/StickyButtonGroup.vue';
 import { useBookingStore } from '@/stores/booking';
 import { formatDateReadable, formatTimeReadable } from '@/utils/date';
 import { capitalize, formatMoney, formatTaxName } from '@/utils/string';
-import { computed, onBeforeMount, ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 
@@ -40,9 +40,18 @@ const seatNumbers = computed(() => bookedFlightDetails?.seatNumbers || []);
 
 const termsAccepted = ref(false);
 
-onBeforeMount(() => {
-  if (!bookedFlightDetails) router.push('/flights');
-})
+defineOptions({
+  beforeRouteEnter(to, from, next) {
+    const bookingStore = useBookingStore();
+    const bookedFlightDetails = bookingStore.bookedFlightDetails;
+
+    if (!bookedFlightDetails) {
+      next('/');
+    } else {
+      next();
+    }
+  }
+});
 
 </script>
 
@@ -251,7 +260,7 @@ onBeforeMount(() => {
 
         <!-- BUTTONS -->
         <StickyButtonGroup primaryText="Continue" primaryLink="/payment-method" secondaryText="Back"
-          secondaryLink="/add-ons" :showSecondary="true" />
+          secondaryLink="/add-ons" :showSecondary="true" :isPrimaryDisabled="!termsAccepted" />
       </div>
     </div>
   </div>

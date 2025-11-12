@@ -5,7 +5,7 @@ import PaymentForm from '@/components/forms/PaymentForm.vue';
 import StickyButtonGroup from '@/components/ui/StickyButtonGroup.vue';
 import { useBookingStore } from '@/stores/booking';
 import { storeToRefs } from 'pinia';
-import { onBeforeMount, ref } from 'vue';
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
@@ -14,11 +14,11 @@ const bookingStore = useBookingStore();
 const { bookedFlightDetails } = bookingStore;
 const { paidFlightDetails } = storeToRefs(bookingStore);
 
-const isloading = ref(false);
+const isLoading = ref(false);
 
 const handlePayment = async () => {
   try {
-    isloading.value = true;
+    isLoading.value = true;
 
     // Validate form
     const result = paymentForm.value.submitForm()
@@ -54,7 +54,6 @@ const handlePayment = async () => {
 
     // Handle API response
     if (response.data.status === 'Success') {
-      console.log('Payment successful:', response.data)
       paidFlightDetails.value = response.data.payment
       router.push('/confirmation')
     } else {
@@ -65,15 +64,24 @@ const handlePayment = async () => {
     console.error('Error during payment:', error)
     alert('An error occurred while processing your payment. Please try again.')
   } finally {
-    isloading.value = false;
+    isLoading.value = false;
   }
 }
 
 const termsAccepted = ref(false);
 
-onBeforeMount(() => {
-  if (!bookedFlightDetails) router.push('/flights');
-})
+defineOptions({
+  beforeRouteEnter(to, from, next) {
+    const bookingStore = useBookingStore();
+    const bookedFlightDetails = bookingStore.bookedFlightDetails;
+
+    if (!bookedFlightDetails) {
+      next('/');
+    } else {
+      next();
+    }
+  }
+});
 </script>
 
 <template>
@@ -108,7 +116,8 @@ onBeforeMount(() => {
       </div>
       <!-- Sticky Button -->
       <StickyButtonGroup primaryText="Continue" :primaryFunction="handlePayment" secondaryText="Back"
-        secondaryLink="/payment" :showSecondary="true" :isPrimaryDisabled="!termsAccepted" />
+        secondaryLink="/payment" :showSecondary="true" :isPrimaryDisabled="!termsAccepted"
+        primaryLoadingText="Processing..." :isLoading="isLoading" />
     </div>
   </div>
 </template>

@@ -21,7 +21,7 @@ const router = createRouter({
 
     // Logged-in users
     { path: '/profile', name: 'profile', component: () => import('../views/ProfileView.vue'), meta: { requiresAuth: true, role: 'Customer' } },
-    
+
     // Admin
     { path: '/admin', name: 'admin', component: () => import('../views/AdminView.vue'), meta: { requiresAuth: true, role: 'Admin' } },
 
@@ -38,6 +38,10 @@ const router = createRouter({
 
 
   ],
+  scrollBehavior(to, from, savedPosition) {
+    // Always scroll to top
+    return { top: 0 }
+  },
 })
 
 router.beforeEach((to, from, next) => {

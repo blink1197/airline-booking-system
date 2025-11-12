@@ -10,7 +10,7 @@
     </div>
 
     <!-- Content Area -->
-    <div class="tab-content flex-grow-1 p-3 border rounded shadow-sm">
+    <div class="tab-content flex-grow-1 p-3 border rounded">
       <slot :activeTab="activeTab" :index="activeIndex" />
     </div>
   </div>
@@ -73,5 +73,9 @@ watch(() => props.modelValue, val => (activeIndex.value = val))
 .nav-link.active {
   background-color: var(--color-primary, #0d6efd);
   color: white;
+}
+
+.tab-content {
+  box-shadow: var(--shadow-card);
 }
 </style>
