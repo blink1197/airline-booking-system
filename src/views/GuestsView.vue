@@ -154,7 +154,7 @@ defineOptions({
       </div>
 
       <!-- Contact Information -->
-      <div class="px-2">
+      <div class="px-2 mb-3">
         <h6 class="mb-3 normal-text-bold">Contact Information</h6>
         <ContactInfoForm v-model="contactForm" @useGuestDetails="copyFirstGuestDetails" />
       </div>
