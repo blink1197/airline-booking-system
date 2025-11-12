@@ -260,7 +260,7 @@ defineOptions({
 
         <!-- BUTTONS -->
         <StickyButtonGroup primaryText="Continue" primaryLink="/payment-method" secondaryText="Back"
-          secondaryLink="/add-ons" :showSecondary="true" />
+          secondaryLink="/add-ons" :showSecondary="true" :isPrimaryDisabled="!termsAccepted" />
       </div>
     </div>
   </div>
