@@ -4,10 +4,11 @@ import HomeView from '../views/HomeView.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    // Public pages for guests & logged-in users
+    // Public pages for guests & logged-in userss
     { path: '/', name: 'home', component: HomeView },
     { path: '/about', name: 'about', component: () => import('../views/AboutView.vue') },
     { path: '/flights', name: 'flights', component: () => import('../views/FlightsView.vue') },
+    { path: '/guests', name: 'guests', component: () => import('../views/GuestsView.vue') },
     { path: '/add-ons', name: 'add-ons', component: () => import('../views/AddOnsView.vue') },
     { path: '/payment', name: 'payment', component: () => import('../views/PaymentView.vue') },
     { path: '/payment-method', name: 'payment-method', component: () => import('../views/PaymentMethodView.vue') },
@@ -15,7 +16,6 @@ const router = createRouter({
     { path: '/contact', name: 'contact', component: () => import('../views/ContactView.vue') },
 
     // Guest-only
-    { path: '/guests', name: 'guests', component: () => import('../views/GuestsView.vue'), meta: { guestOnly: true } },
     { path: '/login', name: 'login', component: () => import('../views/LoginView.vue'), meta: { guestOnly: true } },
     { path: '/register', name: 'register', component: () => import('../views/RegisterView.vue'), meta: { guestOnly: true } },
 
