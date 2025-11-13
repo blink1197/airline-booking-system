@@ -41,38 +41,44 @@
 
     <div class="tab-content" id="profileTabContents">
       <!-- Current booking tab -->
+      <!-- Current booking tab -->
       <div class="tab-pane fade show active" id="current-status" role="tabpanel" aria-labelledby="current-tab">
-        <div v-if="currentBooking && currentBooking.flights && currentBooking.flights.length"
-          class="card shadow-sm border-0 mb-4">
-          <div class="card-body">
-            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center">
-              <div>
-                <h4 class="fw-bold">
-                  {{ currentBooking.flights[0].origin.airportId }} → {{ currentBooking.flights[0].destination.airportId }}
-                </h4>
-                <p class="mb-1">
-                  Flight <strong>{{ currentBooking.flights[0].flightNumber }}</strong>
-                </p>
-                <p class="mb-1">
-                  Departure:
-                  {{ formatDateReadable(currentBooking.flights[0].departureTime) }}
-                  at
-                  {{ formatTimeReadable(currentBooking.flights[0].departureTime) }}
-                </p>
-              </div>
+        <div
+          v-if="currentBooking && currentBooking.flights && currentBooking.flights.length"
+          class="alert alert-info shadow-sm border-0"
+          role="alert"
+        >
+          <h4 class="alert-heading">
+            Upcoming Flight:
+            {{ currentBooking.flights[0].origin.airportId }}
+            to
+            {{ currentBooking.flights[0].destination.airportId }}
+          </h4>
 
-              <!-- Flight Status Badge -->
-              <span class="badge fs-6 mt-3 mt-md-0" :class="{
-                'bg-success': currentBooking.status === 'Confirmed',
-                'bg-warning text-dark': currentBooking.status === 'Pending',
-                'bg-danger': currentBooking.status === 'Cancelled'
-              }">
-                {{ currentBooking.status }}
-              </span>
-            </div>
-            <hr>
-            <p class="mb-0 text-muted">Your e-ticket and check-in details will be available soon.</p>
-          </div>
+          <p class="mb-2">
+            Flight <strong>{{ currentBooking.flights[0].flightNumber }}</strong>.
+            Departure:
+            {{ formatDateReadable(currentBooking.flights[0].departureTime) }}
+            at
+            {{ formatTimeReadable(currentBooking.flights[0].departureTime) }}.
+            Status:
+            <span
+              class="badge ms-1 px-2 py-1"
+              :class="{
+                'bg-success text-light': currentBooking.status?.toLowerCase() === 'confirmed',
+                'bg-warning text-dark': ['pending', 'created'].includes(currentBooking.status?.toLowerCase()),
+                'bg-danger text-light': currentBooking.status?.toLowerCase() === 'cancelled'
+              }"
+              style="font-size: 0.9rem;"
+            >
+              {{ currentBooking.status }}
+            </span>
+          </p>
+
+          <hr />
+          <p class="mb-0">
+            Your E-Ticket and check-in details are available below.
+          </p>
         </div>
 
         <div v-else class="text-center p-5 border rounded bg-light">
@@ -80,6 +86,8 @@
           <p class="text-muted">Start by adding a new booking.</p>
         </div>
       </div>
+
+
 
       <!-- Booking history tab -->
       <div class="tab-pane fade" id="booking-history" role="tabpanel" aria-labelledby="history-tab">
