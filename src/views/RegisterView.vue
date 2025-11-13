@@ -1,9 +1,9 @@
 <script setup>
+import { Notyf } from "notyf";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import api from "../api/api";
-import { Notyf } from "notyf";
-import "notyf/notyf.min.css";
+
 
 const router = useRouter();
 
@@ -133,101 +133,56 @@ const handleRegister = async (e) => {
                 <div class="row g-3 mb-3">
                   <div class="col">
                     <label class="form-label fw-bold">First Name</label>
-                    <input
-                      class="form-control py-2"
-                      v-model="firstName"
-                      @blur="validateField('firstName')"
-                      type="text"
-                      placeholder="First Name"
-                      required
-                    />
+                    <input class="form-control py-2" v-model="firstName" @blur="validateField('firstName')" type="text"
+                      placeholder="First Name" required />
                     <small v-if="errors.firstName" class="text-danger">{{ errors.firstName }}</small>
                   </div>
 
                   <div class="col">
                     <label class="form-label fw-bold">Last Name</label>
-                    <input
-                      class="form-control py-2"
-                      v-model="lastName"
-                      @blur="validateField('lastName')"
-                      type="text"
-                      placeholder="Last Name"
-                      required
-                    />
+                    <input class="form-control py-2" v-model="lastName" @blur="validateField('lastName')" type="text"
+                      placeholder="Last Name" required />
                     <small v-if="errors.lastName" class="text-danger">{{ errors.lastName }}</small>
                   </div>
                 </div>
 
                 <div class="mb-3">
                   <label class="form-label fw-bold">Email Address</label>
-                  <input
-                    class="form-control py-2"
-                    v-model="email"
-                    @blur="validateField('email')"
-                    type="email"
-                    placeholder="Email"
-                    required
-                  />
+                  <input class="form-control py-2" v-model="email" @blur="validateField('email')" type="email"
+                    placeholder="Email" required />
                   <small v-if="errors.email" class="text-danger">{{ errors.email }}</small>
                 </div>
 
                 <div class="mb-3">
                   <label class="form-label fw-bold">Mobile Number</label>
-                  <input
-                    class="form-control py-2"
-                    v-model="mobileNumber"
-                    @blur="validateField('mobileNumber')"
-                    type="text"
-                    placeholder="Mobile Number"
-                    required
-                  />
+                  <input class="form-control py-2" v-model="mobileNumber" @blur="validateField('mobileNumber')"
+                    type="text" placeholder="Mobile Number" required />
                   <small v-if="errors.mobileNumber" class="text-danger">{{ errors.mobileNumber }}</small>
                 </div>
 
                 <div class="mb-3">
                   <label class="form-label fw-bold">Date of Birth</label>
-                  <input
-                    class="form-control py-2"
-                    v-model="dateOfBirth"
-                    @blur="validateField('dateOfBirth')"
-                    type="date"
-                    required
-                  />
+                  <input class="form-control py-2" v-model="dateOfBirth" @blur="validateField('dateOfBirth')"
+                    type="date" required />
                   <small v-if="errors.dateOfBirth" class="text-danger">{{ errors.dateOfBirth }}</small>
                 </div>
 
                 <div class="mb-3">
                   <label class="form-label fw-bold">Password</label>
-                  <input
-                    class="form-control py-2"
-                    v-model="password"
-                    @blur="validateField('password')"
-                    type="password"
-                    placeholder="Password"
-                    required
-                  />
+                  <input class="form-control py-2" v-model="password" @blur="validateField('password')" type="password"
+                    placeholder="Password" required />
                   <small v-if="errors.password" class="text-danger">{{ errors.password }}</small>
                 </div>
 
                 <div class="mb-4">
                   <label class="form-label fw-bold">Confirm Password</label>
-                  <input
-                    class="form-control py-2"
-                    v-model="confirmPassword"
-                    @blur="validateField('confirmPassword')"
-                    type="password"
-                    placeholder="Confirm Password"
-                    required
-                  />
+                  <input class="form-control py-2" v-model="confirmPassword" @blur="validateField('confirmPassword')"
+                    type="password" placeholder="Confirm Password" required />
                   <small v-if="errors.confirmPassword" class="text-danger">{{ errors.confirmPassword }}</small>
                 </div>
 
                 <div class="d-grid mb-3">
-                  <button
-                    type="submit"
-                    class="btn btn-primary btn-lg fw-bold py-2"
-                    :disabled="isLoading"
-                  >
+                  <button type="submit" class="btn btn-primary btn-lg fw-bold py-2" :disabled="isLoading">
                     <span v-if="!isLoading">Sign Up</span>
                     <span v-else>
                       <i class="fas fa-spinner fa-spin me-2"></i> Registering...
@@ -257,6 +212,7 @@ const handleRegister = async (e) => {
   background-position: center;
   height: 480px;
 }
+
 .text-danger {
   font-size: 0.875rem;
 }

@@ -1,9 +1,9 @@
 <script setup>
 import { useUserStore } from '@/stores/user.js'
+import { Notyf } from 'notyf'
 import { ref } from 'vue'
 import api from '../api/api.js'
-import { Notyf } from 'notyf'
-import 'notyf/notyf.min.css'
+
 
 const userStore = useUserStore()
 const { login } = userStore
