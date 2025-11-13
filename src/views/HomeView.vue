@@ -6,9 +6,16 @@ import FlightSearchForm from '@/components/common/FlightSearchForm.vue';
 import CardComponent from '@/components/ui/CardComponent.vue';
 import { useAirportsStore } from '@/stores/airports';
 import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
 
+
+const router = useRouter();
 const airportStore = useAirportsStore();
 const isReady = ref(false);
+
+function handleGetAwayClick() {
+  router.push('/flights');
+}
 
 onMounted(async () => {
   try {
@@ -19,6 +26,8 @@ onMounted(async () => {
     isReady.value = true;
   }
 });
+
+
 </script>
 
 <template>
@@ -52,7 +61,7 @@ onMounted(async () => {
             <div class="col-md-6 col-lg-4">
               <CardComponent :image="getawayImage1" title="Iloilo"
                 description="Discover Iloilo: heritage streets, Spanish-era churches, delicious batchoy, and nearby beaches for the perfect quick escape"
-                primaryText="Book Now" miscText="PHP 1,299" />
+                primaryText="Book Now" miscText="PHP 1,299" @primary-click="handleGetAwayClick" />
             </div>
             <div class="col-md-6 col-lg-4">
               <CardComponent :image="getawayImage2" title="Macau"
