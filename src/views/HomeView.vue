@@ -66,12 +66,12 @@ onMounted(async () => {
             <div class="col-md-6 col-lg-4">
               <CardComponent :image="getawayImage2" title="Macau"
                 description="Macau dazzles with a mix of glitzy casinos, Portuguese heritage, cobblestone streets, and world-famous egg tarts."
-                primaryText="Book Now" miscText="PHP 4,900" />
+                primaryText="Book Now" miscText="PHP 4,900" @primary-click="handleGetAwayClick" />
             </div>
             <div class="col-md-6 col-lg-4">
               <CardComponent :image="getawayImage3" title="Laoag"
                 description="Laoag charms with historic churches, wind-swept sand dunes, and vibrant local markets—a gateway to Ilocos Norte's rich culture."
-                primaryText="Book Now" miscText="PHP 1,472" />
+                primaryText="Book Now" miscText="PHP 1,472" @primary-click="handleGetAwayClick" />
             </div>
           </div>
         </div>
