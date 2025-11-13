@@ -1,28 +1,43 @@
 <script setup>
+import { useUserStore } from '@/stores/user.js'
+import { ref } from 'vue'
+import api from '../api/api.js'
+import { Notyf } from 'notyf'
+import 'notyf/notyf.min.css'
 
-import { useUserStore } from '@/stores/user.js';
-import { ref } from 'vue';
-import api from '../api/api.js';
+const userStore = useUserStore()
+const { login } = userStore
 
-const userStore = useUserStore();
-
-const { login } = userStore;
-
-
-
+// refs
 const email = ref('')
 const password = ref('')
+const isLoading = ref(false)
 
+// notyf instance
+const notyf = new Notyf({
+  duration: 3000,
+  position: { x: 'right', y: 'bottom' }
+})
 
 const handleLogin = async () => {
-  const result = await login(email.value, password.value);
+  if (isLoading.value) return
+  isLoading.value = true
 
-  if (!result.success) {
-    alert(result.message)
+  try {
+    const result = await login(email.value, password.value)
+
+    if (result.success) {
+      notyf.success('Login successful! Welcome back.')
+    } else {
+      notyf.error(result.message || 'Login failed. Please try again.')
+    }
+  } catch (error) {
+    console.error(error)
+    notyf.error('An unexpected error occurred. Please try again later.')
+  } finally {
+    isLoading.value = false
   }
-
-};
-
+}
 
 const getBookings = async () => {
   try {
@@ -32,9 +47,8 @@ const getBookings = async () => {
     console.error(err)
   }
 }
-
-
 </script>
+
 
 <template>
   <div class="container mx-auto pt-md-3 pb-md-5">
@@ -64,7 +78,10 @@ const getBookings = async () => {
                     placeholder="Enter your password" required />
                 </div>
                 <div class="d-grid mb-3">
-                  <button type="submit" class="btn btn-primary btn-lg fw-bold py-2">Log In</button>
+                  <button type="submit" class="btn btn-primary btn-lg fw-bold py-2" :disabled="isLoading">
+                    <span v-if="!isLoading">Log In</span>
+                    <span v-else><i class="fas fa-spinner fa-spin me-2"></i>Logging in .....</span>
+                  </button>
                 </div>
                 <div class="text-center">
                   <a href="#" class="text-decoration-none">Forgot Password?</a>
