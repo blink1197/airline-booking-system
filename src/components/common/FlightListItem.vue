@@ -5,7 +5,7 @@ import { getTotalPassengers } from '@/utils/flightSearch'
 import { formatMoney } from '@/utils/string'
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
-import AirPlaneTakeLandingIcon from '../icons/AirPlaneTakeLandingIcon.vue'
+import AirPlaneTakeLandingIcon from '../icons/AirPlaneLandingIcon.vue'
 import AirPlaneTakeOffIcon from '../icons/AirPlaneTakeOffIcon.vue'
 
 // Store setup
