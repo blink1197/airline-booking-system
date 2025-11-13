@@ -10,9 +10,19 @@
 
     <!-- Add Booking Button -->
     <div class="d-flex justify-content-center justify-content-md-end mb-4">
-      <button class="btn btn-primary fw-bold px-4 py-2" @click="toggleFlightSearch">
-        <i class="bi bi-plus-lg me-2"></i>Add Booking
+      <button
+        class="btn btn-primary fw-bold px-4 py-2"
+        @click="toggleFlightSearch"
+        :disabled="isLoading"
+      >
+        <i class="bi bi-plus-lg me-2"></i>
+        <span v-if="!isLoading">Add Booking</span>
+        <span v-else>
+          <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+          Loading...
+        </span>
       </button>
+
     </div>
 
     <!-- Flight Search Form (Toggled) -->
@@ -141,8 +151,11 @@ const { user } = userStore;
 const currentBooking = ref(null);
 const bookingHistory = ref([]);
 const showFlightSearch = ref(false);
+const isLoading = ref(false);
+
 
 const notyf = new Notyf({ duration: 3000, position: { x: "right", y: "bottom" } });
+
 
 const toggleFlightSearch = () => {
   showFlightSearch.value = !showFlightSearch.value;
@@ -150,6 +163,7 @@ const toggleFlightSearch = () => {
 
 // Fetch current booking
 const fetchCurrentBooking = async () => {
+  isLoading.value = true;
   try {
     const res = await api.get('/bookings/current');
     currentBooking.value = res.data || null;
@@ -161,18 +175,27 @@ const fetchCurrentBooking = async () => {
       console.error("Error fetching current booking:", err);
       notyf.error("Failed to load your current booking.");
     }
+  } finally {
+    isLoading.value = false;
   }
 };
 
 // Fetch booking history
 const fetchBookingHistory = async () => {
+  isLoading.value = true;
   try {
     const res = await api.get('/bookings/history');
     bookingHistory.value = res.data;
   } catch (err) {
     console.error(err);
+    notyf.error("Failed to load booking history.");
+  } finally {
+    isLoading.value = false;
   }
 };
+
+
+
 
 onMounted(() => {
   fetchCurrentBooking();
