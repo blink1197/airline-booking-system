@@ -1,7 +1,11 @@
 <script setup>
+import { Notyf } from "notyf";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import api from "../api/api";
+
+
+const router = useRouter();
 
 const firstName = ref("");
 const lastName = ref("");
@@ -10,15 +14,75 @@ const password = ref("");
 const confirmPassword = ref("");
 const mobileNumber = ref("");
 const dateOfBirth = ref("");
-const router = useRouter();
+const isLoading = ref(false);
+
+// validation errors
+const errors = ref({
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+  mobileNumber: "",
+  dateOfBirth: "",
+});
+
+const notyf = new Notyf({
+  duration: 3000,
+  position: { x: "right", y: "bottom" },
+});
+
+// validate individual fields
+const validateField = (field) => {
+  switch (field) {
+    case "firstName":
+      errors.value.firstName = firstName.value.trim() ? "" : "First name is required.";
+      break;
+    case "lastName":
+      errors.value.lastName = lastName.value.trim() ? "" : "Last name is required.";
+      break;
+    case "email":
+      errors.value.email = /^\S+@\S+\.\S+$/.test(email.value)
+        ? ""
+        : "Please enter a valid email address.";
+      break;
+    case "password":
+      errors.value.password =
+        password.value.length >= 6 ? "" : "Password must be at least 6 characters.";
+      break;
+    case "confirmPassword":
+      errors.value.confirmPassword =
+        password.value === confirmPassword.value
+          ? ""
+          : "Passwords do not match.";
+      break;
+    case "mobileNumber":
+      errors.value.mobileNumber = /^\d{11}$/.test(mobileNumber.value)
+        ? ""
+        : "Mobile number must be 11 digits and numeric.";
+      break;
+    case "dateOfBirth":
+      errors.value.dateOfBirth = dateOfBirth.value ? "" : "Date of birth is required.";
+      break;
+  }
+};
+
+// validate all fields at once
+const validateForm = () => {
+  Object.keys(errors.value).forEach((key) => validateField(key));
+  return Object.values(errors.value).every((msg) => msg === "");
+};
 
 const handleRegister = async (e) => {
   e.preventDefault();
 
-  if (password.value !== confirmPassword.value) {
-    alert("Passwords do not match!");
+  if (!validateForm()) {
+    notyf.error("Please fix the errors before submitting.");
     return;
   }
+
+  if (isLoading.value) return;
+  isLoading.value = true;
 
   try {
     const res = await api.post("/users/register", {
@@ -31,22 +95,21 @@ const handleRegister = async (e) => {
     });
 
     console.log("Registration response:", res.data);
-    alert("Registration successful!");
+    notyf.success("Registration successful!");
     router.push("/login");
   } catch (err) {
-    // Log full error response for debugging
     console.error("Registration error response:", err.response);
 
-    // Show backend error if available
     if (err.response && err.response.data) {
-      alert(err.response.data.error || "Registration failed!");
+      notyf.error(err.response.data.error || "Registration failed!");
     } else {
-      alert("Registration failed! Please check your network or backend.");
+      notyf.error("Registration failed! Please check your network or backend.");
     }
+  } finally {
+    isLoading.value = false;
   }
 };
 </script>
-
 
 <template>
   <div class="container mx-auto pt-md-3 pb-md-5">
@@ -66,48 +129,65 @@ const handleRegister = async (e) => {
                 Join Flyx to explore seamless travel booking.
               </p>
 
-              <form @submit="handleRegister">
+              <form @submit="handleRegister" novalidate>
                 <div class="row g-3 mb-3">
                   <div class="col">
                     <label class="form-label fw-bold">First Name</label>
-                    <input class="form-control py-2" v-model="firstName" type="text" placeholder="First Name"
-                      required />
+                    <input class="form-control py-2" v-model="firstName" @blur="validateField('firstName')" type="text"
+                      placeholder="First Name" required />
+                    <small v-if="errors.firstName" class="text-danger">{{ errors.firstName }}</small>
                   </div>
+
                   <div class="col">
                     <label class="form-label fw-bold">Last Name</label>
-                    <input class="form-control py-2" v-model="lastName" type="text" placeholder="Last Name" required />
+                    <input class="form-control py-2" v-model="lastName" @blur="validateField('lastName')" type="text"
+                      placeholder="Last Name" required />
+                    <small v-if="errors.lastName" class="text-danger">{{ errors.lastName }}</small>
                   </div>
                 </div>
 
                 <div class="mb-3">
                   <label class="form-label fw-bold">Email Address</label>
-                  <input class="form-control py-2" v-model="email" type="email" placeholder="Email" required />
+                  <input class="form-control py-2" v-model="email" @blur="validateField('email')" type="email"
+                    placeholder="Email" required />
+                  <small v-if="errors.email" class="text-danger">{{ errors.email }}</small>
                 </div>
 
                 <div class="mb-3">
                   <label class="form-label fw-bold">Mobile Number</label>
-                  <input class="form-control py-2" v-model="mobileNumber" type="text" placeholder="Mobile Number"
-                    required />
+                  <input class="form-control py-2" v-model="mobileNumber" @blur="validateField('mobileNumber')"
+                    type="text" placeholder="Mobile Number" required />
+                  <small v-if="errors.mobileNumber" class="text-danger">{{ errors.mobileNumber }}</small>
                 </div>
 
                 <div class="mb-3">
                   <label class="form-label fw-bold">Date of Birth</label>
-                  <input class="form-control py-2" v-model="dateOfBirth" type="date" required />
+                  <input class="form-control py-2" v-model="dateOfBirth" @blur="validateField('dateOfBirth')"
+                    type="date" required />
+                  <small v-if="errors.dateOfBirth" class="text-danger">{{ errors.dateOfBirth }}</small>
                 </div>
 
                 <div class="mb-3">
                   <label class="form-label fw-bold">Password</label>
-                  <input class="form-control py-2" v-model="password" type="password" placeholder="Password" required />
+                  <input class="form-control py-2" v-model="password" @blur="validateField('password')" type="password"
+                    placeholder="Password" required />
+                  <small v-if="errors.password" class="text-danger">{{ errors.password }}</small>
                 </div>
 
                 <div class="mb-4">
                   <label class="form-label fw-bold">Confirm Password</label>
-                  <input class="form-control py-2" v-model="confirmPassword" type="password"
-                    placeholder="Confirm Password" required />
+                  <input class="form-control py-2" v-model="confirmPassword" @blur="validateField('confirmPassword')"
+                    type="password" placeholder="Confirm Password" required />
+                  <small v-if="errors.confirmPassword" class="text-danger">{{ errors.confirmPassword }}</small>
                 </div>
 
                 <div class="d-grid mb-3">
-                  <button type="submit" class="btn btn-primary btn-lg fw-bold py-2">Sign Up</button>
+                  <button type="submit" class="btn btn-primary btn-lg fw-bold py-2" :disabled="isLoading">
+                    <span v-if="!isLoading">Sign Up</span>
+                    <span v-else>
+                      <i class="fas fa-spinner fa-spin me-2"></i> Registering...
+                    </span>
+                  </button>
                 </div>
               </form>
             </div>
@@ -131,5 +211,9 @@ const handleRegister = async (e) => {
   background-size: cover;
   background-position: center;
   height: 480px;
+}
+
+.text-danger {
+  font-size: 0.875rem;
 }
 </style>
