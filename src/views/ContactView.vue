@@ -155,7 +155,7 @@ const handleSubmit = async (e) => {
 
             <p class="text-center text-muted mb-4">
               Office Address: 6th Flr. Oledan Square, Ayala Avenue. Makati City (Philippines)
-              | Contact No: (02)711-8037
+              | Contact No: (02)711-8037 | Office Hours: Mon - Fri 8am to 5pm
             </p>
           </div>
         </div>
