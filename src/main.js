@@ -2,6 +2,7 @@ import 'bootstrap';
 import 'bootstrap-icons/font/bootstrap-icons.min.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
+import 'notyf/notyf.min.css';
 import './assets/styles/main.css';
 
 import { createPinia } from 'pinia';
