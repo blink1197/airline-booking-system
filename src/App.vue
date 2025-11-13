@@ -29,6 +29,7 @@ import NavbarComponent from './components/layout/NavbarComponent.vue';
 
 .main-content {
   flex: 1;
+  min-height: 100vh;
   /* pushes footer to bottom if content is short */
 }
 </style>
