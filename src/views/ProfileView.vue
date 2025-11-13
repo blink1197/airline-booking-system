@@ -10,11 +10,7 @@
 
     <!-- Add Booking Button -->
     <div class="d-flex justify-content-center justify-content-md-end mb-4">
-      <button
-        class="btn btn-primary fw-bold px-4 py-2"
-        @click="toggleFlightSearch"
-        :disabled="isLoading"
-      >
+      <button class="btn btn-primary fw-bold px-4 py-2" @click="toggleFlightSearch" :disabled="isLoading">
         <i class="bi bi-plus-lg me-2"></i>
         <span v-if="!isLoading">Add Booking</span>
         <span v-else>
@@ -53,11 +49,8 @@
       <!-- Current booking tab -->
       <!-- Current booking tab -->
       <div class="tab-pane fade show active" id="current-status" role="tabpanel" aria-labelledby="current-tab">
-        <div
-          v-if="currentBooking && currentBooking.flights && currentBooking.flights.length"
-          class="alert alert-info shadow-sm border-0"
-          role="alert"
-        >
+        <div v-if="currentBooking && currentBooking.flights && currentBooking.flights.length"
+          class="alert alert-info shadow-sm border-0" role="alert">
           <h4 class="alert-heading">
             Upcoming Flight:
             {{ currentBooking.flights[0].origin.airportId }}
@@ -72,15 +65,11 @@
             at
             {{ formatTimeReadable(currentBooking.flights[0].departureTime) }}.
             Status:
-            <span
-              class="badge ms-1 px-2 py-1"
-              :class="{
-                'bg-success text-light': currentBooking.status?.toLowerCase() === 'confirmed',
-                'bg-warning text-dark': ['pending', 'created'].includes(currentBooking.status?.toLowerCase()),
-                'bg-danger text-light': currentBooking.status?.toLowerCase() === 'cancelled'
-              }"
-              style="font-size: 0.9rem;"
-            >
+            <span class="badge ms-1 px-2 py-1" :class="{
+              'bg-success text-light': currentBooking.status?.toLowerCase() === 'confirmed',
+              'bg-warning text-dark': ['pending', 'created'].includes(currentBooking.status?.toLowerCase()),
+              'bg-danger text-light': currentBooking.status?.toLowerCase() === 'cancelled'
+            }" style="font-size: 0.9rem;">
               {{ currentBooking.status }}
             </span>
           </p>
@@ -137,13 +126,13 @@
 
 <script setup>
 import api from '@/api/api.js';
-import { useUserStore } from '@/stores/user';
 import FlightSearchForm from '@/components/common/FlightSearchForm.vue';
+import { useUserStore } from '@/stores/user';
 import { formatDateReadable, formatTimeReadable } from '@/utils/date';
 import { formatMoney } from '@/utils/string';
-import { onMounted, ref } from 'vue';
 import { Notyf } from "notyf";
-import "notyf/notyf.min.css";
+import { onMounted, ref } from 'vue';
+
 
 const userStore = useUserStore();
 const { user } = userStore;
@@ -209,6 +198,7 @@ onMounted(() => {
 .fade-leave-active {
   transition: opacity 0.3s ease;
 }
+
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
@@ -219,6 +209,7 @@ onMounted(() => {
   .profile-header h1 {
     font-size: 1.8rem;
   }
+
   .profile-tabs {
     flex-wrap: wrap;
   }
