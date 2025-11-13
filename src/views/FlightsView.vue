@@ -59,11 +59,12 @@ function toggleSort() {
         <!-- Filters header -->
         <div class="mx-1 mt-1 mb-3 py-2 d-flex justify-content-between align-items-center smaller-text"
           v-if="flights.length !== 0">
-          <span class="d-flex gap-1 justify-content-between align-items-center" @click="showFilterAndSortModal">
+          <span class="d-flex gap-1 justify-content-between align-items-center cursor-pointer"
+            @click="showFilterAndSortModal">
             <i class="bi bi-funnel"></i>
             Filters
           </span>
-          <span @click="showFilterAndSortModal">Sort by: Earliest first</span>
+          <span class="cursor-pointer" @click="showFilterAndSortModal">Sort by: Earliest first</span>
         </div>
 
         <!-- Results -->
@@ -94,7 +95,7 @@ function toggleSort() {
       v-if="flights.length !== 0" :isPrimaryDisabled="!selectedFlight" />
   </div>
 
-  <BaseModal ref="filterAndSortModal">
+  <BaseModal ref="filterAndSortModal" title="Filter and Sort">
     <template #body>
       <!-- Filter by -->
       <div class=" py-2">
@@ -238,7 +239,6 @@ function toggleSort() {
   opacity: 1;
 }
 
-/* --- Ensure both sliders can be dragged --- */
 .slider-min,
 .slider-max {
   pointer-events: none;
@@ -257,7 +257,6 @@ function toggleSort() {
   cursor: pointer;
 }
 
-/* --- Style thumbs --- */
 .slider-min::-webkit-slider-thumb {
   background: #dee2e6;
   z-index: 3;
@@ -268,23 +267,19 @@ function toggleSort() {
   background: var(--color-primary);
 }
 
-/* --- Layer order --- */
 .slider-min {
   z-index: 2;
-  /* draw above the max slider */
 }
 
 .slider-max {
   z-index: 3;
 }
 
-/* --- Base track style --- */
 .slider-min,
 .slider-max {
   background: #dee2e6;
 }
 
-/* Optional improvement: colored range between sliders */
 .slider-min::before,
 .slider-max::before {
   content: "";
