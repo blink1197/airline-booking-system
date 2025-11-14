@@ -82,13 +82,13 @@ const localForm = computed({
               <label for="countryCode" class="form-label extra-small-text-bold">Country Code<span
                   class="text-danger">*</span></label>
               <input type="text" class="form-control" id="countryCode" v-model="localForm.countryCode"
-                placeholder="e.g. +63" />
+                placeholder="e.g. +63" maxlength="4" />
             </div>
             <div class="col-8 col-md-8">
               <label for="mobileNumber" class="form-label extra-small-text-bold">Mobile Number<span
                   class="text-danger">*</span></label>
               <input type="text" class="form-control" id="mobileNumber" v-model="localForm.mobileNumber"
-                placeholder="e.g. 9123456789" />
+                placeholder="e.g. 9123456789" maxlength="10" />
             </div>
           </div>
         </div>
