@@ -106,7 +106,7 @@
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                 <button type="submit" class="btn btn-primary">{{ modalMode === 'create' ? 'Add Airport' : 'Save Changes'
-                  }}</button>
+                }}</button>
               </div>
             </form>
           </div>
@@ -145,7 +145,7 @@ const fetchAirports = async () => {
   try {
     loading.value = true;
     const res = await api.get('/airports');
-    console.log(res.data)
+    airports.value = res.data
   } catch (err) {
     error.value = err.response?.data?.message || "Failed to load airports.";
   } finally {
