@@ -53,14 +53,8 @@
     </div>
 
     <!-- Modal: Create/Edit Airport -->
-    <div
-      class="modal fade"
-      id="airportModal"
-      tabindex="-1"
-      aria-labelledby="airportModalLabel"
-      aria-hidden="true"
-      ref="airportModalRef"
-    >
+    <div class="modal fade" id="airportModal" tabindex="-1" aria-labelledby="airportModalLabel" aria-hidden="true"
+      ref="airportModalRef">
       <div class="modal-dialog modal-lg modal-dialog-scrollable">
         <div class="modal-content">
           <div class="modal-header bg-primary text-white">
@@ -75,7 +69,8 @@
               <div class="row">
                 <div class="mb-3 col-md-4">
                   <label class="form-label">Airport ID</label>
-                  <input type="text" v-model="form.airportId" class="form-control" :disabled="modalMode === 'edit'" required>
+                  <input type="text" v-model="form.airportId" class="form-control" :disabled="modalMode === 'edit'"
+                    required>
                 </div>
                 <div class="mb-3 col-md-8">
                   <label class="form-label">Name</label>
@@ -110,7 +105,8 @@
 
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary">{{ modalMode === 'create' ? 'Add Airport' : 'Save Changes' }}</button>
+                <button type="submit" class="btn btn-primary">{{ modalMode === 'create' ? 'Add Airport' : 'Save Changes'
+                  }}</button>
               </div>
             </form>
           </div>
@@ -123,9 +119,9 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
 import axios from "axios";
 import { Modal } from "bootstrap";
+import { onMounted, ref } from "vue";
 
 const airports = ref([]);
 const loading = ref(true);
@@ -143,12 +139,11 @@ const form = ref({
 const airportModalRef = ref(null);
 let airportModal = null;
 
-const API_URL = "http://localhost:4000/api/airports";
 
 const fetchAirports = async () => {
   try {
     loading.value = true;
-    const res = await axios.get(API_URL);
+    const res = await axios.get('/airports');
     airports.value = res.data;
   } catch (err) {
     error.value = err.response?.data?.message || "Failed to load airports.";
@@ -210,6 +205,7 @@ onMounted(fetchAirports);
 .table td {
   vertical-align: middle;
 }
+
 .modal-body {
   line-height: 1.6;
 }
