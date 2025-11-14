@@ -119,6 +119,7 @@
 </template>
 
 <script setup>
+import api from "@/api/api";
 import axios from "axios";
 import { Modal } from "bootstrap";
 import { onMounted, ref } from "vue";
@@ -143,8 +144,8 @@ let airportModal = null;
 const fetchAirports = async () => {
   try {
     loading.value = true;
-    const res = await axios.get('/airports');
-    airports.value = res.data;
+    const res = await api.get('/airports');
+    console.log(res.data)
   } catch (err) {
     error.value = err.response?.data?.message || "Failed to load airports.";
   } finally {
