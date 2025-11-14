@@ -1,6 +1,5 @@
 <script setup>
-import { ref, watch } from 'vue';
-
+import { computed, ref, watch } from 'vue';
 
 const props = defineProps({
   id: {
@@ -27,47 +26,68 @@ const props = defineProps({
     type: Boolean,
     default: false
   }
-})
+});
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue']);
 
-const searchTerm = ref('')
-const isOpen = ref(false)
-const filteredOptions = ref([...props.options])
-const selectedValue = ref(props.modelValue)
+const searchTerm = ref('');
+const isOpen = ref(false);
+const selectedValue = ref(props.modelValue);
 
-// --- Watch for external v-model changes ---
+// --- Sync external v-model value ---
 watch(
   () => props.modelValue,
   (val) => {
-    selectedValue.value = val
+    selectedValue.value = val;
     if (val) {
-      searchTerm.value = `${val.city} — ${val.airportId}`
+      searchTerm.value = `${val.city} — ${val.airportId}`;
     } else {
-      searchTerm.value = ''
+      searchTerm.value = '';
     }
   },
   { immediate: true }
-)
+);
 
-function filterOptions() {
-  const term = searchTerm.value.toLowerCase()
-  filteredOptions.value = props.options.filter(opt =>
+// --- Grouped & filtered options ---
+const groupedOptions = computed(() => {
+  const term = searchTerm.value.toLowerCase();
+
+  // Filter
+  const filtered = props.options.filter(opt =>
     `${opt.city} ${opt.country} ${opt.name} ${opt.airportId}`
       .toLowerCase()
       .includes(term)
-  )
-}
+  );
 
+  // Group by country
+  const groups = {};
+
+  filtered.forEach(opt => {
+    if (!groups[opt.country]) groups[opt.country] = [];
+    groups[opt.country].push(opt);
+  });
+
+  // Convert into sorted array
+  return Object.keys(groups)
+    .sort() // sort countries alphabetically
+    .map(country => ({
+      country,
+      airports: groups[country].sort((a, b) =>
+        a.city.localeCompare(b.city)
+      )
+    }));
+});
+
+// --- Select option ---
 function selectOption(option) {
-  searchTerm.value = `${option.city} — ${option.airportId}`
-  selectedValue.value = option
-  emit('update:modelValue', option)
-  isOpen.value = false
+  searchTerm.value = `${option.city} — ${option.airportId}`;
+  selectedValue.value = option;
+  emit('update:modelValue', option);
+  isOpen.value = false;
 }
 
 function closeDropdown() {
-  setTimeout(() => (isOpen.value = false), 150)
+  setTimeout(() => (isOpen.value = false), 150);
 }
 </script>
 
@@ -77,29 +97,38 @@ function closeDropdown() {
 
     <!-- Input Field -->
     <input type="text" class="form-control" :id="id" v-model="searchTerm" :placeholder="placeholder"
-      @focus="isOpen = true" @blur="closeDropdown" @input="filterOptions" :disabled="isDisabled" />
+      @focus="isOpen = true" @blur="closeDropdown" :disabled="isDisabled" />
 
-    <!-- Dropdown List -->
-    <ul v-if="isOpen" class="list-group position-absolute w-100 mt-1 z-3" style="max-height: 220px; overflow-y: auto;">
-      <!-- Show filtered options -->
-      <li v-for="option in filteredOptions" :key="option.airportId" class="list-group-item list-group-item-action"
-        :class="{ active: option.airportId === selectedValue?.airportId }" @mousedown.prevent="selectOption(option)">
-        <div class="fw-semibold">
-          {{ option.city }} - {{ option.airportId }}
-        </div>
-        <div class="small fw-light">
-          {{ option.name }}, {{ option.country }}
-        </div>
-      </li>
+    <!-- Dropdown -->
+    <ul v-if="isOpen" class="list-group position-absolute w-100 mt-1 z-3" style="max-height: 260px; overflow-y: auto;">
+      <!-- Loop on each country group -->
+      <template v-for="group in groupedOptions" :key="group.country">
 
-      <!-- No results message -->
-      <li v-if="filteredOptions.length === 0" class="list-group-item text-center text-muted" style="cursor: default;">
+        <!-- Country header -->
+        <li class="list-group-item bg-light fw-bold text-uppercase small" style="cursor: default;">
+          {{ group.country }}
+        </li>
+
+        <!-- Airports in group -->
+        <li v-for="option in group.airports" :key="option.airportId" class="list-group-item list-group-item-action"
+          :class="{ active: option.airportId === selectedValue?.airportId }" @mousedown.prevent="selectOption(option)">
+          <div class="fw-semibold">
+            {{ option.city }} — {{ option.airportId }}
+          </div>
+          <div class="small fw-light">
+            {{ option.name }}
+          </div>
+        </li>
+
+      </template>
+
+      <!-- No results -->
+      <li v-if="groupedOptions.length === 0" class="list-group-item text-center text-muted" style="cursor: default;">
         No airports found
       </li>
     </ul>
   </div>
 </template>
-
 
 <style scoped>
 .list-group-item {

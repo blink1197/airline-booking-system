@@ -57,8 +57,8 @@ const totalPrice = pricePerCabin[cabin.value.toLowerCase()] * totalPassengers;
 
     <div class="row text-primary">
       <!-- Left side (flight info) -->
-      <div class="col-8 px-0 d-md-flex flex-row justify-content-around w-50">
-        <div class="d-flex gap-2 align-items-center p-2">
+      <div class="col-9 px-0 d-md-flex flex-row justify-content-around w-50">
+        <div class="d-flex gap-2 align-items-center p-2 pe-0">
           <!-- Departure -->
           <span class="d-flex align-items-start flex-column">
             <p class="m-0 small-text fw-bold">{{ formatTimeReadable(departureTime) }}</p>
@@ -97,7 +97,7 @@ const totalPrice = pricePerCabin[cabin.value.toLowerCase()] * totalPassengers;
 
       <!-- Right side (price) -->
       <div
-        class="col-4 d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-around gap-1 p-0 w-50 ps-5 ps-sm-0">
+        class="col-3 d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-around gap-1 p-0 w-50 ps-5 ps-sm-0">
         <div class="order-sm-2">
           <p class="small-text m-0">All-in fare</p>
           <p class="fw-bold m-0">{{ formatMoney(totalPrice) }}</p>
