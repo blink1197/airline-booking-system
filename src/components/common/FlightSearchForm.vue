@@ -115,7 +115,7 @@ async function submitForm() {
   const success = await searchFlights();
 
   //Redirect users to flights results page
-  if (success && flights.value.length > 0) router.push({ name: 'flights' });
+  if (success) router.push({ name: 'flights' });
 }
 </script>
 
