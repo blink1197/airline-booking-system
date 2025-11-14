@@ -45,7 +45,17 @@ export const useFlightSearchStore = defineStore(
         isSearching.value = true;
         error.value = null;
         const response = await api.get(url);
-        flights.value = response.data.results
+
+        const now = new Date();
+        const twoHoursLater = new Date(now.getTime() + 2 * 60 * 60 * 1000);
+
+        flights.value = response.data.results.filter(flight => {
+          if (!flight.departureTime) return false;
+
+          const depTime = new Date(flight.departureTime);
+          return depTime >= twoHoursLater;
+        });
+
         return true;
       } catch (err) {
         console.error("Error fetching flights:", err);
