@@ -139,7 +139,7 @@ const filteredAndSortedFlights = computed(() => {
       flight.basePrice <= maxPrice.value
     );
   });
-  s
+
   // ----------------------------
   // 2. SORTING
   // ----------------------------
