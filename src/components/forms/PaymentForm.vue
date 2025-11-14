@@ -157,13 +157,14 @@ defineExpose({ submitForm })
         <div class="row px-2 pt-2">
           <div class="col-4">
             <label for="cvv" class="form-label extra-small-text-bold">CVV<span class="text-danger">*</span></label>
-            <input type="text" class="form-control" id="cvv" v-model="form.cvv" />
+            <input type="text" class="form-control" id="cvv" v-model="form.cvv" maxlength="4" />
             <small class="text-danger">{{ errors.cvv }}</small>
           </div>
           <div class="col-8">
             <label for="expDate" class="form-label extra-small-text-bold">Expiration Date<span
                 class="text-danger">*</span></label>
-            <input type="text" class="form-control" id="expDate" v-model="form.expDate" placeholder="MM/YY" />
+            <input type="text" class="form-control" id="expDate" v-model="form.expDate" placeholder="MM/YY"
+              maxlength="5" />
             <small class="text-danger">{{ errors.expDate }}</small>
           </div>
         </div>
@@ -197,7 +198,7 @@ defineExpose({ submitForm })
           <div class="col-12">
             <label for="contactNumber" class="form-label extra-small-text-bold">Contact Number<span
                 class="text-danger">*</span></label>
-            <input type="text" class="form-control" id="contactNumber" v-model="form.contactNumber" />
+            <input type="text" class="form-control" id="contactNumber" v-model="form.contactNumber" maxlength="13" />
             <small class="text-danger">{{ errors.contactNumber }}</small>
           </div>
           <div class="col-12">

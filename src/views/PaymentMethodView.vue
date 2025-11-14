@@ -4,10 +4,13 @@ import ProgressBar from '@/components/common/ProgressBar.vue';
 import PaymentForm from '@/components/forms/PaymentForm.vue';
 import StickyButtonGroup from '@/components/ui/StickyButtonGroup.vue';
 import { useBookingStore } from '@/stores/booking';
+import { Notyf } from 'notyf';
 import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
+
+const notyf = new Notyf();
 const router = useRouter();
 const paymentForm = ref(null)
 const bookingStore = useBookingStore();
@@ -55,14 +58,12 @@ const handlePayment = async () => {
     // Handle API response
     if (response.data.status === 'Success') {
       paidFlightDetails.value = response.data.payment
+      notyf.success("Your booking is confirmed")
       router.push('/confirmation')
-    } else {
-      console.error('Payment failed:', response.data.message || response.data)
-      alert('Payment failed. Please try again.')
     }
   } catch (error) {
     console.error('Error during payment:', error)
-    alert('An error occurred while processing your payment. Please try again.')
+    notyf.error(error.response.data.message)
   } finally {
     isLoading.value = false;
   }
