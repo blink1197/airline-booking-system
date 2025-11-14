@@ -8,10 +8,72 @@ import AirPlaneTakeOffIcon from '@/components/icons/AirPlaneTakeOffIcon.vue';
 import StickyButtonGroup from '@/components/ui/StickyButtonGroup.vue';
 import { useFlightSearchStore } from '@/stores/flightSearch';
 import { storeToRefs } from 'pinia';
-import { ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 
 const flightStore = useFlightSearchStore()
 const { flights, isSearching, error, selectedFlight } = storeToRefs(flightStore)
+
+// sample flight object in flights array
+// {
+//     "pricePerCabin": {
+//         "economy": 2172,
+//         "business": 3258,
+//         "first": 4344
+//     },
+//     "_id": "6914dd6a17ccd173ea89a281",
+//     "airline": {
+//         "_id": "690a96b902f2d8f5357437be",
+//         "airlineId": "PAL",
+//         "name": "Philippine Airlines",
+//         "country": "Philippines",
+//         "iataCode": "PR",
+//         "icaoCode": "PAL",
+//         "logoUrl": "/images/airlines/PAL.png",
+//         "website": "https://www.philippineairlines.com",
+//         "__v": 0,
+//         "createdAt": "2025-11-05T00:13:45.910Z",
+//         "updatedAt": "2025-11-05T00:13:45.910Z"
+//     },
+//     "flightNumber": "PR460",
+//     "origin": {
+//         "_id": "690a97dd27504c87ff1d822c",
+//         "airportId": "MNL",
+//         "name": "Ninoy Aquino International Airport",
+//         "city": "Manila",
+//         "country": "Philippines",
+//         "type": "international",
+//         "timezone": "Asia/Manila",
+//         "latitude": 14.5086,
+//         "longitude": 121.0197,
+//         "__v": 0,
+//         "createdAt": "2025-11-05T00:18:37.038Z",
+//         "updatedAt": "2025-11-05T00:18:37.038Z"
+//     },
+//     "destination": {
+//         "_id": "690a97dd27504c87ff1d822d",
+//         "airportId": "CEB",
+//         "name": "Mactan-Cebu International Airport",
+//         "city": "Cebu",
+//         "country": "Philippines",
+//         "type": "international",
+//         "timezone": "Asia/Manila",
+//         "latitude": 10.3073,
+//         "longitude": 123.978,
+//         "__v": 0,
+//         "createdAt": "2025-11-05T00:18:37.039Z",
+//         "updatedAt": "2025-11-05T00:18:37.039Z"
+//     },
+//     "departureTime": "2025-11-14T05:00:00.000Z",
+//     "arrivalTime": "2025-11-14T05:43:00.000Z",
+//     "flightType": "domestic",
+//     "status": "scheduled",
+//     "flightDuration": 43,
+//     "basePrice": 2172,
+//     "createdAt": "2025-11-12T19:18:02.792Z",
+//     "updatedAt": "2025-11-12T19:18:02.792Z",
+//     "flightId": "FL-20251112-0016",
+//     "__v": 0
+// }
 
 const filterAndSortModal = ref(null);
 
@@ -21,8 +83,100 @@ function showFilterAndSortModal() {
 
 const showFilter = ref(true)
 const showSort = ref(true)
+
+
+// Filters
+
+// Time of Flight
+const flightTimeType = ref('departure')
+const quarterOfDay = ref('');
+
+// Price Range
 const minPrice = ref(0);
 const maxPrice = ref(200000);
+
+// Sorts
+const sortBy = ref('departureEarliest');
+
+
+const filteredAndSortedFlights = computed(() => {
+  if (!flights.value) return [];
+
+  // Make a shallow copy
+  let list = [...flights.value];
+
+  // ----------------------------
+  // 1. FILTERING
+  // ----------------------------
+
+  // TIME FILTER (departure/arrival)
+  if (quarterOfDay.value) {
+    const quarterRanges = {
+      '1Q': [0, 6],         // 12 AM - 6 AM
+      '2Q': [6, 12],        // 6 AM - 12 PM
+      '3Q': [12, 18],       // 12 PM - 6 PM
+      '4Q': [18, 24],       // 6 PM - 12 AM
+    };
+
+    const [minHour, maxHour] = quarterRanges[quarterOfDay.value];
+
+    list = list.filter(flight => {
+      const time = new Date(
+        flightTimeType.value === 'departure'
+          ? flight.departureTime
+          : flight.arrivalTime
+      );
+
+      const hour = time.getHours();
+      return hour >= minHour && hour < maxHour;
+    });
+  }
+
+  // PRICE FILTER
+  list = list.filter(flight => {
+    return (
+      flight.basePrice >= minPrice.value &&
+      flight.basePrice <= maxPrice.value
+    );
+  });
+  s
+  // ----------------------------
+  // 2. SORTING
+  // ----------------------------
+
+  list.sort((a, b) => {
+    switch (sortBy.value) {
+      case 'departureEarliest':
+        return new Date(a.departureTime) - new Date(b.departureTime);
+
+      case 'arrivalEarliest':
+        return new Date(a.arrivalTime) - new Date(b.arrivalTime);
+
+      case 'durationShortest':
+        return a.flightDuration - b.flightDuration;
+
+      case 'priceCheapest':
+        return a.basePrice - b.basePrice;
+
+      default:
+        return 0;
+    }
+  });
+
+  return list;
+});
+
+function resetFiltersAndSort() {
+  // Filters
+  flightTimeType.value = 'departure';
+  quarterOfDay.value = '';
+  minPrice.value = 0;
+  maxPrice.value = 200000;
+
+  // Sorting
+  sortBy.value = 'departureEarliest';
+}
+
 
 watch(minPrice, (val) => {
   if (val > maxPrice.value - 1000) {
@@ -84,15 +238,16 @@ function toggleSort() {
             <p class="text-muted">No flights found.</p>
           </div>
 
-          <FlightListItem v-else v-for="(flight, index) in flights" :key="flight.flightNumber" :flightData="flight"
-            :index="index" />
+          <FlightListItem v-else v-for="(flight, index) in filteredAndSortedFlights" :key="flight.flightNumber"
+            :flightData="flight" :index="index" />
+
         </div>
       </div>
     </div>
 
     <!-- Sticky Button -->
     <StickyButtonGroup primaryText="Continue" primaryLink="/guests" secondaryText="Back" :showSecondary="false"
-      v-if="flights.length !== 0" :isPrimaryDisabled="!selectedFlight" />
+      v-if="filteredAndSortedFlights.length !== 0" :isPrimaryDisabled="!selectedFlight" />
   </div>
 
   <BaseModal ref="filterAndSortModal" title="Filter and Sort">
@@ -112,14 +267,18 @@ function toggleSort() {
             </div>
 
             <div class="btn-group w-100 mb-2" role="group" aria-label="Basic radio toggle button group">
-              <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+              <!-- Departure -->
+              <input type="radio" class="btn-check" name="btnradio" id="btnradio1" value="departure"
+                v-model="flightTimeType" />
               <label class="btn btn-outline-primary w-50 d-flex align-items-center justify-content-center gap-1"
                 for="btnradio1">
                 <AirPlaneTakeOffIcon width="18" height="12" />
                 Departure
               </label>
 
-              <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+              <!-- Arrival -->
+              <input type="radio" class="btn-check" name="btnradio" id="btnradio2" value="arrival"
+                v-model="flightTimeType" />
               <label class="btn btn-outline-primary w-50 d-flex align-items-center justify-content-center gap-1"
                 for="btnradio2">
                 <AirPlaneLandingIcon width="18" height="12" />
@@ -129,20 +288,24 @@ function toggleSort() {
 
             <!-- Time options -->
             <div class="form-check">
-              <input class="form-check-input" type="radio" id="12to6AM" name="timeOfFlight" />
-              <label class="form-check-label" for="12to6AM">12:00 AM - 06:00 AM</label>
+              <input class="form-check-input" type="radio" id="1Q" name="timeOfFlight" value="1Q"
+                v-model="quarterOfDay" />
+              <label class="form-check-label" for="1Q">12:00 AM - 06:00 AM</label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" id="6to12PM" name="timeOfFlight" />
-              <label class="form-check-label" for="6to12PM">06:01 AM - 12:00 PM</label>
+              <input class="form-check-input" type="radio" id="2Q" name="timeOfFlight" value="2Q"
+                v-model="quarterOfDay" />
+              <label class="form-check-label" for="2Q">06:01 AM - 12:00 PM</label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" id="12to6PM" name="timeOfFlight" />
-              <label class="form-check-label" for="12to6PM">12:01 PM - 06:00 PM</label>
+              <input class="form-check-input" type="radio" id="3Q" name="timeOfFlight" value="3Q"
+                v-model="quarterOfDay" />
+              <label class="form-check-label" for="3Q">12:01 PM - 06:00 PM</label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" id="6to12AM" name="timeOfFlight" />
-              <label class="form-check-label" for="6to12AM">06:01 PM - 11:59 PM</label>
+              <input class="form-check-input" type="radio" id="4Q" name="timeOfFlight" value="4Q"
+                v-model="quarterOfDay" />
+              <label class="form-check-label" for="4Q">06:01 PM - 11:59 PM</label>
             </div>
 
             <!-- Price range -->
@@ -180,26 +343,30 @@ function toggleSort() {
           <div v-if="showSort" class="mt-2">
             <!-- Your sort controls go here -->
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="sortOptions" id="departureEarliest" checked />
+              <input class="form-check-input" type="radio" name="sortOptions" id="departureEarliest"
+                value="departureEarliest" checked v-model="sortBy" />
               <label class="form-check-label" for="departureEarliest">
                 Departure: Earliest first
               </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="sortOptions" id="arrivalEarliest" />
+              <input class="form-check-input" type="radio" name="sortOptions" id="arrivalEarliest"
+                value="arrivalEarliest" v-model="sortBy" />
               <label class="form-check-label" for="arrivalEarliest">
                 Arrival: Earliest first
               </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="sortOptions" id="durationShortest" />
+              <input class="form-check-input" type="radio" name="sortOptions" id="durationShortest"
+                value="durationShortest" v-model="sortBy" />
               <label class="form-check-label" for="durationShortest">
                 Flight duration: Shortest first
               </label>
             </div>
 
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="sortOptions" id="priceCheapest" />
+              <input class="form-check-input" type="radio" name="sortOptions" id="priceCheapest" value="priceCheapest"
+                v-model="sortBy" />
               <label class="form-check-label" for="priceCheapest">
                 Price: Lowest first
               </label>
@@ -207,6 +374,11 @@ function toggleSort() {
           </div>
         </transition>
       </div>
+    </template>
+    <template #footer>
+      <button class="btn btn-outline-primary w-100" @click="resetFiltersAndSort">
+        Reset Filters & Sorting
+      </button>
     </template>
   </BaseModal>
 </template>
