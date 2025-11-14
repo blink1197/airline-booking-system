@@ -50,31 +50,24 @@ watch(
 
 // --- Grouped & filtered options ---
 const groupedOptions = computed(() => {
-  const term = searchTerm.value.toLowerCase();
+  const term = searchTerm.value.toLowerCase().replace(/[^a-z0-9 ]/gi, ''); // remove special chars
 
-  // Filter
-  const filtered = props.options.filter(opt =>
-    `${opt.city} ${opt.country} ${opt.name} ${opt.airportId}`
-      .toLowerCase()
-      .includes(term)
-  );
+  const filtered = props.options.filter(opt => {
+    const text = `${opt.city} ${opt.country} ${opt.name} ${opt.airportId}`.toLowerCase();
+    return text.includes(term);
+  });
 
-  // Group by country
   const groups = {};
-
   filtered.forEach(opt => {
     if (!groups[opt.country]) groups[opt.country] = [];
     groups[opt.country].push(opt);
   });
 
-  // Convert into sorted array
   return Object.keys(groups)
-    .sort() // sort countries alphabetically
+    .sort()
     .map(country => ({
       country,
-      airports: groups[country].sort((a, b) =>
-        a.city.localeCompare(b.city)
-      )
+      airports: groups[country].sort((a, b) => a.city.localeCompare(b.city))
     }));
 });
 
@@ -89,6 +82,12 @@ function selectOption(option) {
 function closeDropdown() {
   setTimeout(() => (isOpen.value = false), 150);
 }
+
+// --- Clear search term on focus to show all options ---
+function onFocus() {
+  isOpen.value = true;
+  searchTerm.value = '';
+}
 </script>
 
 <template>
@@ -96,33 +95,26 @@ function closeDropdown() {
     <label :for="id" class="form-label fw-semibold">{{ label }}</label>
 
     <!-- Input Field -->
-    <input type="text" class="form-control" :id="id" v-model="searchTerm" :placeholder="placeholder"
-      @focus="isOpen = true" @blur="closeDropdown" :disabled="isDisabled" />
+    <input type="text" class="form-control" :id="id" v-model="searchTerm" :placeholder="placeholder" @focus="onFocus"
+      @blur="closeDropdown" :disabled="isDisabled" />
 
     <!-- Dropdown -->
     <ul v-if="isOpen" class="list-group position-absolute w-100 mt-1 z-3" style="max-height: 260px; overflow-y: auto;">
       <!-- Loop on each country group -->
       <template v-for="group in groupedOptions" :key="group.country">
-
-        <!-- Country header -->
         <li class="list-group-item bg-light fw-bold text-uppercase small" style="cursor: default;">
           {{ group.country }}
         </li>
 
-        <!-- Airports in group -->
         <li v-for="option in group.airports" :key="option.airportId" class="list-group-item list-group-item-action"
           :class="{ active: option.airportId === selectedValue?.airportId }" @mousedown.prevent="selectOption(option)">
           <div class="fw-semibold">
             {{ option.city }} — {{ option.airportId }}
           </div>
-          <div class="small fw-light">
-            {{ option.name }}
-          </div>
+          <div class="small fw-light">{{ option.name }}</div>
         </li>
-
       </template>
 
-      <!-- No results -->
       <li v-if="groupedOptions.length === 0" class="list-group-item text-center text-muted" style="cursor: default;">
         No airports found
       </li>
